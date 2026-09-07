@@ -1,0 +1,249 @@
+ I would make them small, independent projects, but connect them into one final HFT system.
+
+The rule should be:
+
+Every project teaches one low-latency concept, produces measurable results, and later gets reused.
+
+Project roadmap
+🟢 Stage 1 — C++ + CPU
+#	Small project	What you learn
+01	CPU-Pinned Worker	std::thread, CPU affinity
+02	Latency Timer	steady_clock, distributions, p50/p99
+03	CPU Migration Detector	scheduler behavior, sched_getcpu()
+04	Cache Latency Lab	cache vs RAM, access patterns
+05	False Sharing Demo	cache lines, contention
+06	Atomic Counter Benchmark	atomics vs mutex
+07	Memory Ordering Lab	acquire/release/relaxed
+08	SPSC Queue	lock-free programming
+09	Object Pool	allocation overhead
+10	Aligned Data Benchmark	alignment, cache-line layout
+🟡 Stage 2 — Linux systems
+#	Small project	What you learn
+11	Thread Scheduler Lab	scheduling/preemption
+12	CPU Isolation Experiment	dedicated cores
+13	Context Switch Benchmark	context-switch cost
+14	Page Fault Lab	virtual memory
+15	Huge Page Experiment	TLB/page behavior
+16	NUMA Latency Lab	local vs remote memory
+17	Core/NUMA Mapper	lscpu, numactl, topology
+18	perf Profiling Lab	CPU cycles, cache misses
+19	CPU Frequency Experiment	frequency/turbo effects
+20	Low-Latency Worker	combine affinity + memory + profiling
+🟠 Stage 3 — Networking
+#	Small project	What you learn
+21	TCP Echo Server	TCP fundamentals
+22	UDP Echo Server	UDP
+23	UDP Latency Tester	network latency
+24	Nonblocking UDP Engine	polling/event behavior
+25	Packet Size Benchmark	packet overhead
+26	Multicast Sender	multicast
+27	Multicast Receiver	market-data style feed
+28	Sequence Number Monitor	packet loss/order
+29	Packet Replay Tool	deterministic testing
+30	Timestamping Lab	packet timing
+🔴 Stage 4 — NIC + Linux low latency
+#	Small project	What you learn
+31	NIC Inspection Tool	NIC/driver capabilities
+32	NIC Queue Inspection	RX/TX queues
+33	RSS Experiment	packet → CPU distribution
+34	IRQ Affinity Experiment	NIC interrupts
+35	CPU ↔ NIC Mapping	dedicated datapath
+36	Busy-Poll Receiver	polling vs interrupts
+37	Socket Buffer Benchmark	kernel networking tuning
+38	Zero-Allocation UDP Receiver	allocation-free hot path
+39	End-to-End Packet Benchmark	complete latency path
+40	Low-Jitter Receiver	combine all optimizations
+🔵 Stage 5 — Kernel bypass
+#	Small project	What you learn
+41	XDP Packet Counter	XDP basics
+42	XDP Packet Filter	kernel-side packet processing
+43	AF_XDP Receiver	userspace packet reception
+44	AF_XDP Latency Benchmark	compare with UDP
+45	AF_XDP Multi-Queue	queue/core mapping
+46	DPDK Hello / Port Setup	DPDK architecture
+47	DPDK RX Loop	poll-mode driver
+48	DPDK TX Loop	packet transmission
+49	DPDK Mempool Lab	packet buffers
+50	DPDK Ring Lab	inter-thread communication
+51	DPDK Multi-Core Receiver	scaling
+52	DPDK Queue/Core Affinity	NIC/CPU optimization
+53	DPDK Packet Benchmark	packets/sec + latency
+🟣 Stage 6 — Actual trading components
+Now the projects stop being generic networking experiments.
+
+#	Project	What you build
+54	Binary Protocol Lab	fixed binary message format
+55	Market Data Generator	exchange simulator
+56	Feed Handler	receive + decode messages
+57	Fast Parser	zero/minimal allocation parser
+58	Order Book v1	bids/asks
+59	Order Book v2	incremental updates
+60	Order Book Benchmark	throughput/latency
+61	Trade/Event Engine	process book events
+62	Strategy Engine	generate decisions
+63	Risk Engine	position/order limits
+64	OMS	order lifecycle
+65	Exchange Simulator	accept/reject/fill orders
+66	Order Gateway	outbound order path
+🟣 Stage 7 — Put it together
+Project 67 — Low-Latency Trading Pipeline
+Market Data
+     ↓
+Feed Handler
+     ↓
+Parser
+     ↓
+Order Book
+     ↓
+Strategy
+     ↓
+Risk
+     ↓
+OMS
+     ↓
+Order Gateway
+Project 68 — Lock-Free Trading Pipeline
+Replace unnecessary locks with:
+
+SPSC / MPSC queues
+       ↓
+atomic state
+       ↓
+cache-aware structures
+Project 69 — NUMA-Aware Trading Engine
+NIC
+ ↓
+CPU 4
+ ↓
+Book
+ ↓
+Strategy
+ ↓
+Gateway
+Keep related data/threads on the appropriate NUMA node.
+
+Project 70 — DPDK Trading Engine
+Replace:
+
+UDP socket
+with:
+
+DPDK RX/TX
+and benchmark the difference.
+
+Project 71 — Full Latency Measurement
+Measure:
+
+NIC RX
+ ↓
+parser
+ ↓
+order book
+ ↓
+strategy
+ ↓
+risk
+ ↓
+order
+ ↓
+NIC TX
+Report:
+
+min
+p50
+p95
+p99
+p99.9
+max
+Project 72 — Stress Test
+Test:
+
+1M msg/s
+2M msg/s
+5M msg/s
+...
+depending on what your hardware can actually sustain.
+
+Measure:
+
+throughput
+latency
+jitter
+CPU utilization
+packet loss
+The important part: don't build 72 unrelated repos
+Use one repository with small projects:
+
+hft-lab/
+│
+├── 01_cpu_pinned_worker/
+├── 02_latency_timer/
+├── 03_cpu_migration/
+├── 04_cache_latency/
+├── ...
+├── 41_xdp_counter/
+├── 43_af_xdp_receiver/
+├── 46_dpdk_port/
+├── ...
+├── 56_feed_handler/
+├── 58_order_book/
+├── 62_strategy/
+├── 63_risk/
+├── 66_order_gateway/
+└── 72_final_trading_system/
+And each project should have:
+
+src/
+README.md
+benchmark/
+results/
+The README should answer:
+
+What did I test?
+What was the baseline?
+What did I change?
+Why should it be faster?
+What did I measure?
+What was the result?
+Why did the result happen?
+That last part is critical for an HFT interview.
+
+The final progression
+C++ 
+ ↓
+CPU
+ ↓
+Cache
+ ↓
+Memory
+ ↓
+Concurrency
+ ↓
+Linux
+ ↓
+Networking
+ ↓
+NIC
+ ↓
+Low latency
+ ↓
+XDP
+ ↓
+AF_XDP
+ ↓
+DPDK
+ ↓
+Market Data
+ ↓
+Order Book
+ ↓
+Strategy
+ ↓
+Risk
+ ↓
+OMS
+ ↓
+Gateway
+ ↓
+Complete HFT system
+This is the roadmap I'd recommend for you. We should start with Project 01 only, finish it properly, benchmark it, and then move to Project 02.

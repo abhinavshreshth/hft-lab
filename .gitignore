@@ -1,0 +1,26 @@
+# Build
+build/
+build-*/
+cmake-build-*/
+compile_commands.json
+*.o
+*.a
+*.so
+*.d
+
+# Editors
+.vscode/
+.idea/
+*.swp
+.cache/
+
+# Tooling / OS
+.DS_Store
+__pycache__/
+perf.data
+perf.data.old
+
+# Results: raw measurement output IS committed (that's the point of this repo).
+# Only ignore accidental large captures.
+*.pcap
+*.pcapng
