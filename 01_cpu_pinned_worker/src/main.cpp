@@ -1,12 +1,43 @@
 #include <iostream>
 #include <thread>
 #include <chrono>
+#include <cstring>
+#include <optional>
+#include <string>
+#include <cstdlib>
 #include <sched.h>
+#include <pthread.h>
+
+// Which CPU "pinned" mode uses unless overridden on the command line.
+constexpr int kDefaultPinCpu = 4;
 
 // A thread runs inside the same process as main().
 // It shares main's memory, but has its own stack and runs independently.
-void worker() {
+//
+// std::nullopt means "don't pin" — this is the Experiment 1/2 baseline.
+// A CPU number means "restrict this thread to exactly that CPU" — Experiment 3.
+// optional<int> instead of a -1 sentinel: "no CPU" is then part of the type,
+// not a magic number the reader has to know about.
+void worker(std::optional<int> pin_to_cpu) {
     using clock = std::chrono::steady_clock;
+
+    if (pin_to_cpu.has_value()) {
+        cpu_set_t cpuset;
+        CPU_ZERO(&cpuset);            // start with an empty allowed-CPU set
+        CPU_SET(*pin_to_cpu, &cpuset); // allow only that one CPU in the set
+
+        // pthread_self() here means "this thread" (the worker), because
+        // this code is running inside worker() itself, not inside main().
+        // Affinity restricts WHERE the thread is allowed to run — it does
+        // not move the thread there immediately by itself, though in
+        // practice the very next scheduling decision will honor it.
+        int rc = pthread_setaffinity_np(pthread_self(), sizeof(cpuset), &cpuset);
+        if (rc != 0) {
+            // pthread_* functions return an error number directly, unlike
+            // most POSIX calls that set errno. strerror() decodes it.
+            std::cerr << "pthread_setaffinity_np failed: " << std::strerror(rc) << "\n";
+        }
+    }
 
     // constexpr = fixed at compile time, not a magic number repeated everywhere.
     // long (64-bit here) so this never silently overflows like a 32-bit int
@@ -55,15 +86,58 @@ void worker() {
     std::cout << "sink:       " << sink << "\n";  // proves the loop wasn't optimized away
 }
 
-int main() {
-    std::cout << "main thread running\n";
+// The spec describes four experiments, but they are not four programs:
+//   Experiment 1 (unpinned baseline)  -> mode "unpinned"
+//   Experiment 2 (detect current CPU) -> the instrumentation inside worker(),
+//                                        used by both modes, never removed
+//   Experiment 3 (pin the worker)     -> mode "pinned"
+//   Experiment 4 (compare)            -> mode "compare", plus the analysis
+//                                        written up in README.md
+// Each condition is runnable on its own so a results/ file can record the
+// exact command that produced it.
+void usage(const char* argv0) {
+    std::cerr << "usage: " << argv0 << " [unpinned | pinned [cpu] | compare]\n"
+              << "  unpinned      Experiment 1/2: no affinity, baseline\n"
+              << "  pinned [cpu]  Experiment 3: pin to cpu (default "
+              << kDefaultPinCpu << ")\n"
+              << "  compare       Experiment 4: run both, back to back (default)\n";
+}
 
-    // This line creates a real OS thread.
-    // From here, main() and worker() run at the same time.
-    std::thread t(worker);
-
-    // join() = wait here until the worker thread finishes.
+// Runs the worker on its own thread and labels the output.
+void run(const std::string& label, std::optional<int> pin_to_cpu) {
+    std::cout << "=== " << label << " ===\n";
+    std::thread t(worker, pin_to_cpu);
     t.join();
+}
+
+int main(int argc, char** argv) {
+    std::string mode = (argc > 1) ? argv[1] : "compare";
+
+    int cpu = kDefaultPinCpu;
+    if (argc > 2) {
+        cpu = std::atoi(argv[2]);
+        // hardware_concurrency() is the logical CPU count. Catching a bad CPU
+        // here gives a clear message instead of an opaque EINVAL from
+        // pthread_setaffinity_np deep inside the worker.
+        if (cpu < 0 || cpu >= static_cast<int>(std::thread::hardware_concurrency())) {
+            std::cerr << "error: cpu " << cpu << " out of range (0.."
+                      << std::thread::hardware_concurrency() - 1 << ")\n";
+            return 1;
+        }
+    }
+
+    if (mode == "unpinned") {
+        run("unpinned (baseline)", std::nullopt);
+    } else if (mode == "pinned") {
+        run("pinned to CPU " + std::to_string(cpu), cpu);
+    } else if (mode == "compare") {
+        run("unpinned (baseline)", std::nullopt);
+        std::cout << "\n";
+        run("pinned to CPU " + std::to_string(cpu), cpu);
+    } else {
+        usage(argv[0]);
+        return 1;
+    }
 
     return 0;
 }

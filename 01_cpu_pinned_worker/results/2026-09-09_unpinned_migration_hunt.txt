@@ -1,0 +1,184 @@
+# Command: ./build/01_cpu_pinned_worker/01_cpu_pinned_worker unpinned   (repeated 20x)
+# Purpose: does the migration counter ever fire? 5 reps was too few to see one.
+# Machine: wsl2 (docs/ENVIRONMENT.md) — Ryzen 9 7900X, 24 logical CPUs, otherwise idle
+
+--- repetition 1 ---
+=== unpinned (baseline) ===
+start CPU:  4
+final CPU:  4
+migrations: 0
+iterations: 2000000000
+elapsed:    761.436 ms
+sink:       1999999999000000000
+
+--- repetition 2 ---
+=== unpinned (baseline) ===
+start CPU:  11
+final CPU:  11
+migrations: 0
+iterations: 2000000000
+elapsed:    760.688 ms
+sink:       1999999999000000000
+
+--- repetition 3 ---
+=== unpinned (baseline) ===
+start CPU:  19
+final CPU:  19
+migrations: 0
+iterations: 2000000000
+elapsed:    767.019 ms
+sink:       1999999999000000000
+
+--- repetition 4 ---
+=== unpinned (baseline) ===
+start CPU:  19
+final CPU:  19
+migrations: 0
+iterations: 2000000000
+elapsed:    765.143 ms
+sink:       1999999999000000000
+
+--- repetition 5 ---
+=== unpinned (baseline) ===
+start CPU:  11
+final CPU:  11
+migrations: 0
+iterations: 2000000000
+elapsed:    765.837 ms
+sink:       1999999999000000000
+
+--- repetition 6 ---
+=== unpinned (baseline) ===
+start CPU:  14
+final CPU:  14
+migrations: 0
+iterations: 2000000000
+elapsed:    763.526 ms
+sink:       1999999999000000000
+
+--- repetition 7 ---
+=== unpinned (baseline) ===
+start CPU:  9
+final CPU:  9
+migrations: 0
+iterations: 2000000000
+elapsed:    764.378 ms
+sink:       1999999999000000000
+
+--- repetition 8 ---
+=== unpinned (baseline) ===
+start CPU:  15
+final CPU:  15
+migrations: 0
+iterations: 2000000000
+elapsed:    764.28 ms
+sink:       1999999999000000000
+
+--- repetition 9 ---
+=== unpinned (baseline) ===
+start CPU:  22
+final CPU:  23
+migrations: 1
+iterations: 2000000000
+elapsed:    764.34 ms
+sink:       1999999999000000000
+
+--- repetition 10 ---
+=== unpinned (baseline) ===
+start CPU:  10
+final CPU:  10
+migrations: 0
+iterations: 2000000000
+elapsed:    773.134 ms
+sink:       1999999999000000000
+
+--- repetition 11 ---
+=== unpinned (baseline) ===
+start CPU:  10
+final CPU:  10
+migrations: 0
+iterations: 2000000000
+elapsed:    763.346 ms
+sink:       1999999999000000000
+
+--- repetition 12 ---
+=== unpinned (baseline) ===
+start CPU:  16
+final CPU:  16
+migrations: 0
+iterations: 2000000000
+elapsed:    764.246 ms
+sink:       1999999999000000000
+
+--- repetition 13 ---
+=== unpinned (baseline) ===
+start CPU:  22
+final CPU:  22
+migrations: 0
+iterations: 2000000000
+elapsed:    766.628 ms
+sink:       1999999999000000000
+
+--- repetition 14 ---
+=== unpinned (baseline) ===
+start CPU:  14
+final CPU:  14
+migrations: 0
+iterations: 2000000000
+elapsed:    762.302 ms
+sink:       1999999999000000000
+
+--- repetition 15 ---
+=== unpinned (baseline) ===
+start CPU:  14
+final CPU:  14
+migrations: 0
+iterations: 2000000000
+elapsed:    765.496 ms
+sink:       1999999999000000000
+
+--- repetition 16 ---
+=== unpinned (baseline) ===
+start CPU:  10
+final CPU:  10
+migrations: 0
+iterations: 2000000000
+elapsed:    761.169 ms
+sink:       1999999999000000000
+
+--- repetition 17 ---
+=== unpinned (baseline) ===
+start CPU:  16
+final CPU:  16
+migrations: 0
+iterations: 2000000000
+elapsed:    762.591 ms
+sink:       1999999999000000000
+
+--- repetition 18 ---
+=== unpinned (baseline) ===
+start CPU:  7
+final CPU:  7
+migrations: 0
+iterations: 2000000000
+elapsed:    763.326 ms
+sink:       1999999999000000000
+
+--- repetition 19 ---
+=== unpinned (baseline) ===
+start CPU:  14
+final CPU:  14
+migrations: 0
+iterations: 2000000000
+elapsed:    763.405 ms
+sink:       1999999999000000000
+
+--- repetition 20 ---
+=== unpinned (baseline) ===
+start CPU:  19
+final CPU:  19
+migrations: 0
+iterations: 2000000000
+elapsed:    761.296 ms
+sink:       1999999999000000000
+

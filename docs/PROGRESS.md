@@ -1,6 +1,6 @@
 # Progress
 
-**0 / 72 complete.**
+**1 / 72 complete.**
 
 Status: `·` not started · `▶` in progress · `✅` done (README complete + results committed)
 
@@ -8,11 +8,11 @@ A project is ticked only when its README's 11 sections are filled and `results/`
 contains real output. See `docs/CONVENTIONS.md` §9.
 
 
-## 🟢 Stage 1 — C++ + CPU  —  0/10
+## 🟢 Stage 1 — C++ + CPU  —  1/10
 
 | | # | Project | Directory | Result headline |
 |---|---|---|---|---|
-| · | 01 | CPU-Pinned Worker | `01_cpu_pinned_worker` | |
+| ✅ | 01 | CPU-Pinned Worker | `01_cpu_pinned_worker` | Pinning fixes placement (0 vs 1 migration, always CPU 4) but shows no measurable latency change on an idle 24-core machine |
 | · | 02 | Latency Timer | `02_latency_timer` | |
 | · | 03 | CPU Migration Detector | `03_cpu_migration` | |
 | · | 04 | Cache Latency Lab | `04_cache_latency` | |
@@ -129,3 +129,4 @@ contains real output. See `docs/CONVENTIONS.md` §9.
 | Date | Project | Note |
 |---|---|---|
 | 2026-09-07 | — | Repository architecture created; no project started. |
+| 2026-09-08 | 01 | CPU-Pinned Worker complete: unpinned vs. pinned (CPU 4), 5 reps each. Pinning made placement deterministic (0 vs 1 migration) but no measurable latency change on an idle 24-core Ryzen 9 7900X. |

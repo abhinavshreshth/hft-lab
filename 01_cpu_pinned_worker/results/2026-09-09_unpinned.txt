@@ -1,0 +1,49 @@
+# Command: ./build/01_cpu_pinned_worker/01_cpu_pinned_worker unpinned   (repeated 5x)
+# Machine: wsl2 (docs/ENVIRONMENT.md) — Ryzen 9 7900X, 24 logical CPUs, otherwise idle
+# Build: Release (-O2 -g), g++ 15.2.0, C++20
+
+--- repetition 1 ---
+=== unpinned (baseline) ===
+start CPU:  16
+final CPU:  16
+migrations: 0
+iterations: 2000000000
+elapsed:    757.574 ms
+sink:       1999999999000000000
+
+--- repetition 2 ---
+=== unpinned (baseline) ===
+start CPU:  4
+final CPU:  4
+migrations: 0
+iterations: 2000000000
+elapsed:    766.89 ms
+sink:       1999999999000000000
+
+--- repetition 3 ---
+=== unpinned (baseline) ===
+start CPU:  15
+final CPU:  15
+migrations: 0
+iterations: 2000000000
+elapsed:    766.401 ms
+sink:       1999999999000000000
+
+--- repetition 4 ---
+=== unpinned (baseline) ===
+start CPU:  8
+final CPU:  8
+migrations: 0
+iterations: 2000000000
+elapsed:    763.582 ms
+sink:       1999999999000000000
+
+--- repetition 5 ---
+=== unpinned (baseline) ===
+start CPU:  17
+final CPU:  17
+migrations: 0
+iterations: 2000000000
+elapsed:    764.96 ms
+sink:       1999999999000000000
+
