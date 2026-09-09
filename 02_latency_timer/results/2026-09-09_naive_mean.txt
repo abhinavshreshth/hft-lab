@@ -1,0 +1,40 @@
+# Command: build/02_latency_timer/02_exp2_naive_mean    (repeated 5x)
+# Date:    2026-09-09T18:25:20+00:00
+# Machine: Linux 6.18.33.2-microsoft-standard-WSL2 — 24 logical CPUs (see docs/ENVIRONMENT.md)
+# Build:   Release (-O2 -g), g++ (Ubuntu 15.2.0-16ubuntu1) 15.2.0
+
+--- repetition 1 ---
+=== Experiment 2: naive aggregate mean (baseline) ===
+iterations: 20000
+elapsed:    0.196134 ms
+mean:       9.8067 ns/push_back
+final size: 20000
+
+--- repetition 2 ---
+=== Experiment 2: naive aggregate mean (baseline) ===
+iterations: 20000
+elapsed:    0.157113 ms
+mean:       7.85565 ns/push_back
+final size: 20000
+
+--- repetition 3 ---
+=== Experiment 2: naive aggregate mean (baseline) ===
+iterations: 20000
+elapsed:    0.150403 ms
+mean:       7.52015 ns/push_back
+final size: 20000
+
+--- repetition 4 ---
+=== Experiment 2: naive aggregate mean (baseline) ===
+iterations: 20000
+elapsed:    0.143753 ms
+mean:       7.18765 ns/push_back
+final size: 20000
+
+--- repetition 5 ---
+=== Experiment 2: naive aggregate mean (baseline) ===
+iterations: 20000
+elapsed:    0.200354 ms
+mean:       10.0177 ns/push_back
+final size: 20000
+

@@ -28,7 +28,7 @@ Captured 2026-09-08 via `scripts/capture_env.sh`:
 - Compiler: `g++ (Ubuntu 15.2.0-16ubuntu1) 15.2.0`
 - CMake / Ninja: `4.2.3` / `1.13.2`
 - Build flags: `-std=c++20 -O2 -g -Wall -Wextra -Wpedantic`
-- `steady_clock` resolution: (measure in Project 02)
+- `steady_clock` resolution: 10 ns (min observed tick, see 02_latency_timer/README.md §7)
 - CPU governor / frequency scaling: not exposed under WSL2 (`scaling_governor` unreadable — host-controlled)
 - Huge pages: `Hugepagesize: 2048 kB`, `HugePages_Total: 0` (none reserved)
 

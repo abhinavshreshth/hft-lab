@@ -1,0 +1,75 @@
+# Command: build/02_latency_timer/02_exp4_compare    (repeated 5x)
+# Date:    2026-09-09T18:25:20+00:00
+# Machine: Linux 6.18.33.2-microsoft-standard-WSL2 — 24 logical CPUs (see docs/ENVIRONMENT.md)
+# Build:   Release (-O2 -g), g++ (Ubuntu 15.2.0-16ubuntu1) 15.2.0
+
+--- repetition 1 ---
+=== Experiment 4: one run, two framings ===
+iterations:               20000
+-- Framing A: naive mean (Project 01 style) --
+naive mean (ns):          50.6249
+-- Framing B: percentile report, same run --
+min   (ns):               10
+p50   (ns):               20
+p95   (ns):               20
+p99   (ns):               20
+p99.9 (ns):               1570
+max   (ns):               66741
+final size:               20000
+
+--- repetition 2 ---
+=== Experiment 4: one run, two framings ===
+iterations:               20000
+-- Framing A: naive mean (Project 01 style) --
+naive mean (ns):          45.7814
+-- Framing B: percentile report, same run --
+min   (ns):               10
+p50   (ns):               20
+p95   (ns):               20
+p99   (ns):               20
+p99.9 (ns):               1320
+max   (ns):               58651
+final size:               20000
+
+--- repetition 3 ---
+=== Experiment 4: one run, two framings ===
+iterations:               20000
+-- Framing A: naive mean (Project 01 style) --
+naive mean (ns):          49.5515
+-- Framing B: percentile report, same run --
+min   (ns):               10
+p50   (ns):               20
+p95   (ns):               20
+p99   (ns):               20
+p99.9 (ns):               1430
+max   (ns):               83891
+final size:               20000
+
+--- repetition 4 ---
+=== Experiment 4: one run, two framings ===
+iterations:               20000
+-- Framing A: naive mean (Project 01 style) --
+naive mean (ns):          48.9273
+-- Framing B: percentile report, same run --
+min   (ns):               10
+p50   (ns):               20
+p95   (ns):               20
+p99   (ns):               20
+p99.9 (ns):               1510
+max   (ns):               94242
+final size:               20000
+
+--- repetition 5 ---
+=== Experiment 4: one run, two framings ===
+iterations:               20000
+-- Framing A: naive mean (Project 01 style) --
+naive mean (ns):          45.8329
+-- Framing B: percentile report, same run --
+min   (ns):               10
+p50   (ns):               20
+p95   (ns):               20
+p99   (ns):               20
+p99.9 (ns):               1550
+max   (ns):               57391
+final size:               20000
+

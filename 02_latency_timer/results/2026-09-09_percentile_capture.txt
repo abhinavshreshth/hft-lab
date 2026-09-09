@@ -1,0 +1,65 @@
+# Command: build/02_latency_timer/02_exp3_percentile_capture    (repeated 5x)
+# Date:    2026-09-09T18:25:20+00:00
+# Machine: Linux 6.18.33.2-microsoft-standard-WSL2 — 24 logical CPUs (see docs/ENVIRONMENT.md)
+# Build:   Release (-O2 -g), g++ (Ubuntu 15.2.0-16ubuntu1) 15.2.0
+
+--- repetition 1 ---
+=== Experiment 3: per-iteration percentile capture (modified) ===
+iterations:          20000
+reallocations seen:  16
+min   (ns):          10
+p50   (ns):          20
+p95   (ns):          20
+p99   (ns):          20
+p99.9 (ns):          1270
+max   (ns):          56511
+final size:          20000
+
+--- repetition 2 ---
+=== Experiment 3: per-iteration percentile capture (modified) ===
+iterations:          20000
+reallocations seen:  16
+min   (ns):          10
+p50   (ns):          20
+p95   (ns):          20
+p99   (ns):          20
+p99.9 (ns):          1400
+max   (ns):          87832
+final size:          20000
+
+--- repetition 3 ---
+=== Experiment 3: per-iteration percentile capture (modified) ===
+iterations:          20000
+reallocations seen:  16
+min   (ns):          10
+p50   (ns):          20
+p95   (ns):          20
+p99   (ns):          20
+p99.9 (ns):          1650
+max   (ns):          53721
+final size:          20000
+
+--- repetition 4 ---
+=== Experiment 3: per-iteration percentile capture (modified) ===
+iterations:          20000
+reallocations seen:  16
+min   (ns):          10
+p50   (ns):          20
+p95   (ns):          20
+p99   (ns):          20
+p99.9 (ns):          1230
+max   (ns):          46911
+final size:          20000
+
+--- repetition 5 ---
+=== Experiment 3: per-iteration percentile capture (modified) ===
+iterations:          20000
+reallocations seen:  16
+min   (ns):          10
+p50   (ns):          20
+p95   (ns):          20
+p99   (ns):          20
+p99.9 (ns):          1140
+max   (ns):          58302
+final size:          20000
+

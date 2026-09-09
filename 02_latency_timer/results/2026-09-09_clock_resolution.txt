@@ -1,0 +1,55 @@
+# Command: build/02_latency_timer/02_exp1_clock_resolution    (repeated 5x)
+# Date:    2026-09-09T18:25:20+00:00
+# Machine: Linux 6.18.33.2-microsoft-standard-WSL2 — 24 logical CPUs (see docs/ENVIRONMENT.md)
+# Build:   Release (-O2 -g), g++ (Ubuntu 15.2.0-16ubuntu1) 15.2.0
+
+--- repetition 1 ---
+=== Experiment 1: steady_clock tick resolution ===
+samples:    10000
+min (ns):   10   <- practical steady_clock resolution
+p50  (ns):  20
+p95  (ns):  20
+p99  (ns):  20
+p99.9(ns):  1280
+max  (ns):  3440
+
+--- repetition 2 ---
+=== Experiment 1: steady_clock tick resolution ===
+samples:    10000
+min (ns):   10   <- practical steady_clock resolution
+p50  (ns):  20
+p95  (ns):  20
+p99  (ns):  20
+p99.9(ns):  1020
+max  (ns):  3040
+
+--- repetition 3 ---
+=== Experiment 1: steady_clock tick resolution ===
+samples:    10000
+min (ns):   10   <- practical steady_clock resolution
+p50  (ns):  20
+p95  (ns):  30
+p99  (ns):  40
+p99.9(ns):  1370
+max  (ns):  1660
+
+--- repetition 4 ---
+=== Experiment 1: steady_clock tick resolution ===
+samples:    10000
+min (ns):   10   <- practical steady_clock resolution
+p50  (ns):  20
+p95  (ns):  20
+p99  (ns):  20
+p99.9(ns):  1141
+max  (ns):  3190
+
+--- repetition 5 ---
+=== Experiment 1: steady_clock tick resolution ===
+samples:    10000
+min (ns):   10   <- practical steady_clock resolution
+p50  (ns):  20
+p95  (ns):  20
+p99  (ns):  20
+p99.9(ns):  1020
+max  (ns):  1440
+
