@@ -181,6 +181,18 @@ make single-threaded arithmetic faster on an uncontended machine.
   it produces consistency (deterministic placement), which is a different
   property from throughput or latency, and the two must be measured
   separately.
+- The mechanism by which migration costs latency is indirect, and every link
+  in it is conditional: **migration → the new CPU's cache may not hold the
+  working set → the resulting misses must be served from a further level
+  (L2/L3) or from DRAM → higher latency.** Nothing in that chain is
+  automatic, and it broke twice here. A migration between SMT siblings keeps
+  L1/L2, so it fails at the first link (all 4 observed migrations were
+  sibling moves). A working set of one `volatile long` has no state worth
+  reloading, so it fails at the second. That is why the migrations that did
+  occur cost no measurable time. Migration is only expensive when the move
+  crosses a cache boundary *and* the working set is large enough that
+  refilling it hurts — "migration is slow" is a claim about the workload's
+  memory profile as much as about the scheduler.
 - Naive fixed-iteration-count loops can be silently gutted by the optimizer
   if the loop body has no real, unpredictable-to-the-compiler work; a
   `volatile` accumulator (or an explicit "don't optimize this" escape) is

@@ -30,6 +30,7 @@ void worker() {
     auto t1 = clock::now();
 
     double elapsed_ms = std::chrono::duration<double, std::milli>(t1 - t0).count();
+    
 
     std::cout << "iterations: " << kIterations << "\n";
     std::cout << "elapsed:    " << elapsed_ms << " ms\n";
