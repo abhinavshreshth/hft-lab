@@ -15,20 +15,39 @@ during all runs (AMD Ryzen 9 7900X, 24 logical CPUs, 1 NUMA node).
 
 ## 3. What I tested
 
-The spec's four experiments map onto **two runtime configurations** of one
-worker function, because Experiment 2 is instrumentation shared by both and
-Experiment 4 is an analysis, not a program:
+One executable per experiment, mirroring the four experiments in the spec.
+Each file is a self-contained lab-notebook entry, meant to be read on its own
+and **diffed against the previous one** to see exactly what that step added:
 
 ```
-Project 01
-├── Experiment 1: Unpinned Worker      -> ./01_cpu_pinned_worker unpinned
-│   └── no affinity; establish baseline
-├── Experiment 2: Detect Current CPU   -> instrumentation inside worker()
-│   └── initial CPU, CPUs observed, migration count (used by both modes)
-├── Experiment 3: Pin Worker           -> ./01_cpu_pinned_worker pinned [cpu]
-│   └── select CPU, apply affinity, verify the worker stays there
-└── Experiment 4: Compare              -> ./01_cpu_pinned_worker compare
-    └── both back to back; analysis in sections 7-8 below
+01_cpu_pinned_worker/src/
+├── exp1_unpinned.cpp     Experiment 1 (docx §6)  — run worker, no affinity, baseline timing
+├── exp2_detect_cpu.cpp   Experiment 2 (docx §9)  — + sched_getcpu, CPUs observed, migrations
+├── exp3_pinned.cpp       Experiment 3 (docx §11) — + cpu_set_t affinity, verify it stays put
+└── exp4_compare.cpp      Experiment 4 (docx §13) — both conditions back to back
+```
+
+```bash
+cmake --build build
+./build/01_cpu_pinned_worker/01_exp1_unpinned
+./build/01_cpu_pinned_worker/01_exp2_detect_cpu
+./build/01_cpu_pinned_worker/01_exp3_pinned 4
+./build/01_cpu_pinned_worker/01_exp4_compare 4
+```
+
+`diff src/exp2_detect_cpu.cpp src/exp3_pinned.cpp` is the clearest statement of
+what pinning actually is: a `cpu_set_t`, two macros, and one call.
+
+The workload loop is duplicated across the four files on purpose. These are
+frozen artifacts that will never need to change together, and factoring them
+into a shared header would hide the very progression the files exist to show.
+
+Reproducing the measurements (`benchmark/run.sh <binary> <reps> <label> [args]`):
+
+```bash
+benchmark/run.sh 01_exp2_detect_cpu 5  unpinned
+benchmark/run.sh 01_exp3_pinned     5  pinned 4
+benchmark/run.sh 01_exp2_detect_cpu 20 unpinned_migration_hunt
 ```
 
 The workload is identical in every mode: 2,000,000,000 iterations of a
@@ -39,15 +58,14 @@ accumulator value (proving the loop actually executed).
 
 ## 4. Baseline configuration
 
-`./01_cpu_pinned_worker unpinned` — `worker(std::nullopt)`, no call to
-`pthread_setaffinity_np`. The thread starts wherever the scheduler places it
-and may migrate freely among all 24 CPUs.
+`01_exp2_detect_cpu` — no call to `pthread_setaffinity_np`. The thread starts
+wherever the scheduler places it and may migrate freely among all 24 CPUs.
 
 ## 5. Modified configuration
 
-`./01_cpu_pinned_worker pinned 4` — `worker(4)`: before the loop, the thread
-calls `pthread_setaffinity_np` with a `cpu_set_t` containing only CPU 4,
-restricting the scheduler to that one CPU.
+`01_exp3_pinned 4` — before the loop, the thread calls
+`pthread_setaffinity_np` with a `cpu_set_t` containing only CPU 4, restricting
+the scheduler to that one CPU.
 
 Hypothesis (written *before* measuring): pinning will make CPU placement
 constant (always CPU 4, 0 migrations) but will **not** measurably change
@@ -66,9 +84,9 @@ condition. CPU checked every 1,000,000 iterations via `sched_getcpu()`.
 
 | Metric | Unpinned | Pinned (CPU 4) |
 |---|---|---|
-| CPUs observed (5 runs) | 4, 8, 15, 16, 17 (5 distinct placements) | 4 (always) |
+| CPUs observed (5 runs) | 2, 4, 10, 11 (4 distinct placements) | 4 (always) |
 | Total migrations (5 runs) | 0 | 0 |
-| Elapsed time — min / mean / max (ms) | 757.57 / 763.88 / 766.89 | 764.10 / 765.26 / 767.27 |
+| Elapsed time — min / mean / max (ms) | 762.18 / 764.38 / 768.33 | 763.54 / 764.99 / 766.85 |
 
 Raw output: `results/2026-09-09_unpinned.txt`, `results/2026-09-09_pinned.txt`
 
@@ -77,16 +95,29 @@ was run specifically to test whether the counter fires at all:
 
 | Migration hunt (20 unpinned runs) | Result |
 |---|---|
-| Runs with >=1 migration | 1 of 20 |
-| The migration observed | CPU 22 -> 23 |
-| Distinct starting CPUs | 4, 7, 9, 10, 11, 14, 15, 16, 19, 22 |
+| Runs with >=1 migration | 4 of 20 |
+| Migrations observed | 6→7, 6→7, 23→22, 1→0 |
+| **Of those, within one physical core** | **4 of 4** |
+| Distinct starting CPUs | 0, 1, 2, 4, 6, 17, 18, 19, 20, 21, 23 |
 
 Raw output: `results/2026-09-09_unpinned_migration_hunt.txt`
 
-CPU 22 and CPU 23 are SMT siblings of the same physical core (core 11,
-`thread_siblings_list = 22-23`), so even that one migration was a move between
-hyperthreads of the *same* core — sharing L1 and L2 — not a move to a
-different physical core.
+### Instrumentation cost (observer effect)
+
+Experiment 1 has no CPU check in its loop; Experiments 2-4 do. Same workload,
+very different runtime:
+
+| Loop body | Elapsed | Cost |
+|---|---|---|
+| `sink += i` only (exp1) | 381 ms | baseline |
+| `+ if (i % 1048576 == 0)` — 2^20, compiles to a single `AND` | 569 ms | +188 ms (branch + check) |
+| `+ if (i % 1000000 == 0)` — what exp2-4 actually run | 760 ms | +191 ms more (costly modulo) |
+
+Measuring *where* the thread runs **doubled how long it takes**.
+
+Every migration observed was between **SMT siblings of the same physical
+core**, checked against `/sys/devices/system/cpu/cpuN/topology/thread_siblings_list`
+(pairs 6-7, 22-23, 0-1). Not one migration crossed to a different physical core.
 
 ## 8. Why the results happened
 
@@ -94,24 +125,42 @@ different physical core.
 restricts the scheduler's choice set to a single CPU — there is nowhere else
 for the thread to run, so every run starts and stays on CPU 4.
 
-**Migration was rare — 0 of 5 in the headline runs, 1 of 20 in the dedicated
+**Migration was rare — 0 of 5 in the headline runs, 4 of 20 in the dedicated
 hunt — even unpinned**, because the machine has 24
 logical CPUs and was otherwise idle. The Linux scheduler avoids migrating a
 running thread unless there's a load-balancing reason to — moving it costs
 cache locality (the thread's working set is warm in the old CPU's L1/L2) for
 no benefit when free CPUs are already plentiful. Migration would be expected
 to increase sharply under contention (many runnable threads competing for
-few CPUs) — not tested here. It is worth noting the single migration observed
-stayed within one physical core (SMT sibling 22 -> 23), which is the cheapest
-kind of move available: L1 and L2 are shared between siblings, so the thread's
-warm working set followed it. A migration to a different physical core would
-be the expensive case, and we did not observe one at all.
+few CPUs) — not tested here.
 
-**Elapsed time showed no real difference.** The two ranges (757.57–766.89 vs
-764.10–767.27) overlap, the means differ by ~1.4 ms out of ~765 ms (0.2%), and
+**Every migration stayed inside one physical core** (4 of 4). That is the
+cheapest move available: SMT siblings share L1 and L2, so the thread's warm
+working set followed it across. The costly case — migration to a different
+physical core, with cold L1/L2 — was never observed at all. So the migration
+penalty the spec warns about was never actually paid here, which is a further
+reason pinning showed no time benefit: there was no damage for it to prevent.
+
+**Instrumentation doubled the workload, and half of that was self-inflicted.**
+`sched_getcpu()` is not the cause — it runs 2,000 times out of 2,000,000,000.
+The cost is the `i % kCheckInterval` test itself, executed every single
+iteration. Worse, `1,000,000` is not a power of two, so `%` cannot become a
+bitmask: the compiler emits a multiply-high/shift/multiply/subtract sequence,
+which roughly doubles the added cost versus a power-of-two interval (569 ms vs
+760 ms measured). In a loop whose body was otherwise one add and one store,
+that dominates.
+
+This is the observer effect in miniature, and it is the reason Project 01's
+`exp1` timing is **not** comparable to `exp2`/`exp3`/`exp4` timings. It does
+**not** invalidate the pinned-vs-unpinned comparison, because exp2 (unpinned)
+and exp3 (pinned) carry byte-for-byte identical instrumentation — the overhead
+is present in both arms and cancels.
+
+**Elapsed time showed no real difference.** The two ranges (762.18–768.33 vs
+763.54–766.85) overlap, the means differ by ~0.6 ms out of ~765 ms (0.08%), and
 across sessions the sign of that difference keeps flipping — an earlier 3-run
 session had pinned ~1% *slower*, an intermediate capture had it marginally
-*faster*, this one has it ~0.2% slower. That reversal is itself the evidence:
+*faster*, this one has it 0.08% slower. That reversal is itself the evidence:
 the effect size is smaller than the run-to-run noise, so per
 `docs/MEASUREMENT.md`'s honesty rule, the correct conclusion is **no
 measurable latency difference**, not a direction. This is consistent with the
@@ -136,6 +185,14 @@ make single-threaded arithmetic faster on an uncontended machine.
   if the loop body has no real, unpredictable-to-the-compiler work; a
   `volatile` accumulator (or an explicit "don't optimize this" escape) is
   needed to guarantee the measured time reflects real work.
+- Measuring something can change it. Adding a CPU check every 1,000,000
+  iterations doubled the runtime of the loop being measured. A comparison
+  survives this only if both arms carry identical instrumentation — which is
+  why exp2 vs exp3 is still valid while exp1 vs exp2 is not.
+- Integer `%` by a non-power-of-two constant is not cheap. Choosing 1,048,576
+  (2^20) instead of 1,000,000 would recover ~25% of this loop's runtime for
+  free, because the compiler can then use a single bitwise `AND`. Round
+  numbers in decimal are not round numbers to a CPU.
 - Pinning *can* actively hurt performance, even though it didn't here: if the
   chosen CPU is a bad pick (e.g. its SMT sibling is running something else
   busy — CPU 4's sibling is CPU 5 on this machine, both on physical core 2 —
@@ -148,6 +205,11 @@ make single-threaded arithmetic faster on an uncontended machine.
 
 ## 10. Limitations
 
+- The check interval (1,000,000) was chosen for readability, not speed, and
+  costs ~25% of the loop's runtime versus a power-of-two interval. The code
+  still ships that way so the captured results stay reproducible; switching to
+  a countdown counter (`if (--next_check == 0)`) would remove the modulo
+  entirely and is the obvious fix if these numbers are ever re-based.
 - Single machine, single session, only 5 repetitions per condition — not
   enough to statistically bound a small effect, only enough to see that any
   effect is smaller than run-to-run noise.

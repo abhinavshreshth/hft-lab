@@ -1,49 +1,55 @@
-# Command: ./build/01_cpu_pinned_worker/01_cpu_pinned_worker pinned   (repeated 5x)
-# Machine: wsl2 (docs/ENVIRONMENT.md) — Ryzen 9 7900X, 24 logical CPUs, otherwise idle
-# Build: Release (-O2 -g), g++ 15.2.0, C++20
+# Command: build/01_cpu_pinned_worker/01_exp3_pinned 4   (repeated 5x)
+# Date:    2026-09-09T04:27:08+00:00
+# Machine: Linux 6.18.33.2-microsoft-standard-WSL2 — 24 logical CPUs (see docs/ENVIRONMENT.md)
+# Build:   Release (-O2 -g), g++ (Ubuntu 15.2.0-16ubuntu1) 15.2.0
 
 --- repetition 1 ---
-=== pinned to CPU 4 ===
+=== Experiment 3: pinned to CPU 4 ===
+requested:  CPU 4
 start CPU:  4
 final CPU:  4
 migrations: 0
 iterations: 2000000000
-elapsed:    767.269 ms
+elapsed:    764.3 ms
 sink:       1999999999000000000
 
 --- repetition 2 ---
-=== pinned to CPU 4 ===
+=== Experiment 3: pinned to CPU 4 ===
+requested:  CPU 4
 start CPU:  4
 final CPU:  4
 migrations: 0
 iterations: 2000000000
-elapsed:    764.347 ms
+elapsed:    766.848 ms
 sink:       1999999999000000000
 
 --- repetition 3 ---
-=== pinned to CPU 4 ===
+=== Experiment 3: pinned to CPU 4 ===
+requested:  CPU 4
 start CPU:  4
 final CPU:  4
 migrations: 0
 iterations: 2000000000
-elapsed:    764.977 ms
+elapsed:    764.822 ms
 sink:       1999999999000000000
 
 --- repetition 4 ---
-=== pinned to CPU 4 ===
+=== Experiment 3: pinned to CPU 4 ===
+requested:  CPU 4
 start CPU:  4
 final CPU:  4
 migrations: 0
 iterations: 2000000000
-elapsed:    764.102 ms
+elapsed:    765.458 ms
 sink:       1999999999000000000
 
 --- repetition 5 ---
-=== pinned to CPU 4 ===
+=== Experiment 3: pinned to CPU 4 ===
+requested:  CPU 4
 start CPU:  4
 final CPU:  4
 migrations: 0
 iterations: 2000000000
-elapsed:    765.605 ms
+elapsed:    763.539 ms
 sink:       1999999999000000000
 

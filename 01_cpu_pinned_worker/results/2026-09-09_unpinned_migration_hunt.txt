@@ -1,184 +1,185 @@
-# Command: ./build/01_cpu_pinned_worker/01_cpu_pinned_worker unpinned   (repeated 20x)
-# Purpose: does the migration counter ever fire? 5 reps was too few to see one.
-# Machine: wsl2 (docs/ENVIRONMENT.md) — Ryzen 9 7900X, 24 logical CPUs, otherwise idle
+# Command: build/01_cpu_pinned_worker/01_exp2_detect_cpu    (repeated 20x)
+# Date:    2026-09-09T04:27:12+00:00
+# Machine: Linux 6.18.33.2-microsoft-standard-WSL2 — 24 logical CPUs (see docs/ENVIRONMENT.md)
+# Build:   Release (-O2 -g), g++ (Ubuntu 15.2.0-16ubuntu1) 15.2.0
 
 --- repetition 1 ---
-=== unpinned (baseline) ===
+=== Experiment 2: detect current CPU (still unpinned) ===
+start CPU:  18
+final CPU:  18
+migrations: 0
+iterations: 2000000000
+elapsed:    764.719 ms
+sink:       1999999999000000000
+
+--- repetition 2 ---
+=== Experiment 2: detect current CPU (still unpinned) ===
 start CPU:  4
 final CPU:  4
 migrations: 0
 iterations: 2000000000
-elapsed:    761.436 ms
-sink:       1999999999000000000
-
---- repetition 2 ---
-=== unpinned (baseline) ===
-start CPU:  11
-final CPU:  11
-migrations: 0
-iterations: 2000000000
-elapsed:    760.688 ms
+elapsed:    766.886 ms
 sink:       1999999999000000000
 
 --- repetition 3 ---
-=== unpinned (baseline) ===
-start CPU:  19
-final CPU:  19
-migrations: 0
+=== Experiment 2: detect current CPU (still unpinned) ===
+start CPU:  6
+final CPU:  7
+migrations: 1
 iterations: 2000000000
-elapsed:    767.019 ms
+elapsed:    767.395 ms
 sink:       1999999999000000000
 
 --- repetition 4 ---
-=== unpinned (baseline) ===
-start CPU:  19
-final CPU:  19
+=== Experiment 2: detect current CPU (still unpinned) ===
+start CPU:  17
+final CPU:  17
 migrations: 0
 iterations: 2000000000
-elapsed:    765.143 ms
+elapsed:    763.925 ms
 sink:       1999999999000000000
 
 --- repetition 5 ---
-=== unpinned (baseline) ===
-start CPU:  11
-final CPU:  11
+=== Experiment 2: detect current CPU (still unpinned) ===
+start CPU:  0
+final CPU:  0
 migrations: 0
 iterations: 2000000000
-elapsed:    765.837 ms
+elapsed:    765.042 ms
 sink:       1999999999000000000
 
 --- repetition 6 ---
-=== unpinned (baseline) ===
-start CPU:  14
-final CPU:  14
+=== Experiment 2: detect current CPU (still unpinned) ===
+start CPU:  23
+final CPU:  23
 migrations: 0
 iterations: 2000000000
-elapsed:    763.526 ms
+elapsed:    767.342 ms
 sink:       1999999999000000000
 
 --- repetition 7 ---
-=== unpinned (baseline) ===
-start CPU:  9
-final CPU:  9
+=== Experiment 2: detect current CPU (still unpinned) ===
+start CPU:  2
+final CPU:  2
 migrations: 0
 iterations: 2000000000
-elapsed:    764.378 ms
+elapsed:    766.884 ms
 sink:       1999999999000000000
 
 --- repetition 8 ---
-=== unpinned (baseline) ===
-start CPU:  15
-final CPU:  15
+=== Experiment 2: detect current CPU (still unpinned) ===
+start CPU:  6
+final CPU:  6
 migrations: 0
 iterations: 2000000000
-elapsed:    764.28 ms
+elapsed:    762.383 ms
 sink:       1999999999000000000
 
 --- repetition 9 ---
-=== unpinned (baseline) ===
-start CPU:  22
-final CPU:  23
-migrations: 1
+=== Experiment 2: detect current CPU (still unpinned) ===
+start CPU:  21
+final CPU:  21
+migrations: 0
 iterations: 2000000000
-elapsed:    764.34 ms
+elapsed:    765.259 ms
 sink:       1999999999000000000
 
 --- repetition 10 ---
-=== unpinned (baseline) ===
-start CPU:  10
-final CPU:  10
-migrations: 0
+=== Experiment 2: detect current CPU (still unpinned) ===
+start CPU:  6
+final CPU:  7
+migrations: 1
 iterations: 2000000000
-elapsed:    773.134 ms
+elapsed:    762.795 ms
 sink:       1999999999000000000
 
 --- repetition 11 ---
-=== unpinned (baseline) ===
-start CPU:  10
-final CPU:  10
+=== Experiment 2: detect current CPU (still unpinned) ===
+start CPU:  23
+final CPU:  23
 migrations: 0
 iterations: 2000000000
-elapsed:    763.346 ms
+elapsed:    767.992 ms
 sink:       1999999999000000000
 
 --- repetition 12 ---
-=== unpinned (baseline) ===
-start CPU:  16
-final CPU:  16
-migrations: 0
+=== Experiment 2: detect current CPU (still unpinned) ===
+start CPU:  23
+final CPU:  22
+migrations: 1
 iterations: 2000000000
-elapsed:    764.246 ms
+elapsed:    763.359 ms
 sink:       1999999999000000000
 
 --- repetition 13 ---
-=== unpinned (baseline) ===
-start CPU:  22
-final CPU:  22
+=== Experiment 2: detect current CPU (still unpinned) ===
+start CPU:  1
+final CPU:  1
 migrations: 0
 iterations: 2000000000
-elapsed:    766.628 ms
+elapsed:    764.759 ms
 sink:       1999999999000000000
 
 --- repetition 14 ---
-=== unpinned (baseline) ===
-start CPU:  14
-final CPU:  14
-migrations: 0
-iterations: 2000000000
-elapsed:    762.302 ms
-sink:       1999999999000000000
-
---- repetition 15 ---
-=== unpinned (baseline) ===
-start CPU:  14
-final CPU:  14
-migrations: 0
-iterations: 2000000000
-elapsed:    765.496 ms
-sink:       1999999999000000000
-
---- repetition 16 ---
-=== unpinned (baseline) ===
-start CPU:  10
-final CPU:  10
-migrations: 0
-iterations: 2000000000
-elapsed:    761.169 ms
-sink:       1999999999000000000
-
---- repetition 17 ---
-=== unpinned (baseline) ===
-start CPU:  16
-final CPU:  16
-migrations: 0
-iterations: 2000000000
-elapsed:    762.591 ms
-sink:       1999999999000000000
-
---- repetition 18 ---
-=== unpinned (baseline) ===
-start CPU:  7
-final CPU:  7
-migrations: 0
-iterations: 2000000000
-elapsed:    763.326 ms
-sink:       1999999999000000000
-
---- repetition 19 ---
-=== unpinned (baseline) ===
-start CPU:  14
-final CPU:  14
-migrations: 0
-iterations: 2000000000
-elapsed:    763.405 ms
-sink:       1999999999000000000
-
---- repetition 20 ---
-=== unpinned (baseline) ===
+=== Experiment 2: detect current CPU (still unpinned) ===
 start CPU:  19
 final CPU:  19
 migrations: 0
 iterations: 2000000000
-elapsed:    761.296 ms
+elapsed:    763.325 ms
+sink:       1999999999000000000
+
+--- repetition 15 ---
+=== Experiment 2: detect current CPU (still unpinned) ===
+start CPU:  2
+final CPU:  2
+migrations: 0
+iterations: 2000000000
+elapsed:    762.968 ms
+sink:       1999999999000000000
+
+--- repetition 16 ---
+=== Experiment 2: detect current CPU (still unpinned) ===
+start CPU:  1
+final CPU:  0
+migrations: 1
+iterations: 2000000000
+elapsed:    764.142 ms
+sink:       1999999999000000000
+
+--- repetition 17 ---
+=== Experiment 2: detect current CPU (still unpinned) ===
+start CPU:  18
+final CPU:  18
+migrations: 0
+iterations: 2000000000
+elapsed:    767.287 ms
+sink:       1999999999000000000
+
+--- repetition 18 ---
+=== Experiment 2: detect current CPU (still unpinned) ===
+start CPU:  0
+final CPU:  0
+migrations: 0
+iterations: 2000000000
+elapsed:    762.775 ms
+sink:       1999999999000000000
+
+--- repetition 19 ---
+=== Experiment 2: detect current CPU (still unpinned) ===
+start CPU:  20
+final CPU:  20
+migrations: 0
+iterations: 2000000000
+elapsed:    764.936 ms
+sink:       1999999999000000000
+
+--- repetition 20 ---
+=== Experiment 2: detect current CPU (still unpinned) ===
+start CPU:  2
+final CPU:  2
+migrations: 0
+iterations: 2000000000
+elapsed:    764.32 ms
 sink:       1999999999000000000
 
