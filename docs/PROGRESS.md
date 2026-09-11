@@ -1,6 +1,6 @@
 # Progress
 
-**2 / 72 complete.**
+**3 / 72 complete.**
 
 Status: `·` not started · `▶` in progress · `✅` done (README complete + results committed)
 
@@ -8,13 +8,13 @@ A project is ticked only when its README's 11 sections are filled and `results/`
 contains real output. See `docs/CONVENTIONS.md` §9.
 
 
-## 🟢 Stage 1 — C++ + CPU  —  2/10
+## 🟢 Stage 1 — C++ + CPU  —  3/10
 
 | | # | Project | Directory | Result headline |
 |---|---|---|---|---|
 | ✅ | 01 | CPU-Pinned Worker | `01_cpu_pinned_worker` | Pinning fixes placement (0 vs 1 migration, always CPU 4) but shows no measurable latency change on an idle 24-core machine |
 | ✅ | 02 | Latency Timer | `02_latency_timer` | Measured `steady_clock` resolution at 10 ns; on the same 20,000-push_back run, a naive mean (~8 ns) completely hid 16 vector reallocations that pushed `max` to 47–94 µs — only the tail percentiles revealed it |
-| · | 03 | CPU Migration Detector | `03_cpu_migration` | |
+| ✅ | 03 | CPU Migration Detector | `03_cpu_migration` | Built an automatic SMT-sibling classifier (`core_id`) and a same-run coarse-vs-fine poll comparison; fine polling never caught a migration coarse polling missed (30/30 reps matched exactly) — idle-machine migrations are durable moves, not transient blips — and 13/14 observed migrations were same-core, but one genuine cross-core migration refines Project 01's "always SMT-local" claim |
 | · | 04 | Cache Latency Lab | `04_cache_latency` | |
 | · | 05 | False Sharing Demo | `05_false_sharing` | |
 | · | 06 | Atomic Counter Benchmark | `06_atomic_counter` | |
@@ -131,3 +131,4 @@ contains real output. See `docs/CONVENTIONS.md` §9.
 | 2026-09-07 | — | Repository architecture created; no project started. |
 | 2026-09-08 | 01 | CPU-Pinned Worker complete: unpinned vs. pinned (CPU 4), 5 reps each. Pinning made placement deterministic (0 vs 1 migration) but no measurable latency change on an idle 24-core Ryzen 9 7900X. |
 | 2026-09-09 | 02 | Latency Timer complete: measured `steady_clock` resolution (10 ns) and built a nearest-rank percentile calculator. On identical 20,000-push_back runs, a naive aggregate mean (~8 ns) could not see 16 real vector reallocations that drove `max` to 47–94 µs; even `p99.9` only partially captured it (arithmetic reason documented in README §8), demonstrating why distributions, not averages, are the standard from here on. |
+| 2026-09-11 | 03 | CPU Migration Detector complete: built a `core_id`-based SMT-sibling classifier and compared coarse (×1e6) vs fine (×1e3) `sched_getcpu()` polling both across separate runs and, decisively, within the same run (30 reps). The fine tracker never caught a migration the coarse tracker missed — migrations on this idle machine are durable, not transient — refuting the pre-stated hypothesis, an honest negative result. 13/14 observed migrations across 70 total runs were same-core, but one genuine cross-core migration refines Project 01's small-sample "always SMT-local" finding. |

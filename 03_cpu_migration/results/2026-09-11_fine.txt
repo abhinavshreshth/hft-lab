@@ -1,0 +1,225 @@
+# Command: build/03_cpu_migration/03_exp3_fine_detector    (repeated 20x)
+# Date:    2026-09-11T22:11:44+00:00
+# Machine: Linux 6.18.33.2-microsoft-standard-WSL2 — 24 logical CPUs (see docs/ENVIRONMENT.md)
+# Build:   Release (-O2 -g), g++ (Ubuntu 15.2.0-16ubuntu1) 15.2.0
+
+--- repetition 1 ---
+=== Experiment 3: fine-interval detector (modified) ===
+check interval:     every 1000 iterations
+start CPU:          23
+final CPU:          23
+migrations total:   0
+  same-core (SMT):  0
+  cross-core:       0
+iterations:         2000000000
+elapsed:            781.083 ms
+
+--- repetition 2 ---
+=== Experiment 3: fine-interval detector (modified) ===
+check interval:     every 1000 iterations
+start CPU:          18
+final CPU:          19
+migrations total:   1
+  same-core (SMT):  1
+  cross-core:       0
+iterations:         2000000000
+elapsed:            780.884 ms
+
+--- repetition 3 ---
+=== Experiment 3: fine-interval detector (modified) ===
+check interval:     every 1000 iterations
+start CPU:          11
+final CPU:          11
+migrations total:   0
+  same-core (SMT):  0
+  cross-core:       0
+iterations:         2000000000
+elapsed:            781.836 ms
+
+--- repetition 4 ---
+=== Experiment 3: fine-interval detector (modified) ===
+check interval:     every 1000 iterations
+start CPU:          12
+final CPU:          12
+migrations total:   0
+  same-core (SMT):  0
+  cross-core:       0
+iterations:         2000000000
+elapsed:            786.497 ms
+
+--- repetition 5 ---
+=== Experiment 3: fine-interval detector (modified) ===
+check interval:     every 1000 iterations
+start CPU:          20
+final CPU:          20
+migrations total:   0
+  same-core (SMT):  0
+  cross-core:       0
+iterations:         2000000000
+elapsed:            782.197 ms
+
+--- repetition 6 ---
+=== Experiment 3: fine-interval detector (modified) ===
+check interval:     every 1000 iterations
+start CPU:          16
+final CPU:          16
+migrations total:   0
+  same-core (SMT):  0
+  cross-core:       0
+iterations:         2000000000
+elapsed:            778.095 ms
+
+--- repetition 7 ---
+=== Experiment 3: fine-interval detector (modified) ===
+check interval:     every 1000 iterations
+start CPU:          23
+final CPU:          23
+migrations total:   0
+  same-core (SMT):  0
+  cross-core:       0
+iterations:         2000000000
+elapsed:            782.241 ms
+
+--- repetition 8 ---
+=== Experiment 3: fine-interval detector (modified) ===
+check interval:     every 1000 iterations
+start CPU:          17
+final CPU:          17
+migrations total:   0
+  same-core (SMT):  0
+  cross-core:       0
+iterations:         2000000000
+elapsed:            779.336 ms
+
+--- repetition 9 ---
+=== Experiment 3: fine-interval detector (modified) ===
+check interval:     every 1000 iterations
+start CPU:          4
+final CPU:          4
+migrations total:   0
+  same-core (SMT):  0
+  cross-core:       0
+iterations:         2000000000
+elapsed:            778.765 ms
+
+--- repetition 10 ---
+=== Experiment 3: fine-interval detector (modified) ===
+check interval:     every 1000 iterations
+start CPU:          10
+final CPU:          10
+migrations total:   0
+  same-core (SMT):  0
+  cross-core:       0
+iterations:         2000000000
+elapsed:            778.688 ms
+
+--- repetition 11 ---
+=== Experiment 3: fine-interval detector (modified) ===
+check interval:     every 1000 iterations
+start CPU:          19
+final CPU:          19
+migrations total:   0
+  same-core (SMT):  0
+  cross-core:       0
+iterations:         2000000000
+elapsed:            787.362 ms
+
+--- repetition 12 ---
+=== Experiment 3: fine-interval detector (modified) ===
+check interval:     every 1000 iterations
+start CPU:          13
+final CPU:          13
+migrations total:   0
+  same-core (SMT):  0
+  cross-core:       0
+iterations:         2000000000
+elapsed:            779.616 ms
+
+--- repetition 13 ---
+=== Experiment 3: fine-interval detector (modified) ===
+check interval:     every 1000 iterations
+start CPU:          18
+final CPU:          18
+migrations total:   0
+  same-core (SMT):  0
+  cross-core:       0
+iterations:         2000000000
+elapsed:            778.383 ms
+
+--- repetition 14 ---
+=== Experiment 3: fine-interval detector (modified) ===
+check interval:     every 1000 iterations
+start CPU:          12
+final CPU:          12
+migrations total:   0
+  same-core (SMT):  0
+  cross-core:       0
+iterations:         2000000000
+elapsed:            779.862 ms
+
+--- repetition 15 ---
+=== Experiment 3: fine-interval detector (modified) ===
+check interval:     every 1000 iterations
+start CPU:          16
+final CPU:          16
+migrations total:   0
+  same-core (SMT):  0
+  cross-core:       0
+iterations:         2000000000
+elapsed:            784.243 ms
+
+--- repetition 16 ---
+=== Experiment 3: fine-interval detector (modified) ===
+check interval:     every 1000 iterations
+start CPU:          11
+final CPU:          11
+migrations total:   0
+  same-core (SMT):  0
+  cross-core:       0
+iterations:         2000000000
+elapsed:            777.679 ms
+
+--- repetition 17 ---
+=== Experiment 3: fine-interval detector (modified) ===
+check interval:     every 1000 iterations
+start CPU:          16
+final CPU:          16
+migrations total:   0
+  same-core (SMT):  0
+  cross-core:       0
+iterations:         2000000000
+elapsed:            780.316 ms
+
+--- repetition 18 ---
+=== Experiment 3: fine-interval detector (modified) ===
+check interval:     every 1000 iterations
+start CPU:          6
+final CPU:          6
+migrations total:   0
+  same-core (SMT):  0
+  cross-core:       0
+iterations:         2000000000
+elapsed:            781.506 ms
+
+--- repetition 19 ---
+=== Experiment 3: fine-interval detector (modified) ===
+check interval:     every 1000 iterations
+start CPU:          10
+final CPU:          10
+migrations total:   0
+  same-core (SMT):  0
+  cross-core:       0
+iterations:         2000000000
+elapsed:            778.493 ms
+
+--- repetition 20 ---
+=== Experiment 3: fine-interval detector (modified) ===
+check interval:     every 1000 iterations
+start CPU:          18
+final CPU:          18
+migrations total:   0
+  same-core (SMT):  0
+  cross-core:       0
+iterations:         2000000000
+elapsed:            780.217 ms
+

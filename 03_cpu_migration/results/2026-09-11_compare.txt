@@ -1,0 +1,245 @@
+# Command: build/03_cpu_migration/03_exp4_compare    (repeated 30x)
+# Date:    2026-09-11T22:12:03+00:00
+# Machine: Linux 6.18.33.2-microsoft-standard-WSL2 — 24 logical CPUs (see docs/ENVIRONMENT.md)
+# Build:   Release (-O2 -g), g++ (Ubuntu 15.2.0-16ubuntu1) 15.2.0
+
+--- repetition 1 ---
+=== Experiment 4: coarse vs fine, same run ===
+start CPU:                11
+coarse (every 1000000): 0 migrations  (same-core 0, cross-core 0)
+fine   (every 1000):     0 migrations  (same-core 0, cross-core 0)
+iterations:               2000000000
+elapsed:                  781.34 ms
+
+--- repetition 2 ---
+=== Experiment 4: coarse vs fine, same run ===
+start CPU:                1
+coarse (every 1000000): 0 migrations  (same-core 0, cross-core 0)
+fine   (every 1000):     0 migrations  (same-core 0, cross-core 0)
+iterations:               2000000000
+elapsed:                  783.904 ms
+
+--- repetition 3 ---
+=== Experiment 4: coarse vs fine, same run ===
+start CPU:                23
+coarse (every 1000000): 0 migrations  (same-core 0, cross-core 0)
+fine   (every 1000):     0 migrations  (same-core 0, cross-core 0)
+iterations:               2000000000
+elapsed:                  780.999 ms
+
+--- repetition 4 ---
+=== Experiment 4: coarse vs fine, same run ===
+start CPU:                23
+coarse (every 1000000): 1 migrations  (same-core 1, cross-core 0)
+fine   (every 1000):     1 migrations  (same-core 1, cross-core 0)
+iterations:               2000000000
+elapsed:                  785.125 ms
+
+--- repetition 5 ---
+=== Experiment 4: coarse vs fine, same run ===
+start CPU:                6
+coarse (every 1000000): 0 migrations  (same-core 0, cross-core 0)
+fine   (every 1000):     0 migrations  (same-core 0, cross-core 0)
+iterations:               2000000000
+elapsed:                  782.856 ms
+
+--- repetition 6 ---
+=== Experiment 4: coarse vs fine, same run ===
+start CPU:                6
+coarse (every 1000000): 0 migrations  (same-core 0, cross-core 0)
+fine   (every 1000):     0 migrations  (same-core 0, cross-core 0)
+iterations:               2000000000
+elapsed:                  783.109 ms
+
+--- repetition 7 ---
+=== Experiment 4: coarse vs fine, same run ===
+start CPU:                18
+coarse (every 1000000): 0 migrations  (same-core 0, cross-core 0)
+fine   (every 1000):     0 migrations  (same-core 0, cross-core 0)
+iterations:               2000000000
+elapsed:                  782.401 ms
+
+--- repetition 8 ---
+=== Experiment 4: coarse vs fine, same run ===
+start CPU:                22
+coarse (every 1000000): 0 migrations  (same-core 0, cross-core 0)
+fine   (every 1000):     0 migrations  (same-core 0, cross-core 0)
+iterations:               2000000000
+elapsed:                  781.564 ms
+
+--- repetition 9 ---
+=== Experiment 4: coarse vs fine, same run ===
+start CPU:                18
+coarse (every 1000000): 0 migrations  (same-core 0, cross-core 0)
+fine   (every 1000):     0 migrations  (same-core 0, cross-core 0)
+iterations:               2000000000
+elapsed:                  779.617 ms
+
+--- repetition 10 ---
+=== Experiment 4: coarse vs fine, same run ===
+start CPU:                2
+coarse (every 1000000): 0 migrations  (same-core 0, cross-core 0)
+fine   (every 1000):     0 migrations  (same-core 0, cross-core 0)
+iterations:               2000000000
+elapsed:                  781.945 ms
+
+--- repetition 11 ---
+=== Experiment 4: coarse vs fine, same run ===
+start CPU:                18
+coarse (every 1000000): 1 migrations  (same-core 1, cross-core 0)
+fine   (every 1000):     1 migrations  (same-core 1, cross-core 0)
+iterations:               2000000000
+elapsed:                  783.138 ms
+
+--- repetition 12 ---
+=== Experiment 4: coarse vs fine, same run ===
+start CPU:                23
+coarse (every 1000000): 0 migrations  (same-core 0, cross-core 0)
+fine   (every 1000):     0 migrations  (same-core 0, cross-core 0)
+iterations:               2000000000
+elapsed:                  780.585 ms
+
+--- repetition 13 ---
+=== Experiment 4: coarse vs fine, same run ===
+start CPU:                0
+coarse (every 1000000): 0 migrations  (same-core 0, cross-core 0)
+fine   (every 1000):     0 migrations  (same-core 0, cross-core 0)
+iterations:               2000000000
+elapsed:                  787.222 ms
+
+--- repetition 14 ---
+=== Experiment 4: coarse vs fine, same run ===
+start CPU:                4
+coarse (every 1000000): 0 migrations  (same-core 0, cross-core 0)
+fine   (every 1000):     0 migrations  (same-core 0, cross-core 0)
+iterations:               2000000000
+elapsed:                  780.15 ms
+
+--- repetition 15 ---
+=== Experiment 4: coarse vs fine, same run ===
+start CPU:                18
+coarse (every 1000000): 0 migrations  (same-core 0, cross-core 0)
+fine   (every 1000):     0 migrations  (same-core 0, cross-core 0)
+iterations:               2000000000
+elapsed:                  782.313 ms
+
+--- repetition 16 ---
+=== Experiment 4: coarse vs fine, same run ===
+start CPU:                23
+coarse (every 1000000): 0 migrations  (same-core 0, cross-core 0)
+fine   (every 1000):     0 migrations  (same-core 0, cross-core 0)
+iterations:               2000000000
+elapsed:                  780.602 ms
+
+--- repetition 17 ---
+=== Experiment 4: coarse vs fine, same run ===
+start CPU:                5
+coarse (every 1000000): 0 migrations  (same-core 0, cross-core 0)
+fine   (every 1000):     0 migrations  (same-core 0, cross-core 0)
+iterations:               2000000000
+elapsed:                  781.924 ms
+
+--- repetition 18 ---
+=== Experiment 4: coarse vs fine, same run ===
+start CPU:                5
+coarse (every 1000000): 2 migrations  (same-core 2, cross-core 0)
+fine   (every 1000):     2 migrations  (same-core 2, cross-core 0)
+iterations:               2000000000
+elapsed:                  780.812 ms
+
+--- repetition 19 ---
+=== Experiment 4: coarse vs fine, same run ===
+start CPU:                23
+coarse (every 1000000): 0 migrations  (same-core 0, cross-core 0)
+fine   (every 1000):     0 migrations  (same-core 0, cross-core 0)
+iterations:               2000000000
+elapsed:                  779.801 ms
+
+--- repetition 20 ---
+=== Experiment 4: coarse vs fine, same run ===
+start CPU:                18
+coarse (every 1000000): 0 migrations  (same-core 0, cross-core 0)
+fine   (every 1000):     0 migrations  (same-core 0, cross-core 0)
+iterations:               2000000000
+elapsed:                  784.038 ms
+
+--- repetition 21 ---
+=== Experiment 4: coarse vs fine, same run ===
+start CPU:                0
+coarse (every 1000000): 0 migrations  (same-core 0, cross-core 0)
+fine   (every 1000):     0 migrations  (same-core 0, cross-core 0)
+iterations:               2000000000
+elapsed:                  786.596 ms
+
+--- repetition 22 ---
+=== Experiment 4: coarse vs fine, same run ===
+start CPU:                23
+coarse (every 1000000): 0 migrations  (same-core 0, cross-core 0)
+fine   (every 1000):     0 migrations  (same-core 0, cross-core 0)
+iterations:               2000000000
+elapsed:                  780.032 ms
+
+--- repetition 23 ---
+=== Experiment 4: coarse vs fine, same run ===
+start CPU:                0
+coarse (every 1000000): 1 migrations  (same-core 1, cross-core 0)
+fine   (every 1000):     1 migrations  (same-core 1, cross-core 0)
+iterations:               2000000000
+elapsed:                  787.91 ms
+
+--- repetition 24 ---
+=== Experiment 4: coarse vs fine, same run ===
+start CPU:                6
+coarse (every 1000000): 1 migrations  (same-core 1, cross-core 0)
+fine   (every 1000):     1 migrations  (same-core 1, cross-core 0)
+iterations:               2000000000
+elapsed:                  785.922 ms
+
+--- repetition 25 ---
+=== Experiment 4: coarse vs fine, same run ===
+start CPU:                4
+coarse (every 1000000): 1 migrations  (same-core 1, cross-core 0)
+fine   (every 1000):     1 migrations  (same-core 1, cross-core 0)
+iterations:               2000000000
+elapsed:                  786.674 ms
+
+--- repetition 26 ---
+=== Experiment 4: coarse vs fine, same run ===
+start CPU:                5
+coarse (every 1000000): 1 migrations  (same-core 1, cross-core 0)
+fine   (every 1000):     1 migrations  (same-core 1, cross-core 0)
+iterations:               2000000000
+elapsed:                  780.604 ms
+
+--- repetition 27 ---
+=== Experiment 4: coarse vs fine, same run ===
+start CPU:                2
+coarse (every 1000000): 2 migrations  (same-core 2, cross-core 0)
+fine   (every 1000):     2 migrations  (same-core 2, cross-core 0)
+iterations:               2000000000
+elapsed:                  782.791 ms
+
+--- repetition 28 ---
+=== Experiment 4: coarse vs fine, same run ===
+start CPU:                22
+coarse (every 1000000): 1 migrations  (same-core 1, cross-core 0)
+fine   (every 1000):     1 migrations  (same-core 1, cross-core 0)
+iterations:               2000000000
+elapsed:                  781.045 ms
+
+--- repetition 29 ---
+=== Experiment 4: coarse vs fine, same run ===
+start CPU:                2
+coarse (every 1000000): 0 migrations  (same-core 0, cross-core 0)
+fine   (every 1000):     0 migrations  (same-core 0, cross-core 0)
+iterations:               2000000000
+elapsed:                  786.684 ms
+
+--- repetition 30 ---
+=== Experiment 4: coarse vs fine, same run ===
+start CPU:                12
+coarse (every 1000000): 0 migrations  (same-core 0, cross-core 0)
+fine   (every 1000):     0 migrations  (same-core 0, cross-core 0)
+iterations:               2000000000
+elapsed:                  781.052 ms
+

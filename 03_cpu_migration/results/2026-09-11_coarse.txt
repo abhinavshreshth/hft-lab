@@ -1,0 +1,225 @@
+# Command: build/03_cpu_migration/03_exp2_coarse_detector    (repeated 20x)
+# Date:    2026-09-11T22:11:28+00:00
+# Machine: Linux 6.18.33.2-microsoft-standard-WSL2 — 24 logical CPUs (see docs/ENVIRONMENT.md)
+# Build:   Release (-O2 -g), g++ (Ubuntu 15.2.0-16ubuntu1) 15.2.0
+
+--- repetition 1 ---
+=== Experiment 2: coarse-interval detector (baseline) ===
+check interval:     every 1000000 iterations
+start CPU:          7
+final CPU:          7
+migrations total:   0
+  same-core (SMT):  0
+  cross-core:       0
+iterations:         2000000000
+elapsed:            768.579 ms
+
+--- repetition 2 ---
+=== Experiment 2: coarse-interval detector (baseline) ===
+check interval:     every 1000000 iterations
+start CPU:          16
+final CPU:          16
+migrations total:   0
+  same-core (SMT):  0
+  cross-core:       0
+iterations:         2000000000
+elapsed:            767.43 ms
+
+--- repetition 3 ---
+=== Experiment 2: coarse-interval detector (baseline) ===
+check interval:     every 1000000 iterations
+start CPU:          0
+final CPU:          4
+migrations total:   1
+  same-core (SMT):  0
+  cross-core:       1
+iterations:         2000000000
+elapsed:            776.484 ms
+
+--- repetition 4 ---
+=== Experiment 2: coarse-interval detector (baseline) ===
+check interval:     every 1000000 iterations
+start CPU:          16
+final CPU:          16
+migrations total:   0
+  same-core (SMT):  0
+  cross-core:       0
+iterations:         2000000000
+elapsed:            768.237 ms
+
+--- repetition 5 ---
+=== Experiment 2: coarse-interval detector (baseline) ===
+check interval:     every 1000000 iterations
+start CPU:          8
+final CPU:          8
+migrations total:   0
+  same-core (SMT):  0
+  cross-core:       0
+iterations:         2000000000
+elapsed:            768.203 ms
+
+--- repetition 6 ---
+=== Experiment 2: coarse-interval detector (baseline) ===
+check interval:     every 1000000 iterations
+start CPU:          10
+final CPU:          10
+migrations total:   0
+  same-core (SMT):  0
+  cross-core:       0
+iterations:         2000000000
+elapsed:            769.131 ms
+
+--- repetition 7 ---
+=== Experiment 2: coarse-interval detector (baseline) ===
+check interval:     every 1000000 iterations
+start CPU:          17
+final CPU:          17
+migrations total:   0
+  same-core (SMT):  0
+  cross-core:       0
+iterations:         2000000000
+elapsed:            767.773 ms
+
+--- repetition 8 ---
+=== Experiment 2: coarse-interval detector (baseline) ===
+check interval:     every 1000000 iterations
+start CPU:          8
+final CPU:          8
+migrations total:   0
+  same-core (SMT):  0
+  cross-core:       0
+iterations:         2000000000
+elapsed:            776.161 ms
+
+--- repetition 9 ---
+=== Experiment 2: coarse-interval detector (baseline) ===
+check interval:     every 1000000 iterations
+start CPU:          16
+final CPU:          16
+migrations total:   0
+  same-core (SMT):  0
+  cross-core:       0
+iterations:         2000000000
+elapsed:            772.657 ms
+
+--- repetition 10 ---
+=== Experiment 2: coarse-interval detector (baseline) ===
+check interval:     every 1000000 iterations
+start CPU:          12
+final CPU:          12
+migrations total:   0
+  same-core (SMT):  0
+  cross-core:       0
+iterations:         2000000000
+elapsed:            770.058 ms
+
+--- repetition 11 ---
+=== Experiment 2: coarse-interval detector (baseline) ===
+check interval:     every 1000000 iterations
+start CPU:          14
+final CPU:          14
+migrations total:   0
+  same-core (SMT):  0
+  cross-core:       0
+iterations:         2000000000
+elapsed:            767.596 ms
+
+--- repetition 12 ---
+=== Experiment 2: coarse-interval detector (baseline) ===
+check interval:     every 1000000 iterations
+start CPU:          14
+final CPU:          14
+migrations total:   0
+  same-core (SMT):  0
+  cross-core:       0
+iterations:         2000000000
+elapsed:            770.739 ms
+
+--- repetition 13 ---
+=== Experiment 2: coarse-interval detector (baseline) ===
+check interval:     every 1000000 iterations
+start CPU:          13
+final CPU:          13
+migrations total:   0
+  same-core (SMT):  0
+  cross-core:       0
+iterations:         2000000000
+elapsed:            767.58 ms
+
+--- repetition 14 ---
+=== Experiment 2: coarse-interval detector (baseline) ===
+check interval:     every 1000000 iterations
+start CPU:          8
+final CPU:          8
+migrations total:   0
+  same-core (SMT):  0
+  cross-core:       0
+iterations:         2000000000
+elapsed:            768.967 ms
+
+--- repetition 15 ---
+=== Experiment 2: coarse-interval detector (baseline) ===
+check interval:     every 1000000 iterations
+start CPU:          16
+final CPU:          16
+migrations total:   0
+  same-core (SMT):  0
+  cross-core:       0
+iterations:         2000000000
+elapsed:            769.703 ms
+
+--- repetition 16 ---
+=== Experiment 2: coarse-interval detector (baseline) ===
+check interval:     every 1000000 iterations
+start CPU:          4
+final CPU:          5
+migrations total:   1
+  same-core (SMT):  1
+  cross-core:       0
+iterations:         2000000000
+elapsed:            768.821 ms
+
+--- repetition 17 ---
+=== Experiment 2: coarse-interval detector (baseline) ===
+check interval:     every 1000000 iterations
+start CPU:          12
+final CPU:          12
+migrations total:   0
+  same-core (SMT):  0
+  cross-core:       0
+iterations:         2000000000
+elapsed:            771.319 ms
+
+--- repetition 18 ---
+=== Experiment 2: coarse-interval detector (baseline) ===
+check interval:     every 1000000 iterations
+start CPU:          17
+final CPU:          17
+migrations total:   0
+  same-core (SMT):  0
+  cross-core:       0
+iterations:         2000000000
+elapsed:            768.167 ms
+
+--- repetition 19 ---
+=== Experiment 2: coarse-interval detector (baseline) ===
+check interval:     every 1000000 iterations
+start CPU:          23
+final CPU:          23
+migrations total:   0
+  same-core (SMT):  0
+  cross-core:       0
+iterations:         2000000000
+elapsed:            774.687 ms
+
+--- repetition 20 ---
+=== Experiment 2: coarse-interval detector (baseline) ===
+check interval:     every 1000000 iterations
+start CPU:          16
+final CPU:          16
+migrations total:   0
+  same-core (SMT):  0
+  cross-core:       0
+iterations:         2000000000
+elapsed:            767.972 ms
+

@@ -1,0 +1,23 @@
+# Command: build/03_cpu_migration/03_exp1_topology_map    (repeated 1x)
+# Date:    2026-09-11T22:11:28+00:00
+# Machine: Linux 6.18.33.2-microsoft-standard-WSL2 — 24 logical CPUs (see docs/ENVIRONMENT.md)
+# Build:   Release (-O2 -g), g++ (Ubuntu 15.2.0-16ubuntu1) 15.2.0
+
+--- repetition 1 ---
+=== Experiment 1: CPU topology map ===
+logical CPUs:  24
+physical cores: 12
+
+core 0: [0, 1]
+core 1: [2, 3]
+core 2: [4, 5]
+core 3: [6, 7]
+core 4: [8, 9]
+core 5: [10, 11]
+core 6: [12, 13]
+core 7: [14, 15]
+core 8: [16, 17]
+core 9: [18, 19]
+core 10: [20, 21]
+core 11: [22, 23]
+
