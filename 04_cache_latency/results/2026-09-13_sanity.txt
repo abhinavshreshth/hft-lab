@@ -1,0 +1,125 @@
+# Command: build/04_cache_latency/04_exp1_chain_sanity    (repeated 5x)
+# Date:    2026-09-13T11:11:45+00:00
+# Machine: Linux 6.18.33.2-microsoft-standard-WSL2 — 24 logical CPUs (see docs/ENVIRONMENT.md)
+# Build:   Release (-O2 -g), g++ (Ubuntu 15.2.0-16ubuntu1) 15.2.0
+
+--- repetition 1 ---
+=== Experiment 1: chain-construction sanity check ===
+
+-- single-cycle validation (build_random_chain) --
+           4 KiB  n=       64  single-cycle: yes
+          16 KiB  n=      256  single-cycle: yes
+          32 KiB  n=      512  single-cycle: yes
+          64 KiB  n=     1024  single-cycle: yes
+         256 KiB  n=     4096  single-cycle: yes
+        1024 KiB  n=    16384  single-cycle: yes
+        2048 KiB  n=    32768  single-cycle: yes
+        8192 KiB  n=   131072  single-cycle: yes
+       16384 KiB  n=   262144  single-cycle: yes
+       32768 KiB  n=   524288  single-cycle: yes
+       65536 KiB  n=  1048576  single-cycle: yes
+      131072 KiB  n=  2097152  single-cycle: yes
+PASS: every random chain is a single N-cycle
+
+-- order-independence at L1 residency --
+  size:                4 KiB (n=64)
+  sequential ns/access: 0.947064
+  random     ns/access: 0.922067
+  final indices consumed (prevents dead-code elimination): 0, 0
+
+--- repetition 2 ---
+=== Experiment 1: chain-construction sanity check ===
+
+-- single-cycle validation (build_random_chain) --
+           4 KiB  n=       64  single-cycle: yes
+          16 KiB  n=      256  single-cycle: yes
+          32 KiB  n=      512  single-cycle: yes
+          64 KiB  n=     1024  single-cycle: yes
+         256 KiB  n=     4096  single-cycle: yes
+        1024 KiB  n=    16384  single-cycle: yes
+        2048 KiB  n=    32768  single-cycle: yes
+        8192 KiB  n=   131072  single-cycle: yes
+       16384 KiB  n=   262144  single-cycle: yes
+       32768 KiB  n=   524288  single-cycle: yes
+       65536 KiB  n=  1048576  single-cycle: yes
+      131072 KiB  n=  2097152  single-cycle: yes
+PASS: every random chain is a single N-cycle
+
+-- order-independence at L1 residency --
+  size:                4 KiB (n=64)
+  sequential ns/access: 0.954291
+  random     ns/access: 0.923637
+  final indices consumed (prevents dead-code elimination): 0, 0
+
+--- repetition 3 ---
+=== Experiment 1: chain-construction sanity check ===
+
+-- single-cycle validation (build_random_chain) --
+           4 KiB  n=       64  single-cycle: yes
+          16 KiB  n=      256  single-cycle: yes
+          32 KiB  n=      512  single-cycle: yes
+          64 KiB  n=     1024  single-cycle: yes
+         256 KiB  n=     4096  single-cycle: yes
+        1024 KiB  n=    16384  single-cycle: yes
+        2048 KiB  n=    32768  single-cycle: yes
+        8192 KiB  n=   131072  single-cycle: yes
+       16384 KiB  n=   262144  single-cycle: yes
+       32768 KiB  n=   524288  single-cycle: yes
+       65536 KiB  n=  1048576  single-cycle: yes
+      131072 KiB  n=  2097152  single-cycle: yes
+PASS: every random chain is a single N-cycle
+
+-- order-independence at L1 residency --
+  size:                4 KiB (n=64)
+  sequential ns/access: 0.934651
+  random     ns/access: 0.920264
+  final indices consumed (prevents dead-code elimination): 0, 0
+
+--- repetition 4 ---
+=== Experiment 1: chain-construction sanity check ===
+
+-- single-cycle validation (build_random_chain) --
+           4 KiB  n=       64  single-cycle: yes
+          16 KiB  n=      256  single-cycle: yes
+          32 KiB  n=      512  single-cycle: yes
+          64 KiB  n=     1024  single-cycle: yes
+         256 KiB  n=     4096  single-cycle: yes
+        1024 KiB  n=    16384  single-cycle: yes
+        2048 KiB  n=    32768  single-cycle: yes
+        8192 KiB  n=   131072  single-cycle: yes
+       16384 KiB  n=   262144  single-cycle: yes
+       32768 KiB  n=   524288  single-cycle: yes
+       65536 KiB  n=  1048576  single-cycle: yes
+      131072 KiB  n=  2097152  single-cycle: yes
+PASS: every random chain is a single N-cycle
+
+-- order-independence at L1 residency --
+  size:                4 KiB (n=64)
+  sequential ns/access: 1.12838
+  random     ns/access: 0.965188
+  final indices consumed (prevents dead-code elimination): 0, 0
+
+--- repetition 5 ---
+=== Experiment 1: chain-construction sanity check ===
+
+-- single-cycle validation (build_random_chain) --
+           4 KiB  n=       64  single-cycle: yes
+          16 KiB  n=      256  single-cycle: yes
+          32 KiB  n=      512  single-cycle: yes
+          64 KiB  n=     1024  single-cycle: yes
+         256 KiB  n=     4096  single-cycle: yes
+        1024 KiB  n=    16384  single-cycle: yes
+        2048 KiB  n=    32768  single-cycle: yes
+        8192 KiB  n=   131072  single-cycle: yes
+       16384 KiB  n=   262144  single-cycle: yes
+       32768 KiB  n=   524288  single-cycle: yes
+       65536 KiB  n=  1048576  single-cycle: yes
+      131072 KiB  n=  2097152  single-cycle: yes
+PASS: every random chain is a single N-cycle
+
+-- order-independence at L1 residency --
+  size:                4 KiB (n=64)
+  sequential ns/access: 0.934811
+  random     ns/access: 0.918344
+  final indices consumed (prevents dead-code elimination): 0, 0
+

@@ -1,0 +1,90 @@
+# Command: build/04_cache_latency/04_exp2_sequential_sweep    (repeated 5x)
+# Date:    2026-09-13T11:11:48+00:00
+# Machine: Linux 6.18.33.2-microsoft-standard-WSL2 — 24 logical CPUs (see docs/ENVIRONMENT.md)
+# Build:   Release (-O2 -g), g++ (Ubuntu 15.2.0-16ubuntu1) 15.2.0
+
+--- repetition 1 ---
+=== Experiment 2: sequential sweep (baseline) ===
+
+      size      elements       ns/access       final
+       4 KiB            64           0.918           0
+      16 KiB           256           0.923         192
+      32 KiB           512           0.922         192
+      64 KiB          1024           1.011         704
+     256 KiB          4096           0.962        1728
+    1024 KiB         16384           1.026        1728
+    2048 KiB         32768           1.034       18112
+    8192 KiB        131072           0.983      116416
+   16384 KiB        262144           1.006      116416
+   32768 KiB        524288           1.290      378560
+   65536 KiB       1048576           1.322      902848
+  131072 KiB       2097152           1.223      902848
+
+--- repetition 2 ---
+=== Experiment 2: sequential sweep (baseline) ===
+
+      size      elements       ns/access       final
+       4 KiB            64           0.955           0
+      16 KiB           256           0.923         192
+      32 KiB           512           0.934         192
+      64 KiB          1024           1.035         704
+     256 KiB          4096           0.980        1728
+    1024 KiB         16384           1.035        1728
+    2048 KiB         32768           0.974       18112
+    8192 KiB        131072           0.983      116416
+   16384 KiB        262144           0.976      116416
+   32768 KiB        524288           1.239      378560
+   65536 KiB       1048576           1.190      902848
+  131072 KiB       2097152           1.142      902848
+
+--- repetition 3 ---
+=== Experiment 2: sequential sweep (baseline) ===
+
+      size      elements       ns/access       final
+       4 KiB            64           0.932           0
+      16 KiB           256           0.933         192
+      32 KiB           512           0.938         192
+      64 KiB          1024           1.025         704
+     256 KiB          4096           0.998        1728
+    1024 KiB         16384           1.031        1728
+    2048 KiB         32768           0.973       18112
+    8192 KiB        131072           0.980      116416
+   16384 KiB        262144           1.005      116416
+   32768 KiB        524288           1.345      378560
+   65536 KiB       1048576           1.219      902848
+  131072 KiB       2097152           1.221      902848
+
+--- repetition 4 ---
+=== Experiment 2: sequential sweep (baseline) ===
+
+      size      elements       ns/access       final
+       4 KiB            64           0.946           0
+      16 KiB           256           0.943         192
+      32 KiB           512           0.937         192
+      64 KiB          1024           1.037         704
+     256 KiB          4096           0.974        1728
+    1024 KiB         16384           1.052        1728
+    2048 KiB         32768           0.980       18112
+    8192 KiB        131072           0.982      116416
+   16384 KiB        262144           0.967      116416
+   32768 KiB        524288           1.272      378560
+   65536 KiB       1048576           1.135      902848
+  131072 KiB       2097152           1.222      902848
+
+--- repetition 5 ---
+=== Experiment 2: sequential sweep (baseline) ===
+
+      size      elements       ns/access       final
+       4 KiB            64           0.947           0
+      16 KiB           256           0.929         192
+      32 KiB           512           0.962         192
+      64 KiB          1024           1.030         704
+     256 KiB          4096           0.982        1728
+    1024 KiB         16384           0.995        1728
+    2048 KiB         32768           0.981       18112
+    8192 KiB        131072           0.991      116416
+   16384 KiB        262144           0.987      116416
+   32768 KiB        524288           1.283      378560
+   65536 KiB       1048576           1.327      902848
+  131072 KiB       2097152           1.323      902848
+
