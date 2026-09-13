@@ -33,17 +33,32 @@ Four executables, all built on one shared apparatus:
 `cache_lab.hpp` implements the standard pointer-chasing latency benchmark
 (the same technique behind tools like `lat_mem_rd`): allocate `N` 64-byte
 `Node`s (one per cache line, `alignas(64)` forces `sizeof(Node) == 64`), so
-a buffer of `N` nodes occupies exactly `N` cache lines. Each node's `next`
-field is set up one of two ways:
+a buffer of `N` nodes occupies exactly `N` cache lines. Chain construction
+and chain traversal are split into two classes, the same way Project 03's
+`CpuTopology` depends on an injected `CoreIdReader` rather than reading
+sysfs itself:
 
-- **Sequential**: `next[i] = (i + 1) % n` — cache lines are visited in
-  increasing address order.
-- **Random**: a single `N`-node cycle built with **Sattolo's algorithm**
-  (not Fisher-Yates — Fisher-Yates can produce several disjoint short
-  cycles, which would let the chase settle into a small, easily-cached loop
-  instead of touching all `N` cache lines). Sattolo guarantees exactly one
-  cycle covering every node, visited in an order a hardware prefetcher
-  cannot predict.
+- **`ChainBuilder`** — an abstract interface (`build(n)`, `pattern_name()`)
+  for laying out a chain's `next` fields. Two concrete builders implement
+  it: `SequentialChainBuilder` (`next[i] = (i + 1) % n` — cache lines
+  visited in increasing address order) and `RandomChainBuilder` (a single
+  `N`-node cycle built with **Sattolo's algorithm** — not Fisher-Yates,
+  which can produce several disjoint short cycles and let the chase settle
+  into a small, easily-cached loop instead of touching all `N` cache
+  lines; Sattolo guarantees one cycle covering every node, in an order a
+  hardware prefetcher cannot predict).
+- **`PointerChaser`** — the fixed apparatus that times a chase over
+  whichever chain it is handed. It depends only on the `ChainBuilder`
+  interface, never on a concrete pattern, so adding a third access pattern
+  later (Project 04's own "next experiment," Section 11) means writing one
+  new `ChainBuilder` subclass, not touching `PointerChaser` or either
+  existing experiment.
+
+Experiments 2 and 3 differ by exactly one line — which concrete
+`ChainBuilder` is constructed — because the sweep loop in each only calls
+the interface. Experiment 4 holds both builders behind `const ChainBuilder*`
+in an alternating-order array for the same reason: the loop that actually
+runs the chase never branches on which concrete pattern it is holding.
 
 The chase itself is `p = nodes[p].next` in a loop: each step's memory
 address depends on the *value* loaded by the previous step, so the CPU
@@ -115,7 +130,7 @@ cache residency if it fits a tier, otherwise just page-fault-in for sizes
 that don't). Iterations: 3,000,000 measured chase steps per size, fixed
 across all 12 sizes for comparability. Repetitions: 5 full sweeps per
 experiment. `04_exp1_chain_sanity` validates, for every size in the sweep,
-that `build_random_chain()` actually produces a single `N`-cycle (not
+that `RandomChainBuilder` actually produces a single `N`-cycle (not
 several shorter ones) before any of its latency numbers are trusted, and
 checks that sequential and random order cost about the same at the
 smallest (L1-resident) size — if they didn't, the harness itself, not the
@@ -127,7 +142,8 @@ enough to matter (Section 7); no repetitions were discarded.
 
 A correctness note on the benchmark itself: the first version of every
 sweep executable reported `0.000 ns/access` at every size, because
-`chase()`'s returned `final_index` was never consumed by the caller — with
+`PointerChaser::chase()`'s returned `final_index` was never consumed by the
+caller — with
 nothing observing the chase loop's only output, the compiler proved the
 entire warmup and measured loop dead and deleted it (`-O2`), leaving only
 two `steady_clock::now()` calls around empty code. Fixed by printing
@@ -261,7 +277,7 @@ a general measurement problem, as the cause.
   is shared across all 12 physical cores, so a busier machine would likely
   show the 16 MiB boundary effect (Section 8) more strongly, and possibly
   shift the effective L3 boundary lower than 32 MiB.
-- `build_random_chain()` uses one fixed seed (`kRandomSeed`) — these are
+- `RandomChainBuilder` was constructed with one fixed seed (`kRandomSeed`) in every experiment — these are
   numbers from one particular random permutation per size, not an average
   over many random layouts. A different permutation could land slightly
   differently relative to cache-set associativity conflicts, though the
