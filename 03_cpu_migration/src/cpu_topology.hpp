@@ -28,6 +28,10 @@ public:
 // Two logical CPUs with the same core_id are SMT siblings of the same
 // physical core; the kernel exposes this directly, so there is no need to
 // parse thread_siblings_list ranges by hand.
+
+//myNote: here read_core_id() function declation is important, 
+//it is a pure virtual function, which means that any class that inherits
+// from CoreIdReader must implement this function.
 class SysfsCoreIdReader : public CoreIdReader {
 public:
     int read_core_id(int logical_cpu) const override {

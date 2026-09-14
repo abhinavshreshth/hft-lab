@@ -66,12 +66,18 @@ Result run_worker(const hft::CpuTopology& topo) {
     return r;
 }
 
+// std::thread can't capture a return value directly, so the worker writes
+// its Result into an out-parameter instead of using a capturing lambda.
+void run_worker_thread(const hft::CpuTopology& topo, Result& out) {
+    out = run_worker(topo);
+}
+
 int main() {
     std::cout << "=== Experiment 2: coarse-interval detector (baseline) ===\n";
 
     hft::CpuTopology topo;
     Result r;
-    std::thread t([&] { r = run_worker(topo); });
+    std::thread t(run_worker_thread, std::cref(topo), std::ref(r));
     t.join();
 
     std::cout << "check interval:     every " << kCheckInterval << " iterations\n";
