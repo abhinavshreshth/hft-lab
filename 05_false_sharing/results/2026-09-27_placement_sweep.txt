@@ -1,0 +1,160 @@
+# Command: build/05_false_sharing/05_exp7_placement_sweep    (repeated 5x)
+# Date:    2026-09-27T17:54:55+00:00
+# Machine: Linux 6.18.33.2-microsoft-standard-WSL2 — 24 logical CPUs (see docs/ENVIRONMENT.md)
+# Build:   Release (-O2 -g), g++ (Ubuntu 15.2.0-16ubuntu1) 15.2.0
+
+--- repetition 1 ---
+=== Experiment 7: placement sweep ===
+anchor cpu 2 (core 1), 20000000 increments per thread, 11 trials per point
+
+ partner  core     relation  padded p50  packed p50  packed max     ratio   (slowest-thread ns/increment)
+       0     0   other-core       0.200       0.874       1.088    4.362x
+       1     0   other-core       0.197       0.872       0.935    4.423x
+       3     1  smt-sibling       0.195       0.868       0.896    4.452x
+       4     2   other-core       0.197       0.854       0.886    4.338x
+       5     2   other-core       0.200       0.872       1.045    4.370x
+       6     3   other-core       0.204       0.862       0.987    4.231x
+       7     3   other-core       0.199       0.866       0.999    4.343x
+       8     4   other-core       0.201       0.870       0.910    4.332x
+       9     4   other-core       0.201       0.874       0.981    4.353x
+      10     5   other-core       0.201       0.870       0.899    4.331x
+      11     5   other-core       0.197       0.859       0.896    4.368x
+      12     6   other-core       0.197       0.876       0.946    4.445x
+      13     6   other-core       0.210       0.905       1.030    4.309x
+      14     7   other-core       0.212       0.866       1.037    4.091x
+      15     7   other-core       0.200       0.869       1.046    4.351x
+      16     8   other-core       0.196       0.862       1.049    4.392x
+      17     8   other-core       0.198       0.886       0.977    4.471x
+      18     9   other-core       0.197       0.894       1.069    4.546x
+      19     9   other-core       0.196       0.886       0.928    4.512x
+      20    10   other-core       0.196       0.934       1.131    4.776x
+      21    10   other-core       0.200       0.890       0.950    4.445x
+      22    11   other-core       0.200       0.852       0.892    4.256x
+      23    11   other-core       0.198       0.857       0.932    4.338x
+
+checks: ok
+
+--- repetition 2 ---
+=== Experiment 7: placement sweep ===
+anchor cpu 2 (core 1), 20000000 increments per thread, 11 trials per point
+
+ partner  core     relation  padded p50  packed p50  packed max     ratio   (slowest-thread ns/increment)
+       0     0   other-core       0.201       0.874       0.958    4.354x
+       1     0   other-core       0.202       0.853       0.913    4.234x
+       3     1  smt-sibling       0.203       0.860       1.079    4.236x
+       4     2   other-core       0.199       0.864       1.053    4.345x
+       5     2   other-core       0.204       0.828       0.916    4.054x
+       6     3   other-core       0.199       0.839       0.864    4.208x
+       7     3   other-core       0.197       0.848       0.899    4.301x
+       8     4   other-core       0.197       0.847       0.902    4.305x
+       9     4   other-core       0.199       0.872       0.963    4.380x
+      10     5   other-core       0.201       0.852       0.887    4.246x
+      11     5   other-core       0.197       0.845       0.890    4.288x
+      12     6   other-core       0.198       0.853       0.915    4.309x
+      13     6   other-core       0.202       0.843       0.922    4.171x
+      14     7   other-core       0.203       0.860       0.879    4.231x
+      15     7   other-core       0.196       0.843       0.924    4.292x
+      16     8   other-core       0.202       0.845       0.935    4.177x
+      17     8   other-core       0.206       0.844       0.866    4.100x
+      18     9   other-core       0.204       0.846       0.868    4.156x
+      19     9   other-core       0.201       0.859       0.883    4.273x
+      20    10   other-core       0.199       0.859       1.044    4.308x
+      21    10   other-core       0.203       0.871       0.917    4.297x
+      22    11   other-core       0.205       0.855       0.871    4.182x
+      23    11   other-core       0.200       0.859       0.900    4.298x
+
+checks: ok
+
+--- repetition 3 ---
+=== Experiment 7: placement sweep ===
+anchor cpu 2 (core 1), 20000000 increments per thread, 11 trials per point
+
+ partner  core     relation  padded p50  packed p50  packed max     ratio   (slowest-thread ns/increment)
+       0     0   other-core       0.196       0.863       0.933    4.395x
+       1     0   other-core       0.201       0.860       0.880    4.285x
+       3     1  smt-sibling       0.204       0.895       1.076    4.386x
+       4     2   other-core       0.200       0.867       1.099    4.325x
+       5     2   other-core       0.196       0.859       0.902    4.373x
+       6     3   other-core       0.198       0.897       1.100    4.526x
+       7     3   other-core       0.194       0.862       0.902    4.441x
+       8     4   other-core       0.204       0.873       1.126    4.286x
+       9     4   other-core       0.194       0.867       1.100    4.471x
+      10     5   other-core       0.206       0.891       1.008    4.323x
+      11     5   other-core       0.203       0.838       1.062    4.125x
+      12     6   other-core       0.195       0.869       0.910    4.456x
+      13     6   other-core       0.194       0.871       0.913    4.482x
+      14     7   other-core       0.199       0.878       1.150    4.406x
+      15     7   other-core       0.199       0.846       0.889    4.263x
+      16     8   other-core       0.203       0.861       0.922    4.236x
+      17     8   other-core       0.206       0.861       0.975    4.182x
+      18     9   other-core       0.196       0.880       0.938    4.485x
+      19     9   other-core       0.204       0.865       1.066    4.240x
+      20    10   other-core       0.198       0.863       0.897    4.352x
+      21    10   other-core       0.197       0.866       0.895    4.391x
+      22    11   other-core       0.200       0.865       0.926    4.317x
+      23    11   other-core       0.195       0.873       0.885    4.481x
+
+checks: ok
+
+--- repetition 4 ---
+=== Experiment 7: placement sweep ===
+anchor cpu 2 (core 1), 20000000 increments per thread, 11 trials per point
+
+ partner  core     relation  padded p50  packed p50  packed max     ratio   (slowest-thread ns/increment)
+       0     0   other-core       0.200       0.841       0.899    4.212x
+       1     0   other-core       0.207       0.875       1.026    4.226x
+       3     1  smt-sibling       0.203       0.872       1.062    4.299x
+       4     2   other-core       0.202       0.863       1.070    4.272x
+       5     2   other-core       0.200       0.862       0.888    4.317x
+       6     3   other-core       0.201       0.869       1.041    4.317x
+       7     3   other-core       0.202       0.898       1.005    4.454x
+       8     4   other-core       0.200       0.845       1.057    4.225x
+       9     4   other-core       0.196       0.870       1.071    4.431x
+      10     5   other-core       0.203       0.858       0.879    4.223x
+      11     5   other-core       0.196       0.861       1.085    4.380x
+      12     6   other-core       0.203       0.851       0.872    4.195x
+      13     6   other-core       0.204       0.827       0.888    4.049x
+      14     7   other-core       0.205       0.843       1.065    4.106x
+      15     7   other-core       0.197       0.865       1.095    4.399x
+      16     8   other-core       0.202       0.855       0.970    4.222x
+      17     8   other-core       0.205       0.833       0.882    4.063x
+      18     9   other-core       0.197       0.854       0.934    4.337x
+      19     9   other-core       0.196       0.842       0.902    4.291x
+      20    10   other-core       0.200       0.857       0.975    4.291x
+      21    10   other-core       0.206       0.851       0.895    4.128x
+      22    11   other-core       0.195       0.845       0.978    4.343x
+      23    11   other-core       0.205       0.853       0.897    4.150x
+
+checks: ok
+
+--- repetition 5 ---
+=== Experiment 7: placement sweep ===
+anchor cpu 2 (core 1), 20000000 increments per thread, 11 trials per point
+
+ partner  core     relation  padded p50  packed p50  packed max     ratio   (slowest-thread ns/increment)
+       0     0   other-core       0.203       1.038       1.114    5.118x
+       1     0   other-core       0.195       1.060       1.115    5.438x
+       3     1  smt-sibling       0.197       0.999       1.114    5.061x
+       4     2   other-core       0.197       1.041       1.137    5.292x
+       5     2   other-core       0.200       1.068       1.110    5.340x
+       6     3   other-core       0.199       0.956       1.105    4.812x
+       7     3   other-core       0.200       0.989       1.046    4.945x
+       8     4   other-core       0.202       1.073       1.129    5.321x
+       9     4   other-core       0.198       0.970       1.113    4.890x
+      10     5   other-core       0.197       1.080       1.135    5.496x
+      11     5   other-core       0.205       0.955       1.113    4.665x
+      12     6   other-core       0.197       1.088       1.108    5.523x
+      13     6   other-core       0.203       1.088       1.121    5.367x
+      14     7   other-core       0.198       0.982       1.133    4.970x
+      15     7   other-core       0.197       0.984       1.116    5.002x
+      16     8   other-core       0.199       1.078       1.135    5.418x
+      17     8   other-core       0.196       1.033       1.104    5.270x
+      18     9   other-core       0.199       0.991       1.103    4.980x
+      19     9   other-core       0.198       0.972       1.088    4.921x
+      20    10   other-core       0.199       1.049       1.109    5.270x
+      21    10   other-core       0.199       1.083       1.115    5.436x
+      22    11   other-core       0.194       1.071       1.097    5.506x
+      23    11   other-core       0.195       1.083       1.127    5.544x
+
+checks: ok
+

@@ -1,0 +1,255 @@
+# Command: build/05_false_sharing/05_exp1_layout_sanity    (repeated 5x)
+# Date:    2026-09-27T17:54:09+00:00
+# Machine: Linux 6.18.33.2-microsoft-standard-WSL2 — 24 logical CPUs (see docs/ENVIRONMENT.md)
+# Build:   Release (-O2 -g), g++ (Ubuntu 15.2.0-16ubuntu1) 15.2.0
+
+--- repetition 1 ---
+=== Experiment 1: apparatus sanity check ===
+
+-- cache line size --
+  kCacheLineSize (this project):          64
+  hardware_destructive_interference_size: 64
+  sysfs coherency_line_size:              64
+PASS: all three agree
+
+-- layouts (runtime addresses) --
+  packed:  base % 64 = 0
+    counter 0  offset    0 B  line +0
+    counter 1  offset    8 B  line +0
+    counter 2  offset   16 B  line +0
+    counter 3  offset   24 B  line +0
+    counter 4  offset   32 B  line +0
+    counter 5  offset   40 B  line +0
+    counter 6  offset   48 B  line +0
+    counter 7  offset   56 B  line +0
+  padded:  base % 64 = 0
+    counter 0  offset    0 B  line +0
+    counter 1  offset   64 B  line +1
+    counter 2  offset  128 B  line +2
+    counter 3  offset  192 B  line +3
+    counter 4  offset  256 B  line +4
+    counter 5  offset  320 B  line +5
+    counter 6  offset  384 B  line +6
+    counter 7  offset  448 B  line +7
+PASS: packed puts all 8 counters in one line
+PASS: padded puts each counter in its own line
+PASS: offset layout shares a line exactly when offset < 64 (8..512 B)
+
+-- topology --
+  cpu  0 -> core 0     cpu  1 -> core 0     cpu  2 -> core 1     cpu  3 -> core 1
+  cpu  4 -> core 2     cpu  5 -> core 2     cpu  6 -> core 3     cpu  7 -> core 3
+  cpu  8 -> core 4     cpu  9 -> core 4     cpu 10 -> core 5     cpu 11 -> core 5
+  cpu 12 -> core 6     cpu 13 -> core 6     cpu 14 -> core 7     cpu 15 -> core 7
+  cpu 16 -> core 8     cpu 17 -> core 8     cpu 18 -> core 9     cpu 19 -> core 9
+  cpu 20 -> core 10     cpu 21 -> core 10     cpu 22 -> core 11     cpu 23 -> core 11
+  one_cpu_per_core(): 2 4 6 8 10 12 14 16 18 20 22
+
+-- single thread: layout alone must not matter --
+  cpu 2, 50000000 increments, 11 trials
+  packed ns/increment  min 0.194  p50 0.198  max 0.206
+  padded ns/increment  min 0.194  p50 0.198  max 0.206
+  packed/padded p50:   1.000
+PASS: every counter reached 50000000 and every thread ran on its pinned CPU
+
+ALL CHECKS PASSED
+
+--- repetition 2 ---
+=== Experiment 1: apparatus sanity check ===
+
+-- cache line size --
+  kCacheLineSize (this project):          64
+  hardware_destructive_interference_size: 64
+  sysfs coherency_line_size:              64
+PASS: all three agree
+
+-- layouts (runtime addresses) --
+  packed:  base % 64 = 0
+    counter 0  offset    0 B  line +0
+    counter 1  offset    8 B  line +0
+    counter 2  offset   16 B  line +0
+    counter 3  offset   24 B  line +0
+    counter 4  offset   32 B  line +0
+    counter 5  offset   40 B  line +0
+    counter 6  offset   48 B  line +0
+    counter 7  offset   56 B  line +0
+  padded:  base % 64 = 0
+    counter 0  offset    0 B  line +0
+    counter 1  offset   64 B  line +1
+    counter 2  offset  128 B  line +2
+    counter 3  offset  192 B  line +3
+    counter 4  offset  256 B  line +4
+    counter 5  offset  320 B  line +5
+    counter 6  offset  384 B  line +6
+    counter 7  offset  448 B  line +7
+PASS: packed puts all 8 counters in one line
+PASS: padded puts each counter in its own line
+PASS: offset layout shares a line exactly when offset < 64 (8..512 B)
+
+-- topology --
+  cpu  0 -> core 0     cpu  1 -> core 0     cpu  2 -> core 1     cpu  3 -> core 1
+  cpu  4 -> core 2     cpu  5 -> core 2     cpu  6 -> core 3     cpu  7 -> core 3
+  cpu  8 -> core 4     cpu  9 -> core 4     cpu 10 -> core 5     cpu 11 -> core 5
+  cpu 12 -> core 6     cpu 13 -> core 6     cpu 14 -> core 7     cpu 15 -> core 7
+  cpu 16 -> core 8     cpu 17 -> core 8     cpu 18 -> core 9     cpu 19 -> core 9
+  cpu 20 -> core 10     cpu 21 -> core 10     cpu 22 -> core 11     cpu 23 -> core 11
+  one_cpu_per_core(): 2 4 6 8 10 12 14 16 18 20 22
+
+-- single thread: layout alone must not matter --
+  cpu 2, 50000000 increments, 11 trials
+  packed ns/increment  min 0.193  p50 0.196  max 0.205
+  padded ns/increment  min 0.194  p50 0.200  max 0.208
+  packed/padded p50:   0.983
+PASS: every counter reached 50000000 and every thread ran on its pinned CPU
+
+ALL CHECKS PASSED
+
+--- repetition 3 ---
+=== Experiment 1: apparatus sanity check ===
+
+-- cache line size --
+  kCacheLineSize (this project):          64
+  hardware_destructive_interference_size: 64
+  sysfs coherency_line_size:              64
+PASS: all three agree
+
+-- layouts (runtime addresses) --
+  packed:  base % 64 = 0
+    counter 0  offset    0 B  line +0
+    counter 1  offset    8 B  line +0
+    counter 2  offset   16 B  line +0
+    counter 3  offset   24 B  line +0
+    counter 4  offset   32 B  line +0
+    counter 5  offset   40 B  line +0
+    counter 6  offset   48 B  line +0
+    counter 7  offset   56 B  line +0
+  padded:  base % 64 = 0
+    counter 0  offset    0 B  line +0
+    counter 1  offset   64 B  line +1
+    counter 2  offset  128 B  line +2
+    counter 3  offset  192 B  line +3
+    counter 4  offset  256 B  line +4
+    counter 5  offset  320 B  line +5
+    counter 6  offset  384 B  line +6
+    counter 7  offset  448 B  line +7
+PASS: packed puts all 8 counters in one line
+PASS: padded puts each counter in its own line
+PASS: offset layout shares a line exactly when offset < 64 (8..512 B)
+
+-- topology --
+  cpu  0 -> core 0     cpu  1 -> core 0     cpu  2 -> core 1     cpu  3 -> core 1
+  cpu  4 -> core 2     cpu  5 -> core 2     cpu  6 -> core 3     cpu  7 -> core 3
+  cpu  8 -> core 4     cpu  9 -> core 4     cpu 10 -> core 5     cpu 11 -> core 5
+  cpu 12 -> core 6     cpu 13 -> core 6     cpu 14 -> core 7     cpu 15 -> core 7
+  cpu 16 -> core 8     cpu 17 -> core 8     cpu 18 -> core 9     cpu 19 -> core 9
+  cpu 20 -> core 10     cpu 21 -> core 10     cpu 22 -> core 11     cpu 23 -> core 11
+  one_cpu_per_core(): 2 4 6 8 10 12 14 16 18 20 22
+
+-- single thread: layout alone must not matter --
+  cpu 2, 50000000 increments, 11 trials
+  packed ns/increment  min 0.195  p50 0.199  max 0.210
+  padded ns/increment  min 0.193  p50 0.195  max 0.201
+  packed/padded p50:   1.016
+PASS: every counter reached 50000000 and every thread ran on its pinned CPU
+
+ALL CHECKS PASSED
+
+--- repetition 4 ---
+=== Experiment 1: apparatus sanity check ===
+
+-- cache line size --
+  kCacheLineSize (this project):          64
+  hardware_destructive_interference_size: 64
+  sysfs coherency_line_size:              64
+PASS: all three agree
+
+-- layouts (runtime addresses) --
+  packed:  base % 64 = 0
+    counter 0  offset    0 B  line +0
+    counter 1  offset    8 B  line +0
+    counter 2  offset   16 B  line +0
+    counter 3  offset   24 B  line +0
+    counter 4  offset   32 B  line +0
+    counter 5  offset   40 B  line +0
+    counter 6  offset   48 B  line +0
+    counter 7  offset   56 B  line +0
+  padded:  base % 64 = 0
+    counter 0  offset    0 B  line +0
+    counter 1  offset   64 B  line +1
+    counter 2  offset  128 B  line +2
+    counter 3  offset  192 B  line +3
+    counter 4  offset  256 B  line +4
+    counter 5  offset  320 B  line +5
+    counter 6  offset  384 B  line +6
+    counter 7  offset  448 B  line +7
+PASS: packed puts all 8 counters in one line
+PASS: padded puts each counter in its own line
+PASS: offset layout shares a line exactly when offset < 64 (8..512 B)
+
+-- topology --
+  cpu  0 -> core 0     cpu  1 -> core 0     cpu  2 -> core 1     cpu  3 -> core 1
+  cpu  4 -> core 2     cpu  5 -> core 2     cpu  6 -> core 3     cpu  7 -> core 3
+  cpu  8 -> core 4     cpu  9 -> core 4     cpu 10 -> core 5     cpu 11 -> core 5
+  cpu 12 -> core 6     cpu 13 -> core 6     cpu 14 -> core 7     cpu 15 -> core 7
+  cpu 16 -> core 8     cpu 17 -> core 8     cpu 18 -> core 9     cpu 19 -> core 9
+  cpu 20 -> core 10     cpu 21 -> core 10     cpu 22 -> core 11     cpu 23 -> core 11
+  one_cpu_per_core(): 2 4 6 8 10 12 14 16 18 20 22
+
+-- single thread: layout alone must not matter --
+  cpu 2, 50000000 increments, 11 trials
+  packed ns/increment  min 0.193  p50 0.197  max 0.208
+  padded ns/increment  min 0.193  p50 0.199  max 0.203
+  packed/padded p50:   0.991
+PASS: every counter reached 50000000 and every thread ran on its pinned CPU
+
+ALL CHECKS PASSED
+
+--- repetition 5 ---
+=== Experiment 1: apparatus sanity check ===
+
+-- cache line size --
+  kCacheLineSize (this project):          64
+  hardware_destructive_interference_size: 64
+  sysfs coherency_line_size:              64
+PASS: all three agree
+
+-- layouts (runtime addresses) --
+  packed:  base % 64 = 0
+    counter 0  offset    0 B  line +0
+    counter 1  offset    8 B  line +0
+    counter 2  offset   16 B  line +0
+    counter 3  offset   24 B  line +0
+    counter 4  offset   32 B  line +0
+    counter 5  offset   40 B  line +0
+    counter 6  offset   48 B  line +0
+    counter 7  offset   56 B  line +0
+  padded:  base % 64 = 0
+    counter 0  offset    0 B  line +0
+    counter 1  offset   64 B  line +1
+    counter 2  offset  128 B  line +2
+    counter 3  offset  192 B  line +3
+    counter 4  offset  256 B  line +4
+    counter 5  offset  320 B  line +5
+    counter 6  offset  384 B  line +6
+    counter 7  offset  448 B  line +7
+PASS: packed puts all 8 counters in one line
+PASS: padded puts each counter in its own line
+PASS: offset layout shares a line exactly when offset < 64 (8..512 B)
+
+-- topology --
+  cpu  0 -> core 0     cpu  1 -> core 0     cpu  2 -> core 1     cpu  3 -> core 1
+  cpu  4 -> core 2     cpu  5 -> core 2     cpu  6 -> core 3     cpu  7 -> core 3
+  cpu  8 -> core 4     cpu  9 -> core 4     cpu 10 -> core 5     cpu 11 -> core 5
+  cpu 12 -> core 6     cpu 13 -> core 6     cpu 14 -> core 7     cpu 15 -> core 7
+  cpu 16 -> core 8     cpu 17 -> core 8     cpu 18 -> core 9     cpu 19 -> core 9
+  cpu 20 -> core 10     cpu 21 -> core 10     cpu 22 -> core 11     cpu 23 -> core 11
+  one_cpu_per_core(): 2 4 6 8 10 12 14 16 18 20 22
+
+-- single thread: layout alone must not matter --
+  cpu 2, 50000000 increments, 11 trials
+  packed ns/increment  min 0.193  p50 0.197  max 0.202
+  padded ns/increment  min 0.194  p50 0.196  max 0.211
+  packed/padded p50:   1.008
+PASS: every counter reached 50000000 and every thread ran on its pinned CPU
+
+ALL CHECKS PASSED
+

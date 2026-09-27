@@ -1,0 +1,40 @@
+# Command: build/05_false_sharing/05_exp3_padded    (repeated 5x)
+# Date:    2026-09-27T17:54:13+00:00
+# Machine: Linux 6.18.33.2-microsoft-standard-WSL2 — 24 logical CPUs (see docs/ENVIRONMENT.md)
+# Build:   Release (-O2 -g), g++ (Ubuntu 15.2.0-16ubuntu1) 15.2.0
+
+--- repetition 1 ---
+=== Experiment 3: padded counters, 2 threads ===
+cpus 2 (core 1) and 4 (core 2), 50000000 increments per thread, 11 trials
+counter lines: 2198863063602, 2198863063603  (different lines)
+slowest-thread ns/increment  min 0.194  p50 0.200  max 0.255
+checks: ok
+
+--- repetition 2 ---
+=== Experiment 3: padded counters, 2 threads ===
+cpus 2 (core 1) and 4 (core 2), 50000000 increments per thread, 11 trials
+counter lines: 2198959837848, 2198959837849  (different lines)
+slowest-thread ns/increment  min 0.193  p50 0.200  max 0.208
+checks: ok
+
+--- repetition 3 ---
+=== Experiment 3: padded counters, 2 threads ===
+cpus 2 (core 1) and 4 (core 2), 50000000 increments per thread, 11 trials
+counter lines: 2198877468500, 2198877468501  (different lines)
+slowest-thread ns/increment  min 0.195  p50 0.200  max 0.206
+checks: ok
+
+--- repetition 4 ---
+=== Experiment 3: padded counters, 2 threads ===
+cpus 2 (core 1) and 4 (core 2), 50000000 increments per thread, 11 trials
+counter lines: 2198956206905, 2198956206906  (different lines)
+slowest-thread ns/increment  min 0.195  p50 0.196  max 0.203
+checks: ok
+
+--- repetition 5 ---
+=== Experiment 3: padded counters, 2 threads ===
+cpus 2 (core 1) and 4 (core 2), 50000000 increments per thread, 11 trials
+counter lines: 2198872329569, 2198872329570  (different lines)
+slowest-thread ns/increment  min 0.193  p50 0.196  max 0.246
+checks: ok
+

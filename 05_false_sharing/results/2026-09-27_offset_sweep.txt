@@ -1,0 +1,125 @@
+# Command: build/05_false_sharing/05_exp6_offset_sweep    (repeated 5x)
+# Date:    2026-09-27T17:54:44+00:00
+# Machine: Linux 6.18.33.2-microsoft-standard-WSL2 — 24 logical CPUs (see docs/ENVIRONMENT.md)
+# Build:   Release (-O2 -g), g++ (Ubuntu 15.2.0-16ubuntu1) 15.2.0
+
+--- repetition 1 ---
+=== Experiment 6: offset sweep ===
+cpus 2 and 4, 20000000 increments per thread, 11 trials per offset
+
+  offset  same line       min       p50       max   (slowest-thread ns/increment)
+     8 B        yes     0.817     1.288     1.316
+    16 B        yes     0.787     1.244     1.313
+    24 B        yes     1.115     1.240     1.358
+    32 B        yes     1.167     1.248     1.295
+    40 B        yes     0.812     1.254     1.357
+    48 B        yes     0.775     1.262     1.330
+    56 B        yes     0.847     1.250     1.355
+    64 B         no     0.194     0.199     0.216
+    72 B         no     0.196     0.202     0.211
+    96 B         no     0.195     0.198     0.222
+   120 B         no     0.196     0.201     0.212
+   128 B         no     0.194     0.197     0.212
+   136 B         no     0.195     0.199     0.222
+   192 B         no     0.194     0.201     0.216
+   256 B         no     0.196     0.199     0.216
+   512 B         no     0.195     0.205     0.219
+
+checks: ok
+
+--- repetition 2 ---
+=== Experiment 6: offset sweep ===
+cpus 2 and 4, 20000000 increments per thread, 11 trials per offset
+
+  offset  same line       min       p50       max   (slowest-thread ns/increment)
+     8 B        yes     0.789     0.851     0.877
+    16 B        yes     0.838     0.854     0.879
+    24 B        yes     0.825     0.864     0.912
+    32 B        yes     0.843     0.882     0.942
+    40 B        yes     0.796     0.837     0.889
+    48 B        yes     0.740     0.845     0.914
+    56 B        yes     0.747     0.826     0.882
+    64 B         no     0.194     0.198     0.228
+    72 B         no     0.194     0.204     0.216
+    96 B         no     0.195     0.200     0.214
+   120 B         no     0.193     0.197     0.216
+   128 B         no     0.195     0.199     0.217
+   136 B         no     0.196     0.200     0.215
+   192 B         no     0.194     0.200     0.215
+   256 B         no     0.193     0.200     0.230
+   512 B         no     0.193     0.199     0.212
+
+checks: ok
+
+--- repetition 3 ---
+=== Experiment 6: offset sweep ===
+cpus 2 and 4, 20000000 increments per thread, 11 trials per offset
+
+  offset  same line       min       p50       max   (slowest-thread ns/increment)
+     8 B        yes     0.752     0.821     1.367
+    16 B        yes     0.797     1.225     1.322
+    24 B        yes     0.863     1.340     1.378
+    32 B        yes     1.034     1.248     1.351
+    40 B        yes     1.173     1.297     1.412
+    48 B        yes     0.800     1.238     1.323
+    56 B        yes     1.035     1.313     1.394
+    64 B         no     0.193     0.197     0.208
+    72 B         no     0.194     0.199     0.213
+    96 B         no     0.197     0.201     0.218
+   120 B         no     0.196     0.202     0.217
+   128 B         no     0.194     0.197     0.216
+   136 B         no     0.195     0.197     0.225
+   192 B         no     0.194     0.197     0.215
+   256 B         no     0.193     0.204     0.218
+   512 B         no     0.194     0.204     0.216
+
+checks: ok
+
+--- repetition 4 ---
+=== Experiment 6: offset sweep ===
+cpus 2 and 4, 20000000 increments per thread, 11 trials per offset
+
+  offset  same line       min       p50       max   (slowest-thread ns/increment)
+     8 B        yes     1.197     1.265     1.356
+    16 B        yes     0.811     1.260     1.353
+    24 B        yes     0.813     1.269     1.315
+    32 B        yes     1.047     1.254     1.313
+    40 B        yes     0.908     1.261     1.336
+    48 B        yes     1.187     1.251     1.299
+    56 B        yes     0.870     1.262     1.345
+    64 B         no     0.194     0.195     0.210
+    72 B         no     0.193     0.197     0.212
+    96 B         no     0.195     0.202     0.214
+   120 B         no     0.195     0.209     0.221
+   128 B         no     0.194     0.197     0.218
+   136 B         no     0.194     0.196     0.226
+   192 B         no     0.195     0.198     0.211
+   256 B         no     0.194     0.205     0.215
+   512 B         no     0.194     0.208     0.214
+
+checks: ok
+
+--- repetition 5 ---
+=== Experiment 6: offset sweep ===
+cpus 2 and 4, 20000000 increments per thread, 11 trials per offset
+
+  offset  same line       min       p50       max   (slowest-thread ns/increment)
+     8 B        yes     0.786     0.856     0.904
+    16 B        yes     0.817     0.864     0.920
+    24 B        yes     0.834     0.850     0.883
+    32 B        yes     0.817     0.836     0.888
+    40 B        yes     0.826     0.862     0.935
+    48 B        yes     0.753     0.833     0.957
+    56 B        yes     0.769     0.864     0.940
+    64 B         no     0.195     0.202     0.215
+    72 B         no     0.193     0.196     0.212
+    96 B         no     0.195     0.199     0.215
+   120 B         no     0.194     0.198     0.214
+   128 B         no     0.194     0.199     0.220
+   136 B         no     0.194     0.196     0.221
+   192 B         no     0.192     0.195     0.225
+   256 B         no     0.193     0.197     0.211
+   512 B         no     0.193     0.196     0.211
+
+checks: ok
+

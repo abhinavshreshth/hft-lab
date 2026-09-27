@@ -1,0 +1,55 @@
+# Command: build/05_false_sharing/05_exp4_compare    (repeated 5x)
+# Date:    2026-09-27T17:54:13+00:00
+# Machine: Linux 6.18.33.2-microsoft-standard-WSL2 — 24 logical CPUs (see docs/ENVIRONMENT.md)
+# Build:   Release (-O2 -g), g++ (Ubuntu 15.2.0-16ubuntu1) 15.2.0
+
+--- repetition 1 ---
+=== Experiment 4: packed vs padded, same run ===
+cpus 2 (core 1) and 4 (core 2), 50000000 increments per thread, 11 trials each after 1 discarded warmup race(s), order alternating
+
+  layout       min       p50       max   (slowest-thread ns/increment)
+  packed     0.841     0.881     0.964
+  padded     0.194     0.200     0.203
+packed/padded p50: 4.416x
+checks: ok
+
+--- repetition 2 ---
+=== Experiment 4: packed vs padded, same run ===
+cpus 2 (core 1) and 4 (core 2), 50000000 increments per thread, 11 trials each after 1 discarded warmup race(s), order alternating
+
+  layout       min       p50       max   (slowest-thread ns/increment)
+  packed     0.747     0.865     0.897
+  padded     0.194     0.196     0.203
+packed/padded p50: 4.424x
+checks: ok
+
+--- repetition 3 ---
+=== Experiment 4: packed vs padded, same run ===
+cpus 2 (core 1) and 4 (core 2), 50000000 increments per thread, 11 trials each after 1 discarded warmup race(s), order alternating
+
+  layout       min       p50       max   (slowest-thread ns/increment)
+  packed     1.068     1.294     1.339
+  padded     0.193     0.197     0.207
+packed/padded p50: 6.583x
+checks: ok
+
+--- repetition 4 ---
+=== Experiment 4: packed vs padded, same run ===
+cpus 2 (core 1) and 4 (core 2), 50000000 increments per thread, 11 trials each after 1 discarded warmup race(s), order alternating
+
+  layout       min       p50       max   (slowest-thread ns/increment)
+  packed     0.810     1.256     1.322
+  padded     0.194     0.196     0.200
+packed/padded p50: 6.424x
+checks: ok
+
+--- repetition 5 ---
+=== Experiment 4: packed vs padded, same run ===
+cpus 2 (core 1) and 4 (core 2), 50000000 increments per thread, 11 trials each after 1 discarded warmup race(s), order alternating
+
+  layout       min       p50       max   (slowest-thread ns/increment)
+  packed     1.087     1.308     1.370
+  padded     0.193     0.196     0.207
+packed/padded p50: 6.673x
+checks: ok
+

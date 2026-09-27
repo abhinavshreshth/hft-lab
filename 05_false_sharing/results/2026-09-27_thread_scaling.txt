@@ -1,0 +1,90 @@
+# Command: build/05_false_sharing/05_exp5_thread_scaling    (repeated 5x)
+# Date:    2026-09-27T17:54:17+00:00
+# Machine: Linux 6.18.33.2-microsoft-standard-WSL2 — 24 logical CPUs (see docs/ENVIRONMENT.md)
+# Build:   Release (-O2 -g), g++ (Ubuntu 15.2.0-16ubuntu1) 15.2.0
+
+--- repetition 1 ---
+=== Experiment 5: thread-count scaling ===
+cpus (one per physical core, in order used): 2 4 6 8 10 12 14 16
+20000000 increments per thread, 11 trials per point
+
+ threads  padded p50  packed p50  packed min  packed max     ratio   (slowest-thread ns/increment)
+       1       0.197       0.196       0.193       0.211    0.997x
+       2       0.209       1.001       0.699       1.406    4.777x
+       3       0.198       1.610       1.592       1.656    8.114x
+       4       0.199       2.165       1.941       2.213   10.890x
+       5       0.206       2.618       2.560       2.765   12.734x
+       6       0.206       3.335       3.123       3.731   16.207x
+       7       0.212       4.208       3.994       4.587   19.887x
+       8       0.284       5.290       4.509       6.175   18.627x
+
+checks: ok
+
+--- repetition 2 ---
+=== Experiment 5: thread-count scaling ===
+cpus (one per physical core, in order used): 2 4 6 8 10 12 14 16
+20000000 increments per thread, 11 trials per point
+
+ threads  padded p50  packed p50  packed min  packed max     ratio   (slowest-thread ns/increment)
+       1       0.196       0.200       0.194       0.211    1.022x
+       2       0.196       1.254       1.176       1.294    6.411x
+       3       0.201       1.568       1.506       1.692    7.809x
+       4       0.201       2.042       2.002       2.213   10.162x
+       5       0.203       2.627       2.505       2.741   12.940x
+       6       0.211       3.263       3.002       3.551   15.482x
+       7       0.206       4.234       4.016       4.564   20.590x
+       8       0.205       5.573       4.821       6.027   27.118x
+
+checks: ok
+
+--- repetition 3 ---
+=== Experiment 5: thread-count scaling ===
+cpus (one per physical core, in order used): 2 4 6 8 10 12 14 16
+20000000 increments per thread, 11 trials per point
+
+ threads  padded p50  packed p50  packed min  packed max     ratio   (slowest-thread ns/increment)
+       1       0.197       0.198       0.195       0.210    1.001x
+       2       0.202       0.853       0.786       0.920    4.216x
+       3       0.201       1.329       1.284       1.493    6.599x
+       4       0.201       2.041       1.989       2.086   10.171x
+       5       0.204       2.568       2.517       2.682   12.604x
+       6       0.203       3.271       3.044       3.999   16.136x
+       7       0.206       4.212       3.884       4.671   20.448x
+       8       0.207       5.515       4.715       6.361   26.690x
+
+checks: ok
+
+--- repetition 4 ---
+=== Experiment 5: thread-count scaling ===
+cpus (one per physical core, in order used): 2 4 6 8 10 12 14 16
+20000000 increments per thread, 11 trials per point
+
+ threads  padded p50  packed p50  packed min  packed max     ratio   (slowest-thread ns/increment)
+       1       0.197       0.199       0.193       0.213    1.011x
+       2       0.198       0.866       0.806       0.930    4.373x
+       3       0.201       1.325       1.291       1.412    6.588x
+       4       0.204       1.848       1.791       1.880    9.047x
+       5       0.202       2.450       2.415       2.560   12.130x
+       6       0.211       3.050       2.961       3.173   14.444x
+       7       0.207       3.870       3.797       4.177   18.728x
+       8       0.209       5.232       5.089       5.536   24.988x
+
+checks: ok
+
+--- repetition 5 ---
+=== Experiment 5: thread-count scaling ===
+cpus (one per physical core, in order used): 2 4 6 8 10 12 14 16
+20000000 increments per thread, 11 trials per point
+
+ threads  padded p50  packed p50  packed min  packed max     ratio   (slowest-thread ns/increment)
+       1       0.197       0.210       0.195       0.214    1.068x
+       2       0.199       1.254       1.225       1.293    6.315x
+       3       0.200       1.538       1.506       1.597    7.671x
+       4       0.201       2.102       1.999       2.184   10.435x
+       5       0.213       2.579       2.533       2.734   12.102x
+       6       0.205       3.379       3.096       3.744   16.452x
+       7       0.209       4.134       3.926       4.501   19.806x
+       8       0.207       5.378       4.939       5.736   25.924x
+
+checks: ok
+
