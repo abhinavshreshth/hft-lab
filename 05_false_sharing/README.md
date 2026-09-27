@@ -26,11 +26,19 @@ which host core that vCPU is running on. Section 8 shows why that matters.
 
 ## 3. What I tested
 
-Seven executables, all built on one shared apparatus:
+Seven thin experiment executables on top of a small library, `src/lab/`
+(built as the `05_false_sharing_lab` static library):
 
 ```
 05_false_sharing/src/
-├── false_sharing.hpp          shared apparatus (not an experiment)
+├── lab/                       the apparatus (not experiments)
+│   ├── cache_line.hpp         kCacheLineSize, kMaxThreads, line_of()
+│   ├── counter_layout.hpp     WHERE counters live — packed / padded / offset
+│   ├── cpu_placement.*        core ids, one_cpu_per_core(), pinning, CPU args
+│   ├── race_runner.*          HOW threads race — pin, barrier, timed loop
+│   ├── trials.*               warmup + trials, same-run comparison of two layouts
+│   ├── sanity.*               the checks Experiment 1 runs on the apparatus
+│   └── report.*               ALL console output
 ├── exp1_layout_sanity.cpp     Experiment 1 — validate the apparatus itself
 ├── exp2_packed.cpp            Experiment 2 — baseline: 2 threads, counters in ONE line
 ├── exp3_padded.cpp            Experiment 3 — modified: 2 threads, one line per counter
@@ -40,8 +48,13 @@ Seven executables, all built on one shared apparatus:
 └── exp7_placement_sweep.cpp   Experiment 7 — partner thread on every other logical CPU
 ```
 
-`false_sharing.hpp` splits the apparatus the same way Project 04's
-`cache_lab.hpp` split `ChainBuilder` from `PointerChaser`:
+Each `expN_*.cpp` holds only the experiment itself: which layout, which
+CPUs, what gets compared. It hands its results to `report::`, the only
+place that prints anything. The printed format is therefore owned by one
+module, and `results/` captures stay comparable when an experiment changes.
+
+The apparatus splits the same way Project 04's `cache_lab.hpp` split
+`ChainBuilder` from `PointerChaser`:
 
 - **`CounterLayout`** — where each thread's counter lives (the
   experimental variable). Three implementations:
