@@ -20,31 +20,48 @@
 //
 // Usage: ./05_exp7_placement_sweep [anchor_cpu]      (default CPU 2)
 
-#include "lab/cpu_placement.hpp"
-#include "lab/report.hpp"
-#include "lab/trials.hpp"
+#include <array>
+#include <cstdlib>
+#include <iomanip>
+#include <iostream>
 
-using namespace false_sharing;
+#include "false_sharing.hpp"
 
 constexpr std::uint64_t kIterations = 20'000'000;
 
 int main(int argc, char** argv) {
-    int anchor = cpus_from_args(argc, argv, {kDefaultCpuA})[0];
+    int anchor = argc > 1 ? std::atoi(argv[1]) : kDefaultCpuA;
+    const int n_cpus = static_cast<int>(std::thread::hardware_concurrency());
 
     PackedLayout packed;
     PaddedLayout padded;
 
-    std::vector<report::PlacementPoint> points;
-    bool ok = true;
-    for (int partner = 0; partner < logical_cpu_count(); ++partner) {
-        if (partner == anchor) continue;
-        bool packed_first = points.size() % 2 == 0;
-        Comparison c = measure_both(packed, padded, {anchor, partner}, kIterations, packed_first);
-        ok &= c.ok();
-        bool smt_sibling = physical_core_of(partner) == physical_core_of(anchor);
-        points.push_back({partner, smt_sibling, c});
-    }
+    std::cout << "=== Experiment 7: placement sweep ===\n";
+    std::cout << "anchor cpu " << anchor << " (core " << physical_core_of(anchor) << "), " << kIterations
+              << " increments per thread, " << kTrials << " trials per point\n\n";
+    std::cout << std::fixed << std::setprecision(3);
+    std::cout << std::setw(8) << "partner" << std::setw(6) << "core" << std::setw(13) << "relation" << std::setw(12)
+              << "padded p50" << std::setw(12) << "packed p50" << std::setw(12) << "packed max" << std::setw(10)
+              << "ratio" << "   (slowest-thread ns/increment)\n";
 
-    report::placement_sweep(anchor, kIterations, points, ok);
+    bool ok = true;
+    int row = 0;
+    for (int partner = 0; partner < n_cpus; ++partner) {
+        if (partner == anchor) continue;
+        std::array<CounterLayout*, 2> order = (row++ % 2 == 0) ? std::array<CounterLayout*, 2>{&packed, &padded}
+                                                               : std::array<CounterLayout*, 2>{&padded, &packed};
+        Measurement results[2];
+        for (int slot = 0; slot < 2; ++slot) results[slot] = measure(*order[slot], {anchor, partner}, kIterations);
+        const Measurement& p = (order[0] == &packed) ? results[0] : results[1];
+        const Measurement& q = (order[0] == &padded) ? results[0] : results[1];
+        ok &= p.ok && q.ok;
+
+        bool sibling = physical_core_of(partner) == physical_core_of(anchor);
+        std::cout << std::setw(8) << partner << std::setw(6) << physical_core_of(partner) << std::setw(13)
+                  << (sibling ? "smt-sibling" : "other-core") << std::setw(12) << q.stats.p50 << std::setw(12)
+                  << p.stats.p50 << std::setw(12) << p.stats.max << std::setw(9) << p.stats.p50 / q.stats.p50
+                  << "x\n";
+    }
+    std::cout << "\nchecks: " << (ok ? "ok" : "FAILED (count or pinning)") << "\n";
     return ok ? 0 : 1;
 }

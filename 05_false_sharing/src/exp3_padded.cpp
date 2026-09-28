@@ -10,21 +10,32 @@
 //
 // Usage: ./05_exp3_padded [cpuA cpuB]      (default CPUs 2 and 4)
 
-#include "lab/cpu_placement.hpp"
-#include "lab/report.hpp"
-#include "lab/trials.hpp"
+#include <cstdlib>
+#include <iomanip>
+#include <iostream>
 
-using namespace false_sharing;
+#include "false_sharing.hpp"
 
 constexpr std::uint64_t kIterations = 50'000'000;
 
 int main(int argc, char** argv) {
-    std::vector<int> cpus = cpus_from_args(argc, argv, {kDefaultCpuA, kDefaultCpuB});
+    int cpu_a = argc > 2 ? std::atoi(argv[1]) : kDefaultCpuA;
+    int cpu_b = argc > 2 ? std::atoi(argv[2]) : kDefaultCpuB;
 
     PaddedLayout layout;
 
-    Measurement m = measure(layout, cpus, kIterations);
+    std::cout << "=== Experiment 3: " << layout.layout_name() << " counters, 2 threads ===\n";
+    std::cout << "cpus " << cpu_a << " (core " << physical_core_of(cpu_a) << ") and " << cpu_b << " (core "
+              << physical_core_of(cpu_b) << "), " << kIterations << " increments per thread, " << kTrials
+              << " trials\n";
+    std::cout << "counter lines: " << line_of(layout.counter(0)) << ", " << line_of(layout.counter(1))
+              << (line_of(layout.counter(0)) == line_of(layout.counter(1)) ? "  (SAME line)\n" : "  (different lines)\n");
 
-    report::two_thread_run("Experiment 3", layout, cpus, kIterations, m);
+    auto m = measure(layout, {cpu_a, cpu_b}, kIterations);
+
+    std::cout << std::fixed << std::setprecision(3);
+    std::cout << "slowest-thread ns/increment  min " << m.stats.min << "  p50 " << m.stats.p50 << "  max "
+              << m.stats.max << "\n";
+    std::cout << "checks: " << (m.ok ? "ok" : "FAILED (count or pinning)") << "\n";
     return m.ok ? 0 : 1;
 }
