@@ -1,0 +1,140 @@
+# Command: build/06_atomic_counter/06_exp4_compare    (repeated 5x)
+# Date:    2026-09-29T15:26:09+00:00
+# Machine: Linux 6.18.33.2-microsoft-standard-WSL2 — 24 logical CPUs (see docs/ENVIRONMENT.md)
+# Build:   Release (-O2 -g), g++ (Ubuntu 15.2.0-16ubuntu1) 15.2.0
+
+--- repetition 1 ---
+=== Experiment 4: all strategies, same run ===
+uncontended: cpu 2, 20000000 increments
+contended:   cpus 2 (core 1) and 4 (core 2) on one counter, 5000000 increments per thread
+11 trials per strategy after 1 discarded warmup race(s), order rotating
+
+-- uncontended (1 thread), ns/increment --
+   strategy      min      p50      max vs plain
+      plain    0.191    0.198    0.225     1.0x
+  fetch_add    1.279    1.348    1.400     6.8x
+   cas_loop    1.689    1.721    1.738     8.7x
+   spinlock    1.510    1.534    1.564     7.8x
+      mutex    4.131    4.158    4.231    21.0x
+
+-- contended (2 threads, 1 shared counter) --
+   strategy  slow p50  slow min  slow max  fast p50   Mincr/s  vs solo  cas f/inc   vcsw/tr   icsw/tr  kernel
+  fetch_add     8.430     8.212     8.644     8.379     237.2     6.3x      0.000       0.0       2.3     0.0%
+   cas_loop    21.490    18.634    22.311    21.443      93.1    12.5x      0.580       0.0       2.3     0.0%
+   spinlock    25.904    25.185    26.412    25.825      77.2    16.9x      0.000       0.0       2.7     0.0%
+      mutex    27.713    26.782    28.023    27.618      72.2     6.7x      0.000      82.9       3.6    36.7%
+(slow/fast = slowest/fastest thread ns/increment; Mincr/s = total increments/s across both;
+ vs solo = contended slowest p50 / uncontended p50; cas f/inc = failed CAS attempts per increment;
+ vcsw/icsw per trial = voluntary (slept) / involuntary (preempted) context switches, both threads;
+ kernel = share of the threads' CPU time spent in the kernel during the loop)
+
+checks: ok
+
+--- repetition 2 ---
+=== Experiment 4: all strategies, same run ===
+uncontended: cpu 2, 20000000 increments
+contended:   cpus 2 (core 1) and 4 (core 2) on one counter, 5000000 increments per thread
+11 trials per strategy after 1 discarded warmup race(s), order rotating
+
+-- uncontended (1 thread), ns/increment --
+   strategy      min      p50      max vs plain
+      plain    0.189    0.203    0.226     1.0x
+  fetch_add    1.294    1.331    1.385     6.5x
+   cas_loop    1.696    1.711    1.746     8.4x
+   spinlock    1.506    1.512    1.544     7.4x
+      mutex    4.096    4.116    4.219    20.3x
+
+-- contended (2 threads, 1 shared counter) --
+   strategy  slow p50  slow min  slow max  fast p50   Mincr/s  vs solo  cas f/inc   vcsw/tr   icsw/tr  kernel
+  fetch_add     8.549     6.209     9.189     8.472     234.0     6.4x      0.000       0.0       2.1     0.4%
+   cas_loop    20.097     4.970    21.986    19.890      99.5    11.7x      0.465       0.0       2.7     0.6%
+   spinlock    25.003    18.993    27.037    24.856      80.0    16.5x      0.000       0.0       3.6     0.9%
+      mutex    26.216    23.075    27.839    26.048      76.3     6.4x      0.000     157.6       2.5    31.9%
+(slow/fast = slowest/fastest thread ns/increment; Mincr/s = total increments/s across both;
+ vs solo = contended slowest p50 / uncontended p50; cas f/inc = failed CAS attempts per increment;
+ vcsw/icsw per trial = voluntary (slept) / involuntary (preempted) context switches, both threads;
+ kernel = share of the threads' CPU time spent in the kernel during the loop)
+
+checks: ok
+
+--- repetition 3 ---
+=== Experiment 4: all strategies, same run ===
+uncontended: cpu 2, 20000000 increments
+contended:   cpus 2 (core 1) and 4 (core 2) on one counter, 5000000 increments per thread
+11 trials per strategy after 1 discarded warmup race(s), order rotating
+
+-- uncontended (1 thread), ns/increment --
+   strategy      min      p50      max vs plain
+      plain    0.192    0.198    0.210     1.0x
+  fetch_add    1.269    1.321    1.424     6.7x
+   cas_loop    1.709    1.723    1.734     8.7x
+   spinlock    1.518    1.536    1.556     7.8x
+      mutex    4.105    4.171    4.202    21.1x
+
+-- contended (2 threads, 1 shared counter) --
+   strategy  slow p50  slow min  slow max  fast p50   Mincr/s  vs solo  cas f/inc   vcsw/tr   icsw/tr  kernel
+  fetch_add     8.183     7.951     8.589     8.155     244.4     6.2x      0.000       0.0       2.0     0.0%
+   cas_loop    22.934    21.187    23.213    22.933      87.2    13.3x      0.668       0.0       2.7     0.0%
+   spinlock    22.025    21.739    22.264    22.015      90.8    14.3x      0.000       0.0       2.6     0.0%
+      mutex    24.439    23.181    25.295    23.963      81.8     5.9x      0.000      48.2       2.9    37.4%
+(slow/fast = slowest/fastest thread ns/increment; Mincr/s = total increments/s across both;
+ vs solo = contended slowest p50 / uncontended p50; cas f/inc = failed CAS attempts per increment;
+ vcsw/icsw per trial = voluntary (slept) / involuntary (preempted) context switches, both threads;
+ kernel = share of the threads' CPU time spent in the kernel during the loop)
+
+checks: ok
+
+--- repetition 4 ---
+=== Experiment 4: all strategies, same run ===
+uncontended: cpu 2, 20000000 increments
+contended:   cpus 2 (core 1) and 4 (core 2) on one counter, 5000000 increments per thread
+11 trials per strategy after 1 discarded warmup race(s), order rotating
+
+-- uncontended (1 thread), ns/increment --
+   strategy      min      p50      max vs plain
+      plain    0.192    0.199    0.214     1.0x
+  fetch_add    1.345    1.367    1.418     6.9x
+   cas_loop    1.692    1.713    1.737     8.6x
+   spinlock    1.502    1.514    1.575     7.6x
+      mutex    4.083    4.112    4.206    20.7x
+
+-- contended (2 threads, 1 shared counter) --
+   strategy  slow p50  slow min  slow max  fast p50   Mincr/s  vs solo  cas f/inc   vcsw/tr   icsw/tr  kernel
+  fetch_add     7.980     7.866     8.369     7.968     250.6     5.8x      0.000       0.0       2.3     0.9%
+   cas_loop    21.097    20.789    23.038    20.945      94.8    12.3x      0.637       0.0       2.4     0.0%
+   spinlock    21.456    18.541    22.084    21.413      93.2    14.2x      0.000       0.0       2.5     0.0%
+      mutex    23.934    21.661    24.750    23.708      83.6     5.8x      0.000      63.9       3.9    38.9%
+(slow/fast = slowest/fastest thread ns/increment; Mincr/s = total increments/s across both;
+ vs solo = contended slowest p50 / uncontended p50; cas f/inc = failed CAS attempts per increment;
+ vcsw/icsw per trial = voluntary (slept) / involuntary (preempted) context switches, both threads;
+ kernel = share of the threads' CPU time spent in the kernel during the loop)
+
+checks: ok
+
+--- repetition 5 ---
+=== Experiment 4: all strategies, same run ===
+uncontended: cpu 2, 20000000 increments
+contended:   cpus 2 (core 1) and 4 (core 2) on one counter, 5000000 increments per thread
+11 trials per strategy after 1 discarded warmup race(s), order rotating
+
+-- uncontended (1 thread), ns/increment --
+   strategy      min      p50      max vs plain
+      plain    0.190    0.207    0.223     1.0x
+  fetch_add    1.288    1.343    1.422     6.5x
+   cas_loop    1.701    1.726    1.748     8.4x
+   spinlock    1.519    1.535    1.545     7.4x
+      mutex    4.132    4.168    4.249    20.2x
+
+-- contended (2 threads, 1 shared counter) --
+   strategy  slow p50  slow min  slow max  fast p50   Mincr/s  vs solo  cas f/inc   vcsw/tr   icsw/tr  kernel
+  fetch_add     8.005     7.854     8.563     7.983     249.8     6.0x      0.000       0.0       2.3     0.0%
+   cas_loop    22.841    21.095    23.152    22.832      87.6    13.2x      0.667       0.0       3.0     0.0%
+   spinlock    21.995    19.578    22.450    21.969      90.9    14.3x      0.000       0.0       2.6     0.0%
+      mutex    26.517    25.164    27.073    26.489      75.4     6.4x      0.000      76.5       2.7    37.5%
+(slow/fast = slowest/fastest thread ns/increment; Mincr/s = total increments/s across both;
+ vs solo = contended slowest p50 / uncontended p50; cas f/inc = failed CAS attempts per increment;
+ vcsw/icsw per trial = voluntary (slept) / involuntary (preempted) context switches, both threads;
+ kernel = share of the threads' CPU time spent in the kernel during the loop)
+
+checks: ok
+

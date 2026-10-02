@@ -1,6 +1,6 @@
 # Progress
 
-**5 / 72 complete.**
+**6 / 72 complete.**
 
 Status: `·` not started · `▶` in progress · `✅` done (README complete + results committed)
 
@@ -8,7 +8,7 @@ A project is ticked only when its README's 11 sections are filled and `results/`
 contains real output. See `docs/CONVENTIONS.md` §9.
 
 
-## 🟢 Stage 1 — C++ + CPU  —  5/10
+## 🟢 Stage 1 — C++ + CPU  —  6/10
 
 | | # | Project | Directory | Result headline |
 |---|---|---|---|---|
@@ -17,7 +17,7 @@ contains real output. See `docs/CONVENTIONS.md` §9.
 | ✅ | 03 | CPU Migration Detector | `03_cpu_migration` | Built an automatic SMT-sibling classifier (`core_id`) and a same-run coarse-vs-fine poll comparison; fine polling never caught a migration coarse polling missed (30/30 reps matched exactly) — idle-machine migrations are durable moves, not transient blips — and 13/14 observed migrations were same-core, but one genuine cross-core migration refines Project 01's "always SMT-local" claim |
 | ✅ | 04 | Cache Latency Lab | `04_cache_latency` | Pointer-chase sweep across 4 KiB-128 MiB: sequential order stayed 0.93-1.41 ns/access everywhere (prefetcher hides the hierarchy entirely); random order (Sattolo single-cycle) staircased with the cache tiers — ~1 ns in L1, ~2.8 ns in L2, ~6-11 ns in L3, ~90-112 ns once past the 32 MiB L3 into RAM, up to 85x slower than sequential at the same size |
 | ✅ | 05 | False Sharing Demo | `05_false_sharing` | Two threads incrementing private counters in one 64-byte line ran ~5x slower than with `alignas(64)` padding (≈1.0 vs 0.2 ns/increment); the penalty cliff is exactly at 64 B (nothing at 128), and adding writers to one line *reduced* total throughput below a single thread (4.99 → 1.5–2.0 G incr/s); SMT-sibling vs cross-core placement showed no difference — WSL2's vCPUs hide physical topology |
-| · | 06 | Atomic Counter Benchmark | `06_atomic_counter` | |
+| ✅ | 06 | Atomic Counter Benchmark | `06_atomic_counter` | On one shared counter `fetch_add` beat every alternative ~3x (8.2 ns vs 22–26 ns for CAS/spinlock/mutex at 2 threads) while costing 6.7x a plain increment uncontended; the contended mutex spent 37% of its CPU in the kernel while barely sleeping, the naive spinlock collapsed 53x by 8 threads, and a padded per-thread (sharded) atomic scaled 7.6x — sharing, not atomicity, is the cost |
 | · | 07 | Memory Ordering Lab | `07_memory_ordering` | |
 | · | 08 | SPSC Queue | `08_spsc_queue` | |
 | · | 09 | Object Pool | `09_object_pool` | |
@@ -134,3 +134,4 @@ contains real output. See `docs/CONVENTIONS.md` §9.
 | 2026-09-11 | 03 | CPU Migration Detector complete: built a `core_id`-based SMT-sibling classifier and compared coarse (×1e6) vs fine (×1e3) `sched_getcpu()` polling both across separate runs and, decisively, within the same run (30 reps). The fine tracker never caught a migration the coarse tracker missed — migrations on this idle machine are durable, not transient — refuting the pre-stated hypothesis, an honest negative result. 13/14 observed migrations across 70 total runs were same-core, but one genuine cross-core migration refines Project 01's small-sample "always SMT-local" finding. |
 | 2026-09-13 | 04 | Cache Latency Lab complete: built a Sattolo-shuffled pointer-chase harness (validated single-cycle in Experiment 1) and swept 4 KiB-128 MiB with sequential vs. random access order, both across separate runs and in one same-run comparison (5 reps each). Sequential order stayed flat (0.93-1.41 ns/access) across every size — the hardware prefetcher hides the cache hierarchy entirely from a unit-stride pattern. Random order staircased with the machine's actual tiers (~1 ns L1, ~2.8 ns L2, ~6-11 ns L3, ~90-112 ns RAM past the 32 MiB L3), confirming the pre-stated hypothesis cleanly and hitting up to 85x sequential's cost at the same size. One anomaly: 16 MiB (half the shared L3) showed far higher rep-to-rep variance than any neighboring size, plausibly boundary-proximity eviction pressure on the shared cache. |
 | 2026-09-27 | 05 | False Sharing Demo complete: 7 experiments on one pinned-thread harness (`CounterLayout` × `RaceRunner`), every race checked for exact counts and correct pinning. Two writers on private counters in one 64-byte line cost ~5x padded (≈1.0 vs 0.2 ns/increment; single-thread control 0.98–1.02x). Offset sweep: one cliff at exactly 64 B, nothing at 128 B, so `alignas(64)` suffices. Writer sweep: packed aggregate throughput stuck at 1.5–2.0 G incr/s for 2–8 threads, below one thread's 4.99, while padded scaled 7.1x. Placement hypothesis refuted: SMT sibling and all 22 other CPUs cost the same, and packed runs split into ~0.85 vs ~1.3 ns levels per process, both attributed to WSL2 hiding physical vCPU placement; to be rerun on native Linux. |
+| 2026-09-29 | 06 | Atomic Counter Benchmark complete: 6 experiments on one pinned-thread harness (`Counter` concept × `race<C>()`), every race checked for exact counts and pinning, validated by a negative control (atomic load-then-store lost 15–51% of updates while compiling to the same instructions as a plain increment). Uncontended: plain 0.20, `fetch_add` 1.34, spinlock 1.53, CAS 1.72, mutex 4.15 ns (no syscalls). Two threads on one counter: `fetch_add` 8.2 ns vs CAS 21.7, spinlock 23.3, mutex 25.8; the mutex slept only ~60–86 times per 10 M increments yet spent 37% of CPU in the kernel (futex calls, inferred via `getrusage`). 1→8 threads: every shared strategy's total throughput fell (`fetch_add` 237→155 M/s, mutex 84→52 with 75% kernel, spinlock 640→12), CAS failures stayed flat at ~0.5–0.65/increment (refuting the prediction they would multiply), sharded padded `fetch_add` scaled 690→5211 M/s. Project 05's prediction tested: atomic false-sharing ratio 6.4x vs plain 5.1x (refuted as a ratio) but the ns penalty was 9x larger (+7.4 vs +0.8 ns); packed-private ≈ truly-shared (1.06x). Unexplained: at 8 threads guest cores 6–8 ran `fetch_add` ~20% faster than cores 1–5 in all 5 runs — possibly the CCD boundary, to be rerun on native Linux. |

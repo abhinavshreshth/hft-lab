@@ -1,0 +1,55 @@
+# Command: build/06_atomic_counter/06_exp2_mutex    (repeated 5x)
+# Date:    2026-09-29T15:25:59+00:00
+# Machine: Linux 6.18.33.2-microsoft-standard-WSL2 — 24 logical CPUs (see docs/ENVIRONMENT.md)
+# Build:   Release (-O2 -g), g++ (Ubuntu 15.2.0-16ubuntu1) 15.2.0
+
+--- repetition 1 ---
+=== Experiment 2: mutex, 1 shared counter, 2 threads ===
+cpus 2 (core 1) and 4 (core 2), 5000000 increments per thread, 11 trials
+slowest-thread ns/increment  min 24.853  p50 25.232  max 25.578
+fastest-thread ns/increment  min 24.585  p50 25.189  max 25.549
+aggregate M increments/s     min 78.192  p50 79.265  max 80.473
+context switches per trial   voluntary 54.3  involuntary 2.9
+kernel share of thread CPU   39.9%
+checks: ok
+
+--- repetition 2 ---
+=== Experiment 2: mutex, 1 shared counter, 2 threads ===
+cpus 2 (core 1) and 4 (core 2), 5000000 increments per thread, 11 trials
+slowest-thread ns/increment  min 23.756  p50 24.335  max 25.362
+fastest-thread ns/increment  min 23.383  p50 24.294  max 25.317
+aggregate M increments/s     min 78.857  p50 82.186  max 84.191
+context switches per trial   voluntary 70.7  involuntary 2.8
+kernel share of thread CPU   34.7%
+checks: ok
+
+--- repetition 3 ---
+=== Experiment 2: mutex, 1 shared counter, 2 threads ===
+cpus 2 (core 1) and 4 (core 2), 5000000 increments per thread, 11 trials
+slowest-thread ns/increment  min 24.284  p50 24.481  max 25.801
+fastest-thread ns/increment  min 24.078  p50 24.417  max 25.621
+aggregate M increments/s     min 77.517  p50 81.695  max 82.359
+context switches per trial   voluntary 58.9  involuntary 2.5
+kernel share of thread CPU   39.2%
+checks: ok
+
+--- repetition 4 ---
+=== Experiment 2: mutex, 1 shared counter, 2 threads ===
+cpus 2 (core 1) and 4 (core 2), 5000000 increments per thread, 11 trials
+slowest-thread ns/increment  min 23.579  p50 24.067  max 25.030
+fastest-thread ns/increment  min 23.349  p50 23.922  max 24.912
+aggregate M increments/s     min 79.904  p50 83.102  max 84.820
+context switches per trial   voluntary 62.5  involuntary 2.7
+kernel share of thread CPU   32.9%
+checks: ok
+
+--- repetition 5 ---
+=== Experiment 2: mutex, 1 shared counter, 2 threads ===
+cpus 2 (core 1) and 4 (core 2), 5000000 increments per thread, 11 trials
+slowest-thread ns/increment  min 24.185  p50 24.622  max 25.779
+fastest-thread ns/increment  min 23.950  p50 24.474  max 25.690
+aggregate M increments/s     min 77.582  p50 81.227  max 82.695
+context switches per trial   voluntary 55.7  involuntary 2.6
+kernel share of thread CPU   40.2%
+checks: ok
+

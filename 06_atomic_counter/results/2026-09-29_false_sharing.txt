@@ -1,0 +1,80 @@
+# Command: build/06_atomic_counter/06_exp6_false_sharing    (repeated 5x)
+# Date:    2026-09-29T15:26:43+00:00
+# Machine: Linux 6.18.33.2-microsoft-standard-WSL2 — 24 logical CPUs (see docs/ENVIRONMENT.md)
+# Build:   Release (-O2 -g), g++ (Ubuntu 15.2.0-16ubuntu1) 15.2.0
+
+--- repetition 1 ---
+=== Experiment 6: false sharing, plain vs atomic ===
+cpus 2 (core 1) and 4 (core 2), 10000000 increments per thread, 11 trials each, order rotating
+
+            config       min       p50       max   (slowest-thread ns/increment)
+      plain packed     0.960     1.052     1.117
+      plain padded     0.189     0.192     0.232
+  fetch_add packed     8.826     9.175     9.474
+  fetch_add padded     1.345     1.369     1.431
+  fetch_add shared     8.166     8.258     8.772
+plain     packed/padded p50: 5.47x
+fetch_add packed/padded p50: 6.70x
+fetch_add packed/shared p50: 1.11x
+checks: ok
+
+--- repetition 2 ---
+=== Experiment 6: false sharing, plain vs atomic ===
+cpus 2 (core 1) and 4 (core 2), 10000000 increments per thread, 11 trials each, order rotating
+
+            config       min       p50       max   (slowest-thread ns/increment)
+      plain packed     1.016     1.126     1.250
+      plain padded     0.188     0.198     0.233
+  fetch_add packed     8.927     9.287    11.913
+  fetch_add padded     1.338     1.385     1.415
+  fetch_add shared     8.112     8.495     9.203
+plain     packed/padded p50: 5.69x
+fetch_add packed/padded p50: 6.71x
+fetch_add packed/shared p50: 1.09x
+checks: ok
+
+--- repetition 3 ---
+=== Experiment 6: false sharing, plain vs atomic ===
+cpus 2 (core 1) and 4 (core 2), 10000000 increments per thread, 11 trials each, order rotating
+
+            config       min       p50       max   (slowest-thread ns/increment)
+      plain packed     0.973     1.051     1.115
+      plain padded     0.188     0.200     0.236
+  fetch_add packed     8.642     9.199    10.767
+  fetch_add padded     1.323     1.368     1.462
+  fetch_add shared     8.111     8.285     8.404
+plain     packed/padded p50: 5.25x
+fetch_add packed/padded p50: 6.73x
+fetch_add packed/shared p50: 1.11x
+checks: ok
+
+--- repetition 4 ---
+=== Experiment 6: false sharing, plain vs atomic ===
+cpus 2 (core 1) and 4 (core 2), 10000000 increments per thread, 11 trials each, order rotating
+
+            config       min       p50       max   (slowest-thread ns/increment)
+      plain packed     0.786     0.850     1.088
+      plain padded     0.189     0.206     0.213
+  fetch_add packed     7.597     7.727     8.452
+  fetch_add padded     1.320     1.351     1.524
+  fetch_add shared     7.740     7.864     8.163
+plain     packed/padded p50: 4.13x
+fetch_add packed/padded p50: 5.72x
+fetch_add packed/shared p50: 0.98x
+checks: ok
+
+--- repetition 5 ---
+=== Experiment 6: false sharing, plain vs atomic ===
+cpus 2 (core 1) and 4 (core 2), 10000000 increments per thread, 11 trials each, order rotating
+
+            config       min       p50       max   (slowest-thread ns/increment)
+      plain packed     0.868     1.035     1.090
+      plain padded     0.188     0.199     0.229
+  fetch_add packed     8.231     8.340     8.420
+  fetch_add padded     1.348     1.366     1.455
+  fetch_add shared     8.214     8.393     8.646
+plain     packed/padded p50: 5.20x
+fetch_add packed/padded p50: 6.11x
+fetch_add packed/shared p50: 0.99x
+checks: ok
+

@@ -1,0 +1,55 @@
+# Command: build/06_atomic_counter/06_exp3_atomic    (repeated 5x)
+# Date:    2026-09-29T15:26:06+00:00
+# Machine: Linux 6.18.33.2-microsoft-standard-WSL2 — 24 logical CPUs (see docs/ENVIRONMENT.md)
+# Build:   Release (-O2 -g), g++ (Ubuntu 15.2.0-16ubuntu1) 15.2.0
+
+--- repetition 1 ---
+=== Experiment 3: fetch_add, 1 shared counter, 2 threads ===
+cpus 2 (core 1) and 4 (core 2), 5000000 increments per thread, 11 trials
+slowest-thread ns/increment  min 8.289  p50 8.411  max 9.100
+fastest-thread ns/increment  min 8.260  p50 8.359  max 9.081
+aggregate M increments/s     min 219.790  p50 237.797  max 241.291
+context switches per trial   voluntary 0.0  involuntary 2.2
+kernel share of thread CPU   0.0%
+checks: ok
+
+--- repetition 2 ---
+=== Experiment 3: fetch_add, 1 shared counter, 2 threads ===
+cpus 2 (core 1) and 4 (core 2), 5000000 increments per thread, 11 trials
+slowest-thread ns/increment  min 8.859  p50 9.193  max 9.654
+fastest-thread ns/increment  min 8.632  p50 8.978  max 9.522
+aggregate M increments/s     min 207.164  p50 217.558  max 225.767
+context switches per trial   voluntary 0.0  involuntary 2.3
+kernel share of thread CPU   0.0%
+checks: ok
+
+--- repetition 3 ---
+=== Experiment 3: fetch_add, 1 shared counter, 2 threads ===
+cpus 2 (core 1) and 4 (core 2), 5000000 increments per thread, 11 trials
+slowest-thread ns/increment  min 8.933  p50 9.616  max 10.042
+fastest-thread ns/increment  min 8.663  p50 9.493  max 9.915
+aggregate M increments/s     min 199.162  p50 207.988  max 223.878
+context switches per trial   voluntary 0.0  involuntary 2.5
+kernel share of thread CPU   0.0%
+checks: ok
+
+--- repetition 4 ---
+=== Experiment 3: fetch_add, 1 shared counter, 2 threads ===
+cpus 2 (core 1) and 4 (core 2), 5000000 increments per thread, 11 trials
+slowest-thread ns/increment  min 7.815  p50 8.452  max 8.578
+fastest-thread ns/increment  min 7.689  p50 8.377  max 8.514
+aggregate M increments/s     min 233.164  p50 236.621  max 255.909
+context switches per trial   voluntary 0.0  involuntary 2.2
+kernel share of thread CPU   0.0%
+checks: ok
+
+--- repetition 5 ---
+=== Experiment 3: fetch_add, 1 shared counter, 2 threads ===
+cpus 2 (core 1) and 4 (core 2), 5000000 increments per thread, 11 trials
+slowest-thread ns/increment  min 7.992  p50 8.283  max 8.507
+fastest-thread ns/increment  min 7.929  p50 8.160  max 8.413
+aggregate M increments/s     min 235.088  p50 241.452  max 250.244
+context switches per trial   voluntary 0.0  involuntary 2.5
+kernel share of thread CPU   0.0%
+checks: ok
+

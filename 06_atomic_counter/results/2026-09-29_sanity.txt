@@ -1,0 +1,220 @@
+# Command: build/06_atomic_counter/06_exp1_sanity    (repeated 5x)
+# Date:    2026-09-29T15:25:24+00:00
+# Machine: Linux 6.18.33.2-microsoft-standard-WSL2 — 24 logical CPUs (see docs/ENVIRONMENT.md)
+# Build:   Release (-O2 -g), g++ (Ubuntu 15.2.0-16ubuntu1) 15.2.0
+
+--- repetition 1 ---
+=== Experiment 1: apparatus sanity check ===
+
+-- atomics and sizes --
+  sysfs coherency_line_size:                64  (kCacheLineSize 64)
+  atomic<uint64_t>::is_always_lock_free:    true
+  atomic<bool>::is_always_lock_free:        true
+  sizeof PlainCounter / FetchAddCounter / CasCounter: 8 / 8 / 8
+  sizeof SpinlockCounter / MutexCounter (std::mutex): 16 / 48 (40)
+PASS: 64-byte lines, lock-free atomics, 8-byte counters
+
+-- private-counter layouts (runtime addresses) --
+  packed<fetch_add> counter offsets: 0 8 16 24 32 40 48 56  (base % 64 = 0)
+  padded<fetch_add> counter offsets: 0 64 128 192 256 320 384 448  (base % 64 = 0)
+PASS: packed = 8 counters in one line, padded = one line each (plain and fetch_add)
+
+-- topology --
+  cpu  0 -> core 0     cpu  1 -> core 0     cpu  2 -> core 1     cpu  3 -> core 1
+  cpu  4 -> core 2     cpu  5 -> core 2     cpu  6 -> core 3     cpu  7 -> core 3
+  cpu  8 -> core 4     cpu  9 -> core 4     cpu 10 -> core 5     cpu 11 -> core 5
+  cpu 12 -> core 6     cpu 13 -> core 6     cpu 14 -> core 7     cpu 15 -> core 7
+  cpu 16 -> core 8     cpu 17 -> core 8     cpu 18 -> core 9     cpu 19 -> core 9
+  cpu 20 -> core 10     cpu 21 -> core 10     cpu 22 -> core 11     cpu 23 -> core 11
+  one_cpu_per_core(): 2 4 6 8 10 12 14 16 18 20 22
+PASS: at least 8 distinct physical cores
+
+-- negative control: load+store on a shared counter must lose updates --
+  cpus 2,4: 4000000 increments per race, 11 races, lost 1637834 .. 1999831 (40.9% .. 50.0%)
+PASS: every race lost updates — the count check can fail
+
+-- every contender is exact when shared --
+   fetch_add  2 threads x 3 races: exact
+    cas_loop  2 threads x 3 races: exact
+    spinlock  2 threads x 3 races: exact
+       mutex  2 threads x 3 races: exact
+   fetch_add  8 threads x 3 races: exact
+    cas_loop  8 threads x 3 races: exact
+    spinlock  8 threads x 3 races: exact
+       mutex  8 threads x 3 races: exact
+PASS: fetch_add, cas_loop, spinlock and mutex never lost an increment
+
+ALL CHECKS PASSED
+
+--- repetition 2 ---
+=== Experiment 1: apparatus sanity check ===
+
+-- atomics and sizes --
+  sysfs coherency_line_size:                64  (kCacheLineSize 64)
+  atomic<uint64_t>::is_always_lock_free:    true
+  atomic<bool>::is_always_lock_free:        true
+  sizeof PlainCounter / FetchAddCounter / CasCounter: 8 / 8 / 8
+  sizeof SpinlockCounter / MutexCounter (std::mutex): 16 / 48 (40)
+PASS: 64-byte lines, lock-free atomics, 8-byte counters
+
+-- private-counter layouts (runtime addresses) --
+  packed<fetch_add> counter offsets: 0 8 16 24 32 40 48 56  (base % 64 = 0)
+  padded<fetch_add> counter offsets: 0 64 128 192 256 320 384 448  (base % 64 = 0)
+PASS: packed = 8 counters in one line, padded = one line each (plain and fetch_add)
+
+-- topology --
+  cpu  0 -> core 0     cpu  1 -> core 0     cpu  2 -> core 1     cpu  3 -> core 1
+  cpu  4 -> core 2     cpu  5 -> core 2     cpu  6 -> core 3     cpu  7 -> core 3
+  cpu  8 -> core 4     cpu  9 -> core 4     cpu 10 -> core 5     cpu 11 -> core 5
+  cpu 12 -> core 6     cpu 13 -> core 6     cpu 14 -> core 7     cpu 15 -> core 7
+  cpu 16 -> core 8     cpu 17 -> core 8     cpu 18 -> core 9     cpu 19 -> core 9
+  cpu 20 -> core 10     cpu 21 -> core 10     cpu 22 -> core 11     cpu 23 -> core 11
+  one_cpu_per_core(): 2 4 6 8 10 12 14 16 18 20 22
+PASS: at least 8 distinct physical cores
+
+-- negative control: load+store on a shared counter must lose updates --
+  cpus 2,4: 4000000 increments per race, 11 races, lost 1817266 .. 2000000 (45.4% .. 50.0%)
+PASS: every race lost updates — the count check can fail
+
+-- every contender is exact when shared --
+   fetch_add  2 threads x 3 races: exact
+    cas_loop  2 threads x 3 races: exact
+    spinlock  2 threads x 3 races: exact
+       mutex  2 threads x 3 races: exact
+   fetch_add  8 threads x 3 races: exact
+    cas_loop  8 threads x 3 races: exact
+    spinlock  8 threads x 3 races: exact
+       mutex  8 threads x 3 races: exact
+PASS: fetch_add, cas_loop, spinlock and mutex never lost an increment
+
+ALL CHECKS PASSED
+
+--- repetition 3 ---
+=== Experiment 1: apparatus sanity check ===
+
+-- atomics and sizes --
+  sysfs coherency_line_size:                64  (kCacheLineSize 64)
+  atomic<uint64_t>::is_always_lock_free:    true
+  atomic<bool>::is_always_lock_free:        true
+  sizeof PlainCounter / FetchAddCounter / CasCounter: 8 / 8 / 8
+  sizeof SpinlockCounter / MutexCounter (std::mutex): 16 / 48 (40)
+PASS: 64-byte lines, lock-free atomics, 8-byte counters
+
+-- private-counter layouts (runtime addresses) --
+  packed<fetch_add> counter offsets: 0 8 16 24 32 40 48 56  (base % 64 = 0)
+  padded<fetch_add> counter offsets: 0 64 128 192 256 320 384 448  (base % 64 = 0)
+PASS: packed = 8 counters in one line, padded = one line each (plain and fetch_add)
+
+-- topology --
+  cpu  0 -> core 0     cpu  1 -> core 0     cpu  2 -> core 1     cpu  3 -> core 1
+  cpu  4 -> core 2     cpu  5 -> core 2     cpu  6 -> core 3     cpu  7 -> core 3
+  cpu  8 -> core 4     cpu  9 -> core 4     cpu 10 -> core 5     cpu 11 -> core 5
+  cpu 12 -> core 6     cpu 13 -> core 6     cpu 14 -> core 7     cpu 15 -> core 7
+  cpu 16 -> core 8     cpu 17 -> core 8     cpu 18 -> core 9     cpu 19 -> core 9
+  cpu 20 -> core 10     cpu 21 -> core 10     cpu 22 -> core 11     cpu 23 -> core 11
+  one_cpu_per_core(): 2 4 6 8 10 12 14 16 18 20 22
+PASS: at least 8 distinct physical cores
+
+-- negative control: load+store on a shared counter must lose updates --
+  cpus 2,4: 4000000 increments per race, 11 races, lost 1600336 .. 2000000 (40.0% .. 50.0%)
+PASS: every race lost updates — the count check can fail
+
+-- every contender is exact when shared --
+   fetch_add  2 threads x 3 races: exact
+    cas_loop  2 threads x 3 races: exact
+    spinlock  2 threads x 3 races: exact
+       mutex  2 threads x 3 races: exact
+   fetch_add  8 threads x 3 races: exact
+    cas_loop  8 threads x 3 races: exact
+    spinlock  8 threads x 3 races: exact
+       mutex  8 threads x 3 races: exact
+PASS: fetch_add, cas_loop, spinlock and mutex never lost an increment
+
+ALL CHECKS PASSED
+
+--- repetition 4 ---
+=== Experiment 1: apparatus sanity check ===
+
+-- atomics and sizes --
+  sysfs coherency_line_size:                64  (kCacheLineSize 64)
+  atomic<uint64_t>::is_always_lock_free:    true
+  atomic<bool>::is_always_lock_free:        true
+  sizeof PlainCounter / FetchAddCounter / CasCounter: 8 / 8 / 8
+  sizeof SpinlockCounter / MutexCounter (std::mutex): 16 / 48 (40)
+PASS: 64-byte lines, lock-free atomics, 8-byte counters
+
+-- private-counter layouts (runtime addresses) --
+  packed<fetch_add> counter offsets: 0 8 16 24 32 40 48 56  (base % 64 = 0)
+  padded<fetch_add> counter offsets: 0 64 128 192 256 320 384 448  (base % 64 = 0)
+PASS: packed = 8 counters in one line, padded = one line each (plain and fetch_add)
+
+-- topology --
+  cpu  0 -> core 0     cpu  1 -> core 0     cpu  2 -> core 1     cpu  3 -> core 1
+  cpu  4 -> core 2     cpu  5 -> core 2     cpu  6 -> core 3     cpu  7 -> core 3
+  cpu  8 -> core 4     cpu  9 -> core 4     cpu 10 -> core 5     cpu 11 -> core 5
+  cpu 12 -> core 6     cpu 13 -> core 6     cpu 14 -> core 7     cpu 15 -> core 7
+  cpu 16 -> core 8     cpu 17 -> core 8     cpu 18 -> core 9     cpu 19 -> core 9
+  cpu 20 -> core 10     cpu 21 -> core 10     cpu 22 -> core 11     cpu 23 -> core 11
+  one_cpu_per_core(): 2 4 6 8 10 12 14 16 18 20 22
+PASS: at least 8 distinct physical cores
+
+-- negative control: load+store on a shared counter must lose updates --
+  cpus 2,4: 4000000 increments per race, 11 races, lost 595188 .. 2022346 (14.9% .. 50.6%)
+PASS: every race lost updates — the count check can fail
+
+-- every contender is exact when shared --
+   fetch_add  2 threads x 3 races: exact
+    cas_loop  2 threads x 3 races: exact
+    spinlock  2 threads x 3 races: exact
+       mutex  2 threads x 3 races: exact
+   fetch_add  8 threads x 3 races: exact
+    cas_loop  8 threads x 3 races: exact
+    spinlock  8 threads x 3 races: exact
+       mutex  8 threads x 3 races: exact
+PASS: fetch_add, cas_loop, spinlock and mutex never lost an increment
+
+ALL CHECKS PASSED
+
+--- repetition 5 ---
+=== Experiment 1: apparatus sanity check ===
+
+-- atomics and sizes --
+  sysfs coherency_line_size:                64  (kCacheLineSize 64)
+  atomic<uint64_t>::is_always_lock_free:    true
+  atomic<bool>::is_always_lock_free:        true
+  sizeof PlainCounter / FetchAddCounter / CasCounter: 8 / 8 / 8
+  sizeof SpinlockCounter / MutexCounter (std::mutex): 16 / 48 (40)
+PASS: 64-byte lines, lock-free atomics, 8-byte counters
+
+-- private-counter layouts (runtime addresses) --
+  packed<fetch_add> counter offsets: 0 8 16 24 32 40 48 56  (base % 64 = 0)
+  padded<fetch_add> counter offsets: 0 64 128 192 256 320 384 448  (base % 64 = 0)
+PASS: packed = 8 counters in one line, padded = one line each (plain and fetch_add)
+
+-- topology --
+  cpu  0 -> core 0     cpu  1 -> core 0     cpu  2 -> core 1     cpu  3 -> core 1
+  cpu  4 -> core 2     cpu  5 -> core 2     cpu  6 -> core 3     cpu  7 -> core 3
+  cpu  8 -> core 4     cpu  9 -> core 4     cpu 10 -> core 5     cpu 11 -> core 5
+  cpu 12 -> core 6     cpu 13 -> core 6     cpu 14 -> core 7     cpu 15 -> core 7
+  cpu 16 -> core 8     cpu 17 -> core 8     cpu 18 -> core 9     cpu 19 -> core 9
+  cpu 20 -> core 10     cpu 21 -> core 10     cpu 22 -> core 11     cpu 23 -> core 11
+  one_cpu_per_core(): 2 4 6 8 10 12 14 16 18 20 22
+PASS: at least 8 distinct physical cores
+
+-- negative control: load+store on a shared counter must lose updates --
+  cpus 2,4: 4000000 increments per race, 11 races, lost 1636113 .. 1999996 (40.9% .. 50.0%)
+PASS: every race lost updates — the count check can fail
+
+-- every contender is exact when shared --
+   fetch_add  2 threads x 3 races: exact
+    cas_loop  2 threads x 3 races: exact
+    spinlock  2 threads x 3 races: exact
+       mutex  2 threads x 3 races: exact
+   fetch_add  8 threads x 3 races: exact
+    cas_loop  8 threads x 3 races: exact
+    spinlock  8 threads x 3 races: exact
+       mutex  8 threads x 3 races: exact
+PASS: fetch_add, cas_loop, spinlock and mutex never lost an increment
+
+ALL CHECKS PASSED
+
