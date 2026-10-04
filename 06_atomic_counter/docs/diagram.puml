@@ -1,4 +1,4 @@
-@startuml
+@startuml name
 title Project 06 — Mutex (exp2) vs Atomic fetch_add (exp3) on One Shared Counter
 
 skinparam backgroundColor #FFFFFF
