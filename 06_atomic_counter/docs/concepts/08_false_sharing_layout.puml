@@ -1,4 +1,4 @@
-@startditaa
+@startuml false_sharing_layout
   8. False sharing: where the counters sit in memory (each row is one 64 byte cache line)
 
   PACKED: all 8 counters share ONE line, so any write invalidates the whole line
@@ -28,4 +28,4 @@ line 7  | pad  | pad  | pad  | pad  | pad  | pad  | pad  | t7   |
         +------+------+------+------+------+------+------+------+
 
   t0 to t7 are the counters of thread 0..7 (8 bytes each). pad means unused bytes filling the line.
-@endditaa
+@enduml
