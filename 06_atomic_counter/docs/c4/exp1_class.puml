@@ -1,0 +1,102 @@
+@startuml exp1_class
+title Experiment 1 - C4 code level: classes and functions
+skinparam backgroundColor #FFFFFF
+skinparam classAttributeIconSize 0
+hide empty members
+
+interface Counter <<concept>> {
+  +increment() : uint64
+  +value() : uint64
+  +reset()
+}
+
+class "main()" as Main <<function>> {
+  +main() : int
+  checks atomics, layouts, topology
+  runs the negative control
+  runs every contender when shared
+}
+
+class "exact_when_shared~C~()" as Exact <<function>> {
+  +exact_when_shared(cpus, trials) : bool
+  races `trials` times on ONE shared C
+}
+
+class "all_same_line() / all_distinct_lines()" as Lines <<function>> {
+  +all_same_line(layout) : bool
+  +all_distinct_lines(layout) : bool
+}
+
+class "race~C~()" as Race <<function>> {
+  +race(counters, cpus, iterations) : RaceResult
+}
+
+class RaceResult <<struct>> {
+  +slowest_ns_per_increment : double
+  +expected_total : uint64
+  +observed_total : uint64
+  +pinned_ok : bool
+  +counts_ok() : bool
+}
+
+class LoadStoreCounter <<negative control>> {
+  -v_ : atomic uint64
+  +increment() : uint64
+}
+
+class FetchAddCounter <<counter>> {
+  -v_ : atomic uint64
+  +increment() : uint64
+}
+
+class CasCounter <<counter>> {
+  -v_ : atomic uint64
+  +increment() : uint64
+}
+
+class SpinlockCounter <<counter>> {
+  -locked_ : atomic bool
+  -v_ : uint64
+  +increment() : uint64
+}
+
+class MutexCounter <<counter>> {
+  -m_ : std mutex
+  -v_ : uint64
+  +increment() : uint64
+}
+
+class "PackedCounters~C~" as Packed <<layout>> {
+  +at(i) : C*
+  -slots_[8] : C  (one 64-byte line)
+}
+
+class "PaddedCounters~C~" as Padded <<layout>> {
+  +at(i) : C*
+  -slots_[8] : PaddedSlot  (one line each)
+}
+
+Main ..> Exact : calls
+Main ..> Lines : calls
+Main ..> Race : calls for negative control
+Main ..> LoadStoreCounter : creates
+Exact ..> Race : calls
+Exact ..> FetchAddCounter : instantiates
+Exact ..> CasCounter : instantiates
+Exact ..> SpinlockCounter : instantiates
+Exact ..> MutexCounter : instantiates
+Lines ..> Packed : checks addresses
+Lines ..> Padded : checks addresses
+Race ..> RaceResult : returns
+Race ..> Counter : calls increment()
+FetchAddCounter ..|> Counter
+CasCounter ..|> Counter
+SpinlockCounter ..|> Counter
+MutexCounter ..|> Counter
+LoadStoreCounter ..|> Counter
+
+note bottom of Main
+  Exit code 0 only if every check passes.
+  The negative control proves the count check can fail.
+end note
+@enduml

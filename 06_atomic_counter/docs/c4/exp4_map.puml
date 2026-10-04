@@ -1,0 +1,29 @@
+@startmindmap exp4_map
+title Experiment 4 - map: every strategy, uncontended and contended, one run
+skinparam backgroundColor #FFFFFF
+
+* Exp 4: all strategies in one run
+** Question
+*** What does each strategy cost alone, and what does it cost when a second thread joins?
+** Setup
+*** Uncontended: 1 thread on CPU 2, 20 M increments
+*** Contended: 2 threads on CPUs 2 and 4, 5 M increments each
+*** Order of strategies rotates every trial
+** Uncontended results, ns per increment
+*** plain reference: 0.20 (only correct with one thread)
+*** fetch_add: 1.34
+*** CAS loop: 1.72
+*** spinlock: 1.53
+*** mutex: 4.15
+** Contended results, ns per increment, slowest thread
+*** fetch_add: 8.23
+*** CAS loop: 21.69, about 0.6 failed attempts per increment
+*** spinlock: 23.28
+*** mutex: 25.76, 36.5 percent kernel time
+** Lesson
+*** The uncontended cost is small; the contended cost is what matters
+*** fetch_add is the cheapest correct option at both levels
+** Concepts to read first
+*** Concept 05: spinlock
+*** Concept 06: fetch_add vs CAS
+@endmindmap

@@ -1,0 +1,16 @@
+@startuml 05_spinlock
+title 5. Spinlock: waiting by spinning (Experiments 4-5)
+skinparam backgroundColor #FFFFFF
+
+start
+:exchange(flag, true)\ntry to take the lock;
+while (got it?) is (no: flag was already true)
+  :spin: read flag in a loop\nwith _mm_pause();
+  :exchange(flag, true)\nagain;
+endwhile (yes)
+:critical section\n++counter;
+:store(flag, false)\nrelease the lock;
+stop
+
+footer Never sleeps, so it is cheap with one thread (about 1.5 ns per increment). With many threads every release invalidates every spinner's copy, and throughput collapses.
+@enduml

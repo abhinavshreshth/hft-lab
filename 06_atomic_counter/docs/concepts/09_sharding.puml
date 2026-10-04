@@ -1,0 +1,33 @@
+@startuml 09_sharding
+title 9. Shared counter vs sharded counter
+skinparam backgroundColor #FFFFFF
+left to right direction
+
+package "Shared: every thread increments ONE counter" {
+  [Thread 0] as S0
+  [Thread 1] as S1
+  [Thread 7] as S7
+  [x\n(one cache line)] as SX
+  S0 --> SX
+  S1 --> SX
+  S7 --> SX
+}
+
+package "Sharded: each thread gets its OWN padded slot" {
+  [Thread 0] as H0
+  [Thread 1] as H1
+  [Thread 7] as H7
+  [slot 0\n(own line)] as HS0
+  [slot 1\n(own line)] as HS1
+  [slot 7\n(own line)] as HS7
+  [reader: sum all slots\nwhen you need the total] as R
+  H0 --> HS0
+  H1 --> HS1
+  H7 --> HS7
+  HS0 --> R
+  HS1 --> R
+  HS7 --> R
+}
+
+footer Shared: total throughput falls as threads grow. Sharded: no line is contended, so it scales (7.6x on 8 cores in Experiment 5).
+@enduml

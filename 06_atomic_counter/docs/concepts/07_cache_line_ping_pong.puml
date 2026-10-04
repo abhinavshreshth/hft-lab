@@ -1,0 +1,26 @@
+@startuml 07_cache_line_ping_pong
+title 7. Why one shared counter is slow: the cache line moves between cores
+skinparam backgroundColor #FFFFFF
+autonumber
+
+participant "Core 1\n(Thread A)" as C1
+participant "Core 2\n(Thread B)" as C2
+participant "Cache line\ncontaining x" as L
+
+C1 -> L: lock add x (needs the line)
+note over C1: Core 1 now owns the line\n(MESI state: Modified)
+C2 -> L: lock add x (needs the line)
+L -> C1: invalidate your copy
+C1 --> L: line handed over
+note over C2: Core 2 owns it now,\nCore 1 has nothing
+C1 -> L: lock add x (wants it back)
+L -> C2: invalidate your copy
+C2 --> L: line handed over
+
+note over L
+  Each increment may need the line moved from another core.
+  MESI = Modified / Exclusive / Shared / Invalid, the states
+  a cache line can be in on each core.
+  This transfer cost caps total throughput (Experiment 5).
+end note
+@enduml

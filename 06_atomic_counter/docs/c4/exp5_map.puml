@@ -1,0 +1,31 @@
+@startmindmap exp5_map
+title Experiment 5 - map: thread scaling, one shared counter vs sharded
+skinparam backgroundColor #FFFFFF
+
+* Exp 5: thread-count scaling
+** Question
+*** As threads are added, how does total throughput change for each strategy?
+*** Does sharing or atomicity cause the drop?
+** Setup
+*** 1 to 8 threads, each on a different physical core (no SMT siblings)
+*** 2 M increments per thread, 11 trials per point, order rotating
+*** Five contenders: fetch_add, CAS loop, spinlock, mutex, sharded
+** Sharded = the fix
+*** Each thread fetch_adds its OWN padded line
+*** Still one atomic per increment, but nothing is shared
+** Results, total M increments per second
+*** fetch_add: 707 at 1 thread, 237 at 2, 155 at 8
+*** CAS loop: 570 at 1, 94 at 2, 67 at 8
+*** spinlock: 640 at 1, 89 at 2, 12 at 8
+*** mutex: 234 at 1, 84 at 2, 52 at 8
+*** sharded: 690 at 1, 1380 at 2, 5211 at 8, about 7.6 times the 1 thread rate
+** Lesson
+*** Every shared strategy goes DOWN as threads are added
+*** Sharing is the cost, not the atomic instruction
+*** The spinlock collapses, the mutex degrades into the kernel
+** Open question
+*** Cores 6 to 8 were faster than cores 1 to 5, possibly the chiplet boundary
+** Concepts to read first
+*** Concept 07: cache line ping-pong
+*** Concept 09: sharding
+@endmindmap

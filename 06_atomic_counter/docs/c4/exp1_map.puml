@@ -1,0 +1,33 @@
+@startmindmap exp1_map
+title Experiment 1 - map: is the measuring apparatus trustworthy?
+skinparam backgroundColor #FFFFFF
+
+* Exp 1: sanity check
+** Question
+*** Before trusting any timing, does the apparatus do what it claims?
+** Checks
+*** Atomics and sizes
+**** 64-byte cache line (from sysfs)
+**** atomic uint64 is lock-free
+**** counters are 8 bytes
+*** Layouts from runtime addresses
+**** Packed: 8 counters in one line
+**** Padded: each counter in its own line
+*** Topology
+**** at least 8 distinct physical cores
+*** NEGATIVE CONTROL
+**** LoadStoreCounter on 2 threads MUST lose updates
+**** proves the count check can actually fail
+*** Every real contender is exact
+**** fetch_add, CAS loop, spinlock, mutex
+**** 2 threads and 8 threads on one counter
+** Setup
+*** 2 M increments per thread
+*** CPUs 2 and 4 for 2 threads, first 8 physical cores for 8 threads
+** Result
+*** ALL CHECKS PASSED in 5 of 5 runs
+*** Negative control lost 14.9 to 50.6 percent of increments
+** Concepts to read first
+*** Concept 01: the lost update
+*** Concept 02: what atomic means
+@endmindmap

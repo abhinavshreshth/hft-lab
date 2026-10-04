@@ -1,0 +1,25 @@
+@startmindmap exp2_map
+title Experiment 2 - map: the mutex baseline (2 threads, one counter)
+skinparam backgroundColor #FFFFFF
+
+* Exp 2: mutex baseline
+** Question
+*** What does the conventional std mutex cost when two threads share one counter?
+** Setup
+*** Two threads pinned to CPU 2 (core 1) and CPU 4 (core 2)
+*** 5 M increments per thread, 11 trials after 1 warmup
+*** Each thread does lock, plus plus, unlock on ONE shared counter
+** Result (mean of 5 runs)
+*** 24.55 ns per increment, slowest thread
+*** 81.5 M increments per second total
+*** 37 percent of thread CPU time spent in the kernel
+*** About 60 voluntary context switches per trial
+** Lesson
+*** Correct, obvious, and slow under contention
+*** Losers pay futex syscalls, not only sleeps
+** Concepts to read first
+*** Concept 04: how a mutex works
+*** Concept 07: the cache line moves between cores
+** Compared with
+*** Experiment 3: the same loop with fetch_add
+@endmindmap

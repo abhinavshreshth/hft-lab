@@ -1,0 +1,76 @@
+@startuml exp5_class
+title Experiment 5 - C4 code level: classes and functions
+skinparam backgroundColor #FFFFFF
+skinparam classAttributeIconSize 0
+hide empty members
+
+class "main()" as Main <<function>> {
+  +main() : int
+  loops n from 1 to 8 threads
+  prints throughput table and per-thread table
+}
+
+class "one_cpu_per_core()" as OneCpu <<function>> {
+  +one_cpu_per_core() : vector of int
+  skips core 0 and SMT siblings
+}
+
+class Contender <<struct>> {
+  +name : string
+  +run_once : function returning RaceResult
+}
+
+class "shared_contender()" as SharedC <<function>> {
+  +shared_contender(counter, cpus, iterations) : Contender
+}
+
+class "private_contender()" as PrivateC <<function>> {
+  +private_contender(layout, cpus, iterations, name) : Contender
+  thread i gets slot i of the layout
+}
+
+class "measure_interleaved()" as Interleaved <<function>> {
+  +measure_interleaved(contenders) : vector of Measurement
+}
+
+class FetchAddCounter <<counter>> {
+  +increment() : uint64
+  -v_ : atomic uint64
+}
+
+class CasCounter <<counter>> {
+  +increment() : uint64  returns failed attempts
+}
+
+class SpinlockCounter <<counter>> {
+  +increment() : uint64
+}
+
+class MutexCounter <<counter>> {
+  +increment() : uint64
+}
+
+class "PaddedCounters~FetchAddCounter~" as Sharded <<layout>> {
+  +at(i) : FetchAddCounter*
+  one 64-byte line per thread
+}
+
+Main ..> OneCpu : calls
+Main ..> SharedC : calls for 4 strategies
+Main ..> PrivateC : calls for sharded
+Main ..> Interleaved : calls per thread count
+Main ..> FetchAddCounter : creates
+Main ..> CasCounter : creates
+Main ..> SpinlockCounter : creates
+Main ..> MutexCounter : creates
+Main ..> Sharded : creates
+SharedC ..> Contender : returns
+PrivateC ..> Contender : returns
+PrivateC ..> Sharded : one slot per thread
+Interleaved ..> Contender : races each one
+
+note bottom of Sharded
+  The fix: no line is shared, so no line moves between cores.
+  A reader would sum the slots (not written in this experiment).
+end note
+@enduml

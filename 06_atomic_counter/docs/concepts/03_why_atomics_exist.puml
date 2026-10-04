@@ -1,0 +1,19 @@
+@startuml 03_why_atomics_exist
+title 3. Why atomic operations were invented
+skinparam backgroundColor #FFFFFF
+skinparam roundcorner 12
+left to right direction
+
+rectangle "1960s\nPrograms start sharing memory.\nDijkstra's semaphores: mutual exclusion\nas a software concept" as A1 #E8EEF7
+rectangle "1970\nIBM System/370 adds a compare-and-swap\ninstruction: the hardware makes one\nread-modify-write indivisible" as A2 #E8EEF7
+rectangle "Late 1970s onward\nIntel x86 adds the LOCK prefix\n(lock add, lock cmpxchg)\nthe same idea in every PC today" as A3 #E8EEF7
+rectangle "1991\nHerlihy shows CAS can build\nany lock-free data structure\n(wait-free synchronization)" as A4 #E8EEF7
+rectangle "2011\nC++11 standardizes std::atomic\nand a memory model\n(what this project uses)" as A5 #E8EEF7
+
+A1 -right-> A2
+A2 -right-> A3
+A3 -right-> A4
+A4 -right-> A5
+
+footer Why: software-only locks need ordering guarantees that modern CPUs do not give, so the hardware had to provide indivisible instructions.
+@enduml

@@ -1,0 +1,31 @@
+@startditaa
+  8. False sharing: where the counters sit in memory (each row is one 64 byte cache line)
+
+  PACKED: all 8 counters share ONE line, so any write invalidates the whole line
+
+        +------+------+------+------+------+------+------+------+
+packed  | t0   | t1   | t2   | t3   | t4   | t5   | t6   | t7   |
+        +------+------+------+------+------+------+------+------+
+
+  PADDED: each counter gets a line of its own (Experiment 6 "padded")
+
+        +------+------+------+------+------+------+------+------+
+line 0  | t0   | pad  | pad  | pad  | pad  | pad  | pad  | pad  |
+        +------+------+------+------+------+------+------+------+
+line 1  | pad  | t1   | pad  | pad  | pad  | pad  | pad  | pad  |
+        +------+------+------+------+------+------+------+------+
+line 2  | pad  | pad  | t2   | pad  | pad  | pad  | pad  | pad  |
+        +------+------+------+------+------+------+------+------+
+line 3  | pad  | pad  | pad  | t3   | pad  | pad  | pad  | pad  |
+        +------+------+------+------+------+------+------+------+
+line 4  | pad  | pad  | pad  | pad  | t4   | pad  | pad  | pad  |
+        +------+------+------+------+------+------+------+------+
+line 5  | pad  | pad  | pad  | pad  | pad  | t5   | pad  | pad  |
+        +------+------+------+------+------+------+------+------+
+line 6  | pad  | pad  | pad  | pad  | pad  | pad  | t6   | pad  |
+        +------+------+------+------+------+------+------+------+
+line 7  | pad  | pad  | pad  | pad  | pad  | pad  | pad  | t7   |
+        +------+------+------+------+------+------+------+------+
+
+  t0 to t7 are the counters of thread 0..7 (8 bytes each). pad means unused bytes filling the line.
+@endditaa

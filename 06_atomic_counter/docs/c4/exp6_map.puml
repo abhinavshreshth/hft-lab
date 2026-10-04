@@ -1,0 +1,26 @@
+@startmindmap exp6_map
+title Experiment 6 - map: does false sharing hurt atomics too?
+skinparam backgroundColor #FFFFFF
+
+* Exp 6: false sharing, plain vs atomic
+** Question
+*** Project 05 predicted atomics would suffer far more from false sharing
+*** Does the penalty grow when the increment is a locked RMW?
+** Setup
+*** Two threads on CPU 2 and CPU 4, 10 M increments each
+*** Five configurations, order rotating in one run
+**** plain packed and plain padded
+**** fetch_add packed and fetch_add padded
+**** fetch_add shared (both threads on one counter)
+** Results, slowest-thread ns per increment
+*** plain packed 1.02, plain padded 0.20, ratio 5.1 times
+*** fetch_add packed 8.75, fetch_add padded 1.37, ratio 6.4 times
+*** fetch_add shared 8.26, so packed is about the same as shared
+** Lesson
+*** The ratio looks similar, but the absolute penalty is 9 times larger for atomics
+*** Two variables in one line cost as much as one shared variable
+*** The hardware arbitrates cache lines, not variables
+** Concepts to read first
+*** Concept 08: packed vs padded layout
+*** Concept 07: cache line ping-pong
+@endmindmap

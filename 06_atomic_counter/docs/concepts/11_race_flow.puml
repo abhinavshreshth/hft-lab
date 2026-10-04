@@ -1,0 +1,30 @@
+@startuml 11_race_flow
+title 11. What race<C>() does, step by step
+skinparam backgroundColor #FFFFFF
+autonumber
+
+participant "main thread" as M
+participant "worker i\n(pinned to CPU i)" as W
+participant "flags\nready, go" as F
+participant "counter(s)" as C
+
+M -> W: create thread i with counter pointer, CPU, iterations
+W -> W: pin to CPU, check sched_getcpu()
+W -> F: ready++ (check in)
+loop until go is true
+  W -> F: spin on go
+end
+M -> F: wait until ready == n
+M -> F: go = true (release all threads together)
+loop iterations, timed with steady_clock
+  W -> C: increment()
+end
+W -> W: read getrusage before and after
+M -> W: join()
+M -> C: sum distinct counters, must equal threads x iterations
+
+note over M
+  Thread creation, pinning and the barrier are NOT timed.
+  Only the loop between go and the end is.
+end note
+@enduml

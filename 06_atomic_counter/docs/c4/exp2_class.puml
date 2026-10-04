@@ -1,0 +1,65 @@
+@startuml exp2_class
+title Experiment 2 - C4 code level: classes and functions
+skinparam backgroundColor #FFFFFF
+skinparam classAttributeIconSize 0
+hide empty members
+
+class "main()" as Main <<function>> {
+  +main(argc, argv) : int
+  reads CPUs, default 2 and 4
+  prints measurement and checks
+}
+
+class MutexCounter <<counter>> {
+  +kName : const char*  = "mutex"
+  +increment() : uint64
+  +value() : uint64
+  +reset()
+  -m_ : std mutex
+  -v_ : uint64
+}
+
+class "measure~C~()" as Measure <<function>> {
+  +measure(counters, cpus, iterations) : Measurement
+  runs 1 warmup race, then 11 timed races
+}
+
+class "shared_by()" as Shared <<function>> {
+  +shared_by(counter, n) : vector of C*
+  n pointers to ONE counter
+}
+
+class Measurement <<struct>> {
+  +slowest : TrialStats
+  +fastest : TrialStats
+  +aggregate_mops : TrialStats
+  +voluntary_switches_per_trial : double
+  +kernel_fraction : double
+  +ok() : bool
+}
+
+class RaceResult <<struct>> {
+  +slowest_ns_per_increment : double
+  +voluntary_switches : long
+  +kernel_seconds : double
+  +counts_ok() : bool
+}
+
+class "race~C~()" as Race <<function>> {
+  +race(counters, cpus, iterations) : RaceResult
+  start barrier, pin, time, join, sum
+}
+
+Main ..> MutexCounter : creates one
+Main ..> Shared : calls with 2 threads
+Main ..> Measure : calls
+Measure ..> Race : calls per trial
+Measure ..> Measurement : returns
+Race ..> RaceResult : returns
+Race ..> MutexCounter : calls increment() on each thread
+
+note right of MutexCounter
+  increment() = lock_guard, plus plus, unlock.
+  The only line Exp 3 changes is this declaration.
+end note
+@enduml

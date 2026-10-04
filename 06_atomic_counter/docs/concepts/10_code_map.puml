@@ -1,0 +1,33 @@
+@startuml 10_code_map
+title 10. Code map: which file does what
+skinparam backgroundColor #FFFFFF
+skinparam componentStyle rectangle
+
+package "src/atomic_counter.hpp (shared apparatus)" {
+  [Counter concept\nwhat every counter must provide] as Concept
+  [Counter types\nPlainCounter, LoadStoreCounter,\nFetchAddCounter, CasCounter,\nSpinlockCounter, MutexCounter] as Types
+  [Layouts\nPackedCounters, PaddedCounters] as Layouts
+  [race<C>()\npin, barrier, time, verify] as Race
+  [measure(), measure_interleaved()\nwarmup, trials, statistics] as Measure
+}
+
+[exp1_sanity.cpp] as E1
+[exp2_mutex.cpp] as E2
+[exp3_atomic.cpp] as E3
+[exp4_compare.cpp] as E4
+[exp5_thread_scaling.cpp] as E5
+[exp6_false_sharing.cpp] as E6
+
+E1 --> Measure
+E2 --> Measure
+E3 --> Measure
+E4 --> Measure
+E5 --> Measure
+E6 --> Measure
+Measure --> Race
+Race --> Concept : calls increment()
+Types ..> Concept : implements
+Layouts --> Types : one per thread
+
+footer exp2 and exp3 differ only in which counter type is constructed. benchmark/run.sh runs each binary 5 times.
+@enduml

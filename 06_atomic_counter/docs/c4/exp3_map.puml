@@ -1,0 +1,25 @@
+@startmindmap exp3_map
+title Experiment 3 - map: fetch_add instead of a mutex (2 threads, one counter)
+skinparam backgroundColor #FFFFFF
+
+* Exp 3: atomic fetch_add
+** Question
+*** Same loop, same CPUs, same counter: what changes when the lock becomes one atomic instruction?
+** Setup
+*** Identical to Experiment 2 except the counter type
+*** One line of difference: FetchAddCounter replaces MutexCounter
+** Result (mean of 5 runs)
+*** 8.79 ns per increment, slowest thread
+*** 228.3 M increments per second total
+*** 0 percent kernel time
+*** 0 voluntary context switches
+*** About 2.8 times faster than the mutex
+** Lesson
+*** Atomicity does not need a lock object or a syscall
+*** The line itself still moves between cores, so it is not free
+** Concepts to read first
+*** Concept 06: fetch_add vs CAS
+*** Concept 07: the cache line moves between cores
+** Compared with
+*** Experiment 2: the mutex baseline
+@endmindmap

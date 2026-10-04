@@ -1,0 +1,28 @@
+@startuml 04_mutex_how_it_works
+title 4. How a mutex works (std::mutex, Experiment 2)
+skinparam backgroundColor #FFFFFF
+
+start
+partition "lock()" {
+  :try to change state 0 to 1\n(one atomic CAS);
+  if (state was 0?) then (yes: got it)
+    :fast path\nno kernel involved;
+  else (no: another thread holds it)
+    :mark the lock as contended;
+    :futex_wait()\nSLEEP in the kernel;
+    :woken up, retry the lock;
+  endif
+}
+:critical section\n++counter;
+partition "unlock()" {
+  :set state back to 0\n(atomic exchange);
+  if (anyone marked it contended?) then (yes)
+    :futex_wake()\nsyscall: wake one sleeper;
+  else (no)
+    :nothing else to do;
+  endif
+}
+stop
+
+footer Uncontended lock+unlock is about 4 ns with no kernel call. Under contention the futex syscalls are the cost.
+@enduml

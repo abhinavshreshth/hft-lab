@@ -1,0 +1,71 @@
+@startuml exp6_class
+title Experiment 6 - C4 code level: classes and functions
+skinparam backgroundColor #FFFFFF
+skinparam classAttributeIconSize 0
+hide empty members
+
+class "main()" as Main <<function>> {
+  +main(argc, argv) : int
+  builds 4 private layouts and 1 shared counter
+  prints 5 configs and 3 ratios
+}
+
+class "PackedCounters~C~" as Packed <<layout>> {
+  +at(i) : C*
+  8 counters in ONE line
+}
+
+class "PaddedCounters~C~" as Padded <<layout>> {
+  +at(i) : C*
+  one line per counter
+}
+
+class PlainCounter <<reference>> {
+  +increment() : uint64
+  -v_ : volatile uint64
+}
+
+class FetchAddCounter <<counter>> {
+  +increment() : uint64
+  -v_ : atomic uint64
+}
+
+class Contender <<struct>> {
+  +name : string
+  +run_once : function returning RaceResult
+}
+
+class "private_contender()" as PrivateC <<function>> {
+  +private_contender(layout, cpus, iterations, name) : Contender
+}
+
+class "shared_contender()" as SharedC <<function>> {
+  +shared_contender(counter, cpus, iterations, name) : Contender
+}
+
+class "measure_interleaved()" as Interleaved <<function>> {
+  +measure_interleaved(contenders) : vector of Measurement
+}
+
+Main ..> Packed : creates 2
+Main ..> Padded : creates 2
+Main ..> FetchAddCounter : creates shared one
+Main ..> PrivateC : calls for 4 layouts
+Main ..> SharedC : calls for shared
+Main ..> Interleaved : calls once
+PrivateC ..> Packed : one slot per thread
+PrivateC ..> Padded : one slot per thread
+PrivateC ..> Contender : returns
+SharedC ..> Contender : returns
+SharedC ..> FetchAddCounter : all threads use it
+Packed ..> PlainCounter : holds
+Packed ..> FetchAddCounter : holds
+Padded ..> PlainCounter : holds
+Padded ..> FetchAddCounter : holds
+Interleaved ..> Contender : races each one
+
+note bottom of Packed
+  Packed and padded differ only in address layout.
+  The same loop, the same counter type, the same CPUs.
+end note
+@enduml

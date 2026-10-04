@@ -1,0 +1,78 @@
+@startuml exp4_class
+title Experiment 4 - C4 code level: classes and functions
+skinparam backgroundColor #FFFFFF
+skinparam classAttributeIconSize 0
+hide empty members
+
+class "main()" as Main <<function>> {
+  +main(argc, argv) : int
+  builds 5 counters and 2 contender lists
+  prints uncontended and contended tables
+}
+
+class Contender <<struct>> {
+  +name : string
+  +run_once : function returning RaceResult
+}
+
+class "shared_contender~C~()" as SharedC <<function>> {
+  +shared_contender(counter, cpus, iterations) : Contender
+  wraps race() in a std function, one call per race
+}
+
+class "measure_interleaved()" as Interleaved <<function>> {
+  +measure_interleaved(contenders) : vector of Measurement
+  warmup, then rotated trials
+}
+
+class Measurement <<struct>> {
+  +slowest : TrialStats
+  +fastest : TrialStats
+  +aggregate_mops : TrialStats
+  +cas_failures_per_increment : double
+  +kernel_fraction : double
+  +ok() : bool
+}
+
+class PlainCounter <<reference>> {
+  +increment() : uint64
+  -v_ : volatile uint64
+}
+
+class FetchAddCounter <<counter>> {
+  +increment() : uint64
+  -v_ : atomic uint64
+}
+
+class CasCounter <<counter>> {
+  +increment() : uint64  returns failed attempts
+  -v_ : atomic uint64
+}
+
+class SpinlockCounter <<counter>> {
+  +increment() : uint64
+  -locked_ : atomic bool
+  -v_ : uint64
+}
+
+class MutexCounter <<counter>> {
+  +increment() : uint64
+  -m_ : std mutex
+  -v_ : uint64
+}
+
+Main ..> PlainCounter : creates
+Main ..> FetchAddCounter : creates
+Main ..> CasCounter : creates
+Main ..> SpinlockCounter : creates
+Main ..> MutexCounter : creates
+Main ..> SharedC : calls for each contender
+Main ..> Interleaved : calls twice, solo and duo
+SharedC ..> Contender : returns
+Interleaved ..> Contender : races each one
+Interleaved ..> Measurement : returns
+
+note bottom of PlainCounter
+  Only correct with one thread. Shown as the no-synchronization reference.
+end note
+@enduml

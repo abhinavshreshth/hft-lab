@@ -1,0 +1,22 @@
+@startuml 02_what_is_atomic
+title 2. What "atomic" means: no other thread can see it half done
+skinparam backgroundColor #FFFFFF
+skinparam roundcorner 12
+
+rectangle "What makes an operation atomic?\nIt is either fully done or not started.\nNo other thread can observe it in between." as Def #FFF2CC
+
+rectangle "x = x + 1 on a plain variable\nthree separate steps: load, add, store\nNOT safe when shared" as Plain #F8D7DA
+
+rectangle "atomic load, then atomic store\neach access is safe on its own,\nbut the pair is not: lost updates\n(Experiment 1 negative control)" as LS #F8D7DA
+
+rectangle "fetch_add(1)\none read-modify-write instruction: lock add\nSAFE" as FA #D4EDDA
+
+rectangle "compare_exchange (CAS)\nread, compute, swap only if unchanged,\nretry if someone got there first\nSAFE" as CAS #D4EDDA
+
+Def -down-> Plain
+Def -down-> LS
+Def -down-> FA
+Def -down-> CAS
+
+footer Atomics are used for counters, flags, reference counts, and as the building blocks of mutexes, spinlocks and lock-free queues.
+@enduml
