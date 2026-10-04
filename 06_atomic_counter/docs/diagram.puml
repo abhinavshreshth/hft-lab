@@ -1,0 +1,59 @@
+@startuml
+title Project 06 — Mutex (exp2) vs Atomic fetch_add (exp3) on One Shared Counter
+
+skinparam backgroundColor #FFFFFF
+skinparam sequenceMessageAlign center
+skinparam maxMessageSize 160
+
+participant "Thread A\n(pinned CPU 2)" as A
+participant "Thread B\n(pinned CPU 4)" as B
+participant "Shared counter\n(one cache line)" as C
+participant "Kernel\n(futex)" as K
+
+== exp2_mutex: std::lock_guard<std::mutex> ==
+
+A -> C: lock() — CAS on mutex state
+activate C
+C --> A: acquired
+A -> C: ++v (plain add, lock already held)
+A -> C: unlock() — release store
+deactivate C
+
+note right of B: lock already taken by A
+B -> C: lock() — CAS fails, marks "contended"
+B -> K: futex_wait()
+note over K: often returns immediately —\nA may have already unlocked
+A -> K: unlock() sees "contended" flag,\ncalls futex_wake() regardless
+K --> B: woken
+B -> C: lock() retried — succeeds
+activate C
+C --> B: acquired
+B -> C: ++v
+B -> C: unlock()
+deactivate C
+
+note over A, B
+  measured: 24.55 ns/increment, 37% of thread CPU time in kernel,
+  ~60 voluntary context switches per 10M-increment trial
+  — despite that, threads almost never actually slept long
+end note
+
+== exp3_atomic: std::atomic<uint64_t>::fetch_add ==
+
+A -> C: lock add $1 — RMW, core takes line Exclusive
+activate C
+C --> A: done (one instruction, no lock object, no syscall)
+deactivate C
+
+note right of B: wants the same line,\nwaits only for hardware ownership transfer
+B -> C: lock add $1 — RMW, line transferred to B's core
+activate C
+C --> B: done
+deactivate C
+
+note over A, B
+  measured: 8.79 ns/increment, 0% kernel time, 0 context switches
+  — ~2.8x faster than the mutex, same correctness guarantee
+end note
+
+@enduml

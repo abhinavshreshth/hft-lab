@@ -40,6 +40,12 @@ Six executables, all built on one shared apparatus:
 └── exp6_false_sharing.cpp    Experiment 6 — Project 05's layouts with fetch_add instead of stores
 ```
 
+Experiments 2 and 3 differ only in how the increment is made safe — the
+mutex path leaves the hardware and asks the kernel to arbitrate; the atomic
+path never does:
+
+![Mutex (exp2) vs atomic fetch_add (exp3): two pinned threads racing one shared counter](docs/diagram.png)
+
 `atomic_counter.hpp` follows `false_sharing.hpp`'s split:
 
 - **`Counter`**: *how* one increment is made safe (the experimental
